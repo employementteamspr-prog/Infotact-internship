@@ -1,0 +1,799 @@
+Step 0 | Vehicles: 1
+  0 -> speed: 13.89 m/s, waiting: 0.0s, CO2: 2058.86 mg/s
+Step 1 | Vehicles: 1
+  0 -> speed: 14.37 m/s, waiting: 0.0s, CO2: 3693.79 mg/s
+Step 2 | Vehicles: 2
+  0 -> speed: 14.60 m/s, waiting: 0.0s, CO2: 2887.42 mg/s
+  1 -> speed: 13.03 m/s, waiting: 0.0s, CO2: 1989.61 mg/s
+Step 3 | Vehicles: 2
+  0 -> speed: 13.46 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 11.98 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 4 | Vehicles: 3
+  0 -> speed: 13.55 m/s, waiting: 0.0s, CO2: 2302.07 mg/s
+  1 -> speed: 11.84 m/s, waiting: 0.0s, CO2: 1519.66 mg/s
+  2 -> speed: 13.89 m/s, waiting: 0.0s, CO2: 2058.86 mg/s
+Step 5 | Vehicles: 3
+  0 -> speed: 13.65 m/s, waiting: 0.0s, CO2: 2377.19 mg/s
+  1 -> speed: 12.48 m/s, waiting: 0.0s, CO2: 3792.18 mg/s
+  2 -> speed: 13.45 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 6 | Vehicles: 4
+  0 -> speed: 13.49 m/s, waiting: 0.0s, CO2: 1513.09 mg/s
+  1 -> speed: 12.00 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  2 -> speed: 13.27 m/s, waiting: 0.0s, CO2: 1435.23 mg/s
+Step 7 | Vehicles: 4
+  0 -> speed: 14.36 m/s, waiting: 0.0s, CO2: 4971.08 mg/s
+  1 -> speed: 12.16 m/s, waiting: 0.0s, CO2: 2376.50 mg/s
+  2 -> speed: 13.77 m/s, waiting: 0.0s, CO2: 3655.99 mg/s
+Step 8 | Vehicles: 5
+  0 -> speed: 13.95 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.17 m/s, waiting: 0.0s, CO2: 1971.44 mg/s
+  2 -> speed: 13.95 m/s, waiting: 0.0s, CO2: 2637.19 mg/s
+Step 9 | Vehicles: 5
+  0 -> speed: 14.17 m/s, waiting: 0.0s, CO2: 2802.46 mg/s
+  1 -> speed: 12.73 m/s, waiting: 0.0s, CO2: 3612.93 mg/s
+  2 -> speed: 13.12 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 10 | Vehicles: 6
+  0 -> speed: 14.14 m/s, waiting: 0.0s, CO2: 2000.77 mg/s
+  1 -> speed: 12.69 m/s, waiting: 0.0s, CO2: 1827.26 mg/s
+  2 -> speed: 13.78 m/s, waiting: 0.0s, CO2: 4152.35 mg/s
+Step 11 | Vehicles: 6
+  0 -> speed: 13.75 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.57 m/s, waiting: 0.0s, CO2: 1606.04 mg/s
+  2 -> speed: 13.15 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 12 | Vehicles: 7
+  0 -> speed: 13.98 m/s, waiting: 0.0s, CO2: 2800.72 mg/s
+  1 -> speed: 12.36 m/s, waiting: 0.0s, CO2: 1348.37 mg/s
+  2 -> speed: 13.06 m/s, waiting: 0.0s, CO2: 1711.69 mg/s
+Step 13 | Vehicles: 7
+  0 -> speed: 9.87 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.74 m/s, waiting: 0.0s, CO2: 3091.39 mg/s
+  2 -> speed: 13.91 m/s, waiting: 0.0s, CO2: 4773.20 mg/s
+Step 14 | Vehicles: 8
+  0 -> speed: 6.96 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.88 m/s, waiting: 0.0s, CO2: 2386.16 mg/s
+  2 -> speed: 13.03 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 15 | Vehicles: 8
+  0 -> speed: 6.20 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.90 m/s, waiting: 0.0s, CO2: 2039.39 mg/s
+  2 -> speed: 14.00 m/s, waiting: 0.0s, CO2: 5194.20 mg/s
+Step 16 | Vehicles: 9
+  0 -> speed: 5.57 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 10.93 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  2 -> speed: 12.79 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 17 | Vehicles: 9
+  0 -> speed: 7.77 m/s, waiting: 0.0s, CO2: 5953.73 mg/s
+  1 -> speed: 6.43 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  2 -> speed: 10.11 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 18 | Vehicles: 10
+  0 -> speed: 9.79 m/s, waiting: 0.0s, CO2: 6459.53 mg/s
+  1 -> speed: 3.20 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  2 -> speed: 6.47 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 19 | Vehicles: 10
+  0 -> speed: 12.38 m/s, waiting: 0.0s, CO2: 9349.01 mg/s
+  1 -> speed: 3.38 m/s, waiting: 0.0s, CO2: 1787.62 mg/s
+  2 -> speed: 3.69 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 20 | Vehicles: 11
+  0 -> speed: 14.30 m/s, waiting: 0.0s, CO2: 8424.44 mg/s
+  1 -> speed: 4.88 m/s, waiting: 0.0s, CO2: 3753.39 mg/s
+  10 -> speed: 11.36 m/s, waiting: 0.0s, CO2: 1873.96 mg/s
+Step 21 | Vehicles: 11
+  0 -> speed: 14.06 m/s, waiting: 0.0s, CO2: 1299.54 mg/s
+  1 -> speed: 7.47 m/s, waiting: 0.0s, CO2: 6549.74 mg/s
+  10 -> speed: 11.67 m/s, waiting: 0.0s, CO2: 2727.63 mg/s
+Step 22 | Vehicles: 12
+  0 -> speed: 14.42 m/s, waiting: 0.0s, CO2: 3313.20 mg/s
+  1 -> speed: 9.87 m/s, waiting: 0.0s, CO2: 7391.85 mg/s
+  10 -> speed: 11.00 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 23 | Vehicles: 12
+  0 -> speed: 13.65 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.16 m/s, waiting: 0.0s, CO2: 8368.89 mg/s
+  10 -> speed: 12.02 m/s, waiting: 0.0s, CO2: 4744.99 mg/s
+Step 24 | Vehicles: 13
+  0 -> speed: 13.88 m/s, waiting: 0.0s, CO2: 2807.31 mg/s
+  1 -> speed: 12.85 m/s, waiting: 0.0s, CO2: 4026.54 mg/s
+  10 -> speed: 11.28 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 25 | Vehicles: 13
+  0 -> speed: 14.21 m/s, waiting: 0.0s, CO2: 3151.94 mg/s
+  1 -> speed: 12.47 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 11.91 m/s, waiting: 0.0s, CO2: 3645.41 mg/s
+Step 26 | Vehicles: 14
+  0 -> speed: 14.71 m/s, waiting: 0.0s, CO2: 3834.89 mg/s
+  1 -> speed: 12.40 m/s, waiting: 0.0s, CO2: 1714.23 mg/s
+  10 -> speed: 10.86 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 27 | Vehicles: 14
+  0 -> speed: 13.49 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.47 m/s, waiting: 0.0s, CO2: 2157.37 mg/s
+  10 -> speed: 11.23 m/s, waiting: 0.0s, CO2: 2831.41 mg/s
+Step 28 | Vehicles: 15
+  0 -> speed: 13.83 m/s, waiting: 0.0s, CO2: 3144.07 mg/s
+  1 -> speed: 12.29 m/s, waiting: 0.0s, CO2: 1420.52 mg/s
+  10 -> speed: 11.19 m/s, waiting: 0.0s, CO2: 1781.45 mg/s
+Step 29 | Vehicles: 15
+  0 -> speed: 13.70 m/s, waiting: 0.0s, CO2: 1629.65 mg/s
+  1 -> speed: 12.40 m/s, waiting: 0.0s, CO2: 2279.74 mg/s
+  10 -> speed: 11.47 m/s, waiting: 0.0s, CO2: 2616.38 mg/s
+Step 30 | Vehicles: 16
+  0 -> speed: 9.82 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.21 m/s, waiting: 0.0s, CO2: 1394.05 mg/s
+  10 -> speed: 11.50 m/s, waiting: 0.0s, CO2: 1972.50 mg/s
+Step 31 | Vehicles: 16
+  0 -> speed: 6.42 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.76 m/s, waiting: 0.0s, CO2: 3573.43 mg/s
+  10 -> speed: 11.52 m/s, waiting: 0.0s, CO2: 1936.90 mg/s
+Step 32 | Vehicles: 17
+  0 -> speed: 8.41 m/s, waiting: 0.0s, CO2: 5797.37 mg/s
+  1 -> speed: 12.41 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 10.99 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 33 | Vehicles: 17
+  0 -> speed: 7.35 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.84 m/s, waiting: 0.0s, CO2: 3247.15 mg/s
+  10 -> speed: 12.50 m/s, waiting: 0.0s, CO2: 6309.74 mg/s
+Step 34 | Vehicles: 18
+  0 -> speed: 9.87 m/s, waiting: 0.0s, CO2: 7675.20 mg/s
+  1 -> speed: 12.81 m/s, waiting: 0.0s, CO2: 1898.81 mg/s
+  10 -> speed: 12.03 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 35 | Vehicles: 18
+  0 -> speed: 12.21 m/s, waiting: 0.0s, CO2: 8567.33 mg/s
+  1 -> speed: 12.38 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 10.65 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 36 | Vehicles: 19
+  0 -> speed: 14.34 m/s, waiting: 0.0s, CO2: 9095.49 mg/s
+  1 -> speed: 12.34 m/s, waiting: 0.0s, CO2: 1841.27 mg/s
+  10 -> speed: 7.30 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 37 | Vehicles: 19
+  0 -> speed: 13.49 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.05 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 4.50 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 38 | Vehicles: 20
+  0 -> speed: 14.46 m/s, waiting: 0.0s, CO2: 5324.92 mg/s
+  1 -> speed: 12.61 m/s, waiting: 0.0s, CO2: 3590.88 mg/s
+  10 -> speed: 5.94 m/s, waiting: 0.0s, CO2: 3936.31 mg/s
+Step 39 | Vehicles: 19
+  0 -> speed: 13.82 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.87 m/s, waiting: 0.0s, CO2: 2746.11 mg/s
+  10 -> speed: 8.43 m/s, waiting: 0.0s, CO2: 6848.56 mg/s
+Step 40 | Vehicles: 20
+  0 -> speed: 14.12 m/s, waiting: 0.0s, CO2: 3057.71 mg/s
+  1 -> speed: 12.61 m/s, waiting: 0.0s, CO2: 1183.54 mg/s
+  10 -> speed: 10.41 m/s, waiting: 0.0s, CO2: 6656.89 mg/s
+Step 41 | Vehicles: 20
+  0 -> speed: 13.87 m/s, waiting: 0.0s, CO2: 1249.72 mg/s
+  1 -> speed: 11.83 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 12.10 m/s, waiting: 0.0s, CO2: 6652.70 mg/s
+Step 42 | Vehicles: 21
+  0 -> speed: 14.67 m/s, waiting: 0.0s, CO2: 4813.95 mg/s
+  1 -> speed: 11.83 m/s, waiting: 0.0s, CO2: 1901.81 mg/s
+  10 -> speed: 13.42 m/s, waiting: 0.0s, CO2: 6126.91 mg/s
+Step 43 | Vehicles: 21
+  0 -> speed: 14.33 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.48 m/s, waiting: 0.0s, CO2: 3823.19 mg/s
+  10 -> speed: 15.06 m/s, waiting: 0.0s, CO2: 7850.80 mg/s
+Step 44 | Vehicles: 22
+  0 -> speed: 14.02 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.63 m/s, waiting: 0.0s, CO2: 2397.19 mg/s
+  10 -> speed: 14.62 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 45 | Vehicles: 22
+  0 -> speed: 13.84 m/s, waiting: 0.0s, CO2: 1464.80 mg/s
+  1 -> speed: 12.53 m/s, waiting: 0.0s, CO2: 1680.22 mg/s
+  10 -> speed: 14.06 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 46 | Vehicles: 23
+  0 -> speed: 10.99 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.82 m/s, waiting: 0.0s, CO2: 2827.86 mg/s
+  10 -> speed: 14.41 m/s, waiting: 0.0s, CO2: 3257.62 mg/s
+Step 47 | Vehicles: 23
+  0 -> speed: 6.49 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.02 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.30 m/s, waiting: 0.0s, CO2: 1728.68 mg/s
+Step 48 | Vehicles: 24
+  0 -> speed: 8.70 m/s, waiting: 0.0s, CO2: 6389.56 mg/s
+  1 -> speed: 12.56 m/s, waiting: 0.0s, CO2: 3532.67 mg/s
+  10 -> speed: 14.60 m/s, waiting: 0.0s, CO2: 3134.79 mg/s
+Step 49 | Vehicles: 24
+  0 -> speed: 10.95 m/s, waiting: 0.0s, CO2: 7596.83 mg/s
+  1 -> speed: 12.10 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.43 m/s, waiting: 0.0s, CO2: 1550.66 mg/s
+Step 50 | Vehicles: 25
+  0 -> speed: 13.54 m/s, waiting: 0.0s, CO2: 10113.57 mg/s
+  1 -> speed: 12.35 m/s, waiting: 0.0s, CO2: 2626.27 mg/s
+  10 -> speed: 14.41 m/s, waiting: 0.0s, CO2: 2032.40 mg/s
+Step 51 | Vehicles: 25
+  0 -> speed: 14.12 m/s, waiting: 0.0s, CO2: 3956.59 mg/s
+  1 -> speed: 11.84 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 13.88 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 52 | Vehicles: 26
+  0 -> speed: 13.99 m/s, waiting: 0.0s, CO2: 1648.07 mg/s
+  1 -> speed: 12.01 m/s, waiting: 0.0s, CO2: 2369.54 mg/s
+  10 -> speed: 14.45 m/s, waiting: 0.0s, CO2: 3988.94 mg/s
+Step 53 | Vehicles: 26
+  0 -> speed: 14.65 m/s, waiting: 0.0s, CO2: 4344.17 mg/s
+  1 -> speed: 12.10 m/s, waiting: 0.0s, CO2: 2178.95 mg/s
+  10 -> speed: 14.02 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 54 | Vehicles: 27
+  0 -> speed: 14.30 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.19 m/s, waiting: 0.0s, CO2: 2191.56 mg/s
+  10 -> speed: 14.09 m/s, waiting: 0.0s, CO2: 2294.54 mg/s
+Step 55 | Vehicles: 27
+  0 -> speed: 14.66 m/s, waiting: 0.0s, CO2: 3338.03 mg/s
+  1 -> speed: 12.71 m/s, waiting: 0.0s, CO2: 3480.55 mg/s
+  10 -> speed: 13.94 m/s, waiting: 0.0s, CO2: 1598.09 mg/s
+Step 56 | Vehicles: 28
+  0 -> speed: 14.32 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.27 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 15.04 m/s, waiting: 0.0s, CO2: 5967.08 mg/s
+Step 57 | Vehicles: 28
+  0 -> speed: 13.50 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.67 m/s, waiting: 0.0s, CO2: 3130.97 mg/s
+  10 -> speed: 14.65 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 58 | Vehicles: 28
+  0 -> speed: 13.65 m/s, waiting: 0.0s, CO2: 2507.82 mg/s
+  1 -> speed: 13.00 m/s, waiting: 0.0s, CO2: 2977.64 mg/s
+  10 -> speed: 14.15 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 59 | Vehicles: 28
+  0 -> speed: 13.57 m/s, waiting: 0.0s, CO2: 1774.87 mg/s
+  1 -> speed: 12.70 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 13.98 m/s, waiting: 0.0s, CO2: 1540.43 mg/s
+Step 60 | Vehicles: 29
+  0 -> speed: 14.21 m/s, waiting: 0.0s, CO2: 4174.35 mg/s
+  1 -> speed: 12.42 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.74 m/s, waiting: 0.0s, CO2: 4715.83 mg/s
+Step 61 | Vehicles: 29
+  0 -> speed: 13.19 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.51 m/s, waiting: 0.0s, CO2: 2191.45 mg/s
+  10 -> speed: 15.01 m/s, waiting: 0.0s, CO2: 3076.36 mg/s
+Step 62 | Vehicles: 30
+  0 -> speed: 9.33 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 12.62 m/s, waiting: 0.0s, CO2: 2301.22 mg/s
+  10 -> speed: 14.14 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 63 | Vehicles: 30
+  0 -> speed: 5.25 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  1 -> speed: 13.02 m/s, waiting: 0.0s, CO2: 3180.34 mg/s
+  10 -> speed: 14.49 m/s, waiting: 0.0s, CO2: 3261.55 mg/s
+Step 64 | Vehicles: 31
+  0 -> speed: 7.46 m/s, waiting: 0.0s, CO2: 5823.76 mg/s
+  1 -> speed: 12.92 m/s, waiting: 0.0s, CO2: 1692.83 mg/s
+  10 -> speed: 14.62 m/s, waiting: 0.0s, CO2: 2573.66 mg/s
+Step 65 | Vehicles: 31
+  0 -> speed: 9.59 m/s, waiting: 0.0s, CO2: 6659.02 mg/s
+  1 -> speed: 11.77 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.85 m/s, waiting: 0.0s, CO2: 2924.55 mg/s
+Step 66 | Vehicles: 32
+  0 -> speed: 11.09 m/s, waiting: 0.0s, CO2: 5729.66 mg/s
+  1 -> speed: 12.90 m/s, waiting: 0.0s, CO2: 5334.09 mg/s
+  10 -> speed: 14.27 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 67 | Vehicles: 32
+  0 -> speed: 13.57 m/s, waiting: 0.0s, CO2: 9794.18 mg/s
+  1 -> speed: 12.82 m/s, waiting: 0.0s, CO2: 1738.58 mg/s
+  10 -> speed: 13.97 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 68 | Vehicles: 31
+  0 -> speed: 13.58 m/s, waiting: 0.0s, CO2: 2049.67 mg/s
+  10 -> speed: 14.99 m/s, waiting: 0.0s, CO2: 5678.95 mg/s
+  11 -> speed: 13.08 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 69 | Vehicles: 31
+  0 -> speed: 14.49 m/s, waiting: 0.0s, CO2: 5151.72 mg/s
+  10 -> speed: 14.47 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 13.05 m/s, waiting: 0.0s, CO2: 1914.79 mg/s
+Step 70 | Vehicles: 32
+  0 -> speed: 13.55 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.40 m/s, waiting: 0.0s, CO2: 1868.34 mg/s
+  11 -> speed: 10.57 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 71 | Vehicles: 32
+  0 -> speed: 13.58 m/s, waiting: 0.0s, CO2: 2125.55 mg/s
+  10 -> speed: 14.60 m/s, waiting: 0.0s, CO2: 2803.52 mg/s
+  11 -> speed: 6.29 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 72 | Vehicles: 33
+  0 -> speed: 14.19 m/s, waiting: 0.0s, CO2: 4094.09 mg/s
+  10 -> speed: 14.51 m/s, waiting: 0.0s, CO2: 1792.39 mg/s
+  11 -> speed: 5.75 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 73 | Vehicles: 32
+  0 -> speed: 13.89 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.53 m/s, waiting: 0.0s, CO2: 2200.90 mg/s
+  11 -> speed: 6.28 m/s, waiting: 0.0s, CO2: 2532.27 mg/s
+Step 74 | Vehicles: 33
+  0 -> speed: 13.83 m/s, waiting: 0.0s, CO2: 1848.61 mg/s
+  10 -> speed: 13.91 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 5.73 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 75 | Vehicles: 33
+  0 -> speed: 14.42 m/s, waiting: 0.0s, CO2: 4062.07 mg/s
+  10 -> speed: 14.96 m/s, waiting: 0.0s, CO2: 5792.12 mg/s
+  11 -> speed: 8.23 m/s, waiting: 0.0s, CO2: 6777.46 mg/s
+Step 76 | Vehicles: 34
+  0 -> speed: 14.08 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.64 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 10.35 m/s, waiting: 0.0s, CO2: 6971.17 mg/s
+Step 77 | Vehicles: 34
+  0 -> speed: 14.04 m/s, waiting: 0.0s, CO2: 1968.07 mg/s
+  10 -> speed: 14.62 m/s, waiting: 0.0s, CO2: 2054.68 mg/s
+  11 -> speed: 11.69 m/s, waiting: 0.0s, CO2: 5526.73 mg/s
+Step 78 | Vehicles: 35
+  0 -> speed: 9.86 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.62 m/s, waiting: 0.0s, CO2: 2123.63 mg/s
+  11 -> speed: 13.02 m/s, waiting: 0.0s, CO2: 5991.14 mg/s
+Step 79 | Vehicles: 35
+  0 -> speed: 6.84 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.10 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 13.79 m/s, waiting: 0.0s, CO2: 4471.80 mg/s
+Step 80 | Vehicles: 36
+  0 -> speed: 9.20 m/s, waiting: 0.0s, CO2: 6976.26 mg/s
+  10 -> speed: 9.60 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 13.41 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 81 | Vehicles: 36
+  0 -> speed: 10.98 m/s, waiting: 0.0s, CO2: 6408.83 mg/s
+  10 -> speed: 5.10 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 12.97 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 82 | Vehicles: 37
+  0 -> speed: 13.09 m/s, waiting: 0.0s, CO2: 8363.38 mg/s
+  10 -> speed: 7.09 m/s, waiting: 0.0s, CO2: 5264.47 mg/s
+  11 -> speed: 13.11 m/s, waiting: 0.0s, CO2: 2393.02 mg/s
+Step 83 | Vehicles: 37
+  0 -> speed: 14.34 m/s, waiting: 0.0s, CO2: 6236.71 mg/s
+  10 -> speed: 8.10 m/s, waiting: 0.0s, CO2: 3737.54 mg/s
+  11 -> speed: 13.64 m/s, waiting: 0.0s, CO2: 3706.11 mg/s
+Step 84 | Vehicles: 38
+  0 -> speed: 14.46 m/s, waiting: 0.0s, CO2: 2501.04 mg/s
+  10 -> speed: 10.22 m/s, waiting: 0.0s, CO2: 6913.26 mg/s
+  11 -> speed: 13.41 m/s, waiting: 0.0s, CO2: 1329.47 mg/s
+Step 85 | Vehicles: 38
+  0 -> speed: 14.64 m/s, waiting: 0.0s, CO2: 2712.04 mg/s
+  10 -> speed: 11.92 m/s, waiting: 0.0s, CO2: 6591.32 mg/s
+  11 -> speed: 13.42 m/s, waiting: 0.0s, CO2: 2031.72 mg/s
+Step 86 | Vehicles: 39
+  0 -> speed: 14.39 m/s, waiting: 0.0s, CO2: 1300.33 mg/s
+  10 -> speed: 13.60 m/s, waiting: 0.0s, CO2: 7285.62 mg/s
+  11 -> speed: 13.22 m/s, waiting: 0.0s, CO2: 1407.38 mg/s
+Step 87 | Vehicles: 38
+  0 -> speed: 13.92 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.87 m/s, waiting: 0.0s, CO2: 6517.57 mg/s
+  11 -> speed: 13.40 m/s, waiting: 0.0s, CO2: 2562.66 mg/s
+Step 88 | Vehicles: 39
+  0 -> speed: 14.69 m/s, waiting: 0.0s, CO2: 4710.17 mg/s
+  10 -> speed: 14.22 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 12.27 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 89 | Vehicles: 39
+  0 -> speed: 14.55 m/s, waiting: 0.0s, CO2: 1667.58 mg/s
+  10 -> speed: 13.85 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 7.77 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 90 | Vehicles: 40
+  0 -> speed: 14.28 m/s, waiting: 0.0s, CO2: 1212.30 mg/s
+  10 -> speed: 13.86 m/s, waiting: 0.0s, CO2: 2084.22 mg/s
+  11 -> speed: 3.41 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 91 | Vehicles: 40
+  0 -> speed: 13.73 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.30 m/s, waiting: 0.0s, CO2: 3562.09 mg/s
+  11 -> speed: 5.65 m/s, waiting: 0.0s, CO2: 5110.86 mg/s
+Step 92 | Vehicles: 41
+  0 -> speed: 14.01 m/s, waiting: 0.0s, CO2: 2982.88 mg/s
+  10 -> speed: 14.85 m/s, waiting: 0.0s, CO2: 4019.04 mg/s
+  11 -> speed: 7.04 m/s, waiting: 0.0s, CO2: 4171.82 mg/s
+Step 93 | Vehicles: 41
+  0 -> speed: 10.08 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 13.96 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 9.46 m/s, waiting: 0.0s, CO2: 7220.85 mg/s
+Step 94 | Vehicles: 42
+  0 -> speed: 6.46 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 14.08 m/s, waiting: 0.0s, CO2: 2483.38 mg/s
+  11 -> speed: 11.44 m/s, waiting: 0.0s, CO2: 7163.62 mg/s
+Step 95 | Vehicles: 42
+  0 -> speed: 2.26 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  10 -> speed: 13.58 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 13.35 m/s, waiting: 0.0s, CO2: 7878.84 mg/s
+Step 96 | Vehicles: 43
+  0 -> speed: 0.12 m/s, waiting: 0.0s, CO2: 2.47 mg/s
+  10 -> speed: 9.36 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 13.84 m/s, waiting: 0.0s, CO2: 3631.68 mg/s
+Step 97 | Vehicles: 43
+  0 -> speed: 0.05 m/s, waiting: 1.0s, CO2: 1468.65 mg/s
+  10 -> speed: 6.61 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 13.92 m/s, waiting: 0.0s, CO2: 2317.99 mg/s
+Step 98 | Vehicles: 44
+  0 -> speed: 0.02 m/s, waiting: 2.0s, CO2: 1499.11 mg/s
+  10 -> speed: 8.42 m/s, waiting: 0.0s, CO2: 5449.63 mg/s
+  11 -> speed: 14.20 m/s, waiting: 0.0s, CO2: 2988.44 mg/s
+Step 99 | Vehicles: 44
+  0 -> speed: 0.00 m/s, waiting: 3.0s, CO2: 1511.00 mg/s
+  10 -> speed: 10.15 m/s, waiting: 0.0s, CO2: 5925.55 mg/s
+  11 -> speed: 13.28 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 100 | Vehicles: 45
+  0 -> speed: 0.00 m/s, waiting: 4.0s, CO2: 1520.06 mg/s
+  10 -> speed: 12.60 m/s, waiting: 0.0s, CO2: 9089.47 mg/s
+  11 -> speed: 13.96 m/s, waiting: 0.0s, CO2: 4268.20 mg/s
+Step 101 | Vehicles: 45
+  0 -> speed: 0.00 m/s, waiting: 5.0s, CO2: 1520.99 mg/s
+  10 -> speed: 14.41 m/s, waiting: 0.0s, CO2: 8119.55 mg/s
+  11 -> speed: 13.88 m/s, waiting: 0.0s, CO2: 1783.62 mg/s
+Step 102 | Vehicles: 46
+  0 -> speed: 0.00 m/s, waiting: 6.0s, CO2: 1520.86 mg/s
+  10 -> speed: 14.85 m/s, waiting: 0.0s, CO2: 3654.28 mg/s
+  11 -> speed: 13.24 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 103 | Vehicles: 46
+  0 -> speed: 0.00 m/s, waiting: 7.0s, CO2: 1521.00 mg/s
+  10 -> speed: 14.65 m/s, waiting: 0.0s, CO2: 1439.35 mg/s
+  11 -> speed: 13.26 m/s, waiting: 0.0s, CO2: 2057.81 mg/s
+Step 104 | Vehicles: 45
+  0 -> speed: 0.00 m/s, waiting: 8.0s, CO2: 1521.00 mg/s
+  10 -> speed: 13.99 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  11 -> speed: 13.60 m/s, waiting: 0.0s, CO2: 3121.62 mg/s
+Step 105 | Vehicles: 44
+  0 -> speed: 0.00 m/s, waiting: 9.0s, CO2: 1521.00 mg/s
+  10 -> speed: 14.31 m/s, waiting: 0.0s, CO2: 3176.73 mg/s
+  11 -> speed: 13.18 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 106 | Vehicles: 44
+  0 -> speed: 0.00 m/s, waiting: 10.0s, CO2: 1521.00 mg/s
+  10 -> speed: 14.02 m/s, waiting: 0.0s, CO2: 1136.29 mg/s
+  12 -> speed: 13.30 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 107 | Vehicles: 44
+  0 -> speed: 0.00 m/s, waiting: 11.0s, CO2: 1521.00 mg/s
+  10 -> speed: 14.04 m/s, waiting: 0.0s, CO2: 2106.19 mg/s
+  12 -> speed: 13.34 m/s, waiting: 0.0s, CO2: 2130.91 mg/s
+Step 108 | Vehicles: 45
+  0 -> speed: 0.00 m/s, waiting: 12.0s, CO2: 1521.00 mg/s
+  10 -> speed: 14.10 m/s, waiting: 0.0s, CO2: 2301.20 mg/s
+  12 -> speed: 14.18 m/s, waiting: 0.0s, CO2: 4844.58 mg/s
+Step 109 | Vehicles: 45
+  0 -> speed: 0.00 m/s, waiting: 13.0s, CO2: 1521.00 mg/s
+  10 -> speed: 14.70 m/s, waiting: 0.0s, CO2: 4164.47 mg/s
+  12 -> speed: 14.29 m/s, waiting: 0.0s, CO2: 2437.59 mg/s
+Step 110 | Vehicles: 46
+  0 -> speed: 0.00 m/s, waiting: 14.0s, CO2: 1521.00 mg/s
+  10 -> speed: 14.32 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  12 -> speed: 14.23 m/s, waiting: 0.0s, CO2: 1903.15 mg/s
+Step 111 | Vehicles: 46
+  0 -> speed: 0.00 m/s, waiting: 15.0s, CO2: 1521.00 mg/s
+  10 -> speed: 14.16 m/s, waiting: 0.0s, CO2: 1534.91 mg/s
+  12 -> speed: 14.47 m/s, waiting: 0.0s, CO2: 2896.74 mg/s
+Step 112 | Vehicles: 45
+  0 -> speed: 0.00 m/s, waiting: 16.0s, CO2: 1521.00 mg/s
+  12 -> speed: 13.57 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  14 -> speed: 13.42 m/s, waiting: 0.0s, CO2: 3120.32 mg/s
+Step 113 | Vehicles: 45
+  0 -> speed: 0.00 m/s, waiting: 17.0s, CO2: 1521.00 mg/s
+  12 -> speed: 14.46 m/s, waiting: 0.0s, CO2: 5059.72 mg/s
+  14 -> speed: 13.27 m/s, waiting: 0.0s, CO2: 1547.33 mg/s
+Step 114 | Vehicles: 46
+  0 -> speed: 0.00 m/s, waiting: 18.0s, CO2: 1521.00 mg/s
+  12 -> speed: 14.46 m/s, waiting: 0.0s, CO2: 2099.66 mg/s
+  14 -> speed: 13.16 m/s, waiting: 0.0s, CO2: 1673.31 mg/s
+Step 115 | Vehicles: 45
+  0 -> speed: 0.00 m/s, waiting: 19.0s, CO2: 1521.00 mg/s
+  12 -> speed: 14.08 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  14 -> speed: 13.70 m/s, waiting: 0.0s, CO2: 3718.74 mg/s
+Step 116 | Vehicles: 45
+  0 -> speed: 0.00 m/s, waiting: 20.0s, CO2: 1521.00 mg/s
+  12 -> speed: 14.18 m/s, waiting: 0.0s, CO2: 2401.47 mg/s
+  14 -> speed: 12.66 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 117 | Vehicles: 46
+  0 -> speed: 0.00 m/s, waiting: 21.0s, CO2: 1521.00 mg/s
+  12 -> speed: 14.52 m/s, waiting: 0.0s, CO2: 3238.73 mg/s
+  14 -> speed: 13.76 m/s, waiting: 0.0s, CO2: 5531.38 mg/s
+Step 118 | Vehicles: 46
+  0 -> speed: 0.00 m/s, waiting: 22.0s, CO2: 1521.00 mg/s
+  14 -> speed: 13.29 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  15 -> speed: 5.76 m/s, waiting: 0.0s, CO2: 4322.22 mg/s
+Step 119 | Vehicles: 46
+  0 -> speed: 0.57 m/s, waiting: 0.0s, CO2: 1972.99 mg/s
+  14 -> speed: 13.01 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  15 -> speed: 7.30 m/s, waiting: 0.0s, CO2: 4521.86 mg/s
+Step 120 | Vehicles: 46
+  0 -> speed: 2.75 m/s, waiting: 0.0s, CO2: 3933.28 mg/s
+  14 -> speed: 11.12 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  15 -> speed: 9.21 m/s, waiting: 0.0s, CO2: 5981.89 mg/s
+Step 121 | Vehicles: 46
+  0 -> speed: 4.38 m/s, waiting: 0.0s, CO2: 3773.42 mg/s
+  14 -> speed: 6.62 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  15 -> speed: 11.42 m/s, waiting: 0.0s, CO2: 7741.64 mg/s
+Step 122 | Vehicles: 47
+  0 -> speed: 6.54 m/s, waiting: 0.0s, CO2: 5351.57 mg/s
+  14 -> speed: 6.00 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  15 -> speed: 11.75 m/s, waiting: 0.0s, CO2: 2787.44 mg/s
+Step 123 | Vehicles: 47
+  0 -> speed: 7.56 m/s, waiting: 0.0s, CO2: 3616.32 mg/s
+  14 -> speed: 5.50 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  15 -> speed: 12.75 m/s, waiting: 0.0s, CO2: 4930.83 mg/s
+Step 124 | Vehicles: 48
+  0 -> speed: 9.31 m/s, waiting: 0.0s, CO2: 5656.67 mg/s
+  14 -> speed: 7.59 m/s, waiting: 0.0s, CO2: 5661.58 mg/s
+Step #0.00 (1ms ~= 1000.00*RT, ~1000.00UPS, TraCI: 0ms, vehicles TOT 1 ACT 1 BUF 0)       
+Step #100.00 (1ms ~= 1000.00*RT, ~45000.00UPS, TraCI: 0ms, vehicles TOT 51 ACT 45 BUF 0)  
+Step #200.00 (0ms ?*RT. ?UPS, TraCI: 1ms, vehicles TOT 100 ACT 47 BUF 0)                  
+
+  15 -> speed: 12.86 m/s, waiting: 0.0s, CO2: 2282.95 mg/s
+Step 125 | Vehicles: 48
+  0 -> speed: 10.75 m/s, waiting: 0.0s, CO2: 5477.64 mg/s
+  14 -> speed: 8.98 m/s, waiting: 0.0s, CO2: 4758.29 mg/s
+  15 -> speed: 12.30 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 126 | Vehicles: 47
+  0 -> speed: 12.43 m/s, waiting: 0.0s, CO2: 6766.03 mg/s
+  14 -> speed: 10.85 m/s, waiting: 0.0s, CO2: 6576.80 mg/s
+  15 -> speed: 11.82 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 127 | Vehicles: 47
+  0 -> speed: 14.36 m/s, waiting: 0.0s, CO2: 8489.71 mg/s
+  14 -> speed: 13.20 m/s, waiting: 0.0s, CO2: 9152.18 mg/s
+  15 -> speed: 11.62 m/s, waiting: 0.0s, CO2: 1350.22 mg/s
+Step 128 | Vehicles: 48
+  0 -> speed: 13.57 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  14 -> speed: 13.46 m/s, waiting: 0.0s, CO2: 2826.12 mg/s
+  15 -> speed: 12.60 m/s, waiting: 0.0s, CO2: 4802.95 mg/s
+Step 129 | Vehicles: 47
+  0 -> speed: 13.37 m/s, waiting: 0.0s, CO2: 1379.83 mg/s
+  14 -> speed: 13.51 m/s, waiting: 0.0s, CO2: 2169.53 mg/s
+  15 -> speed: 11.80 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 130 | Vehicles: 48
+  0 -> speed: 13.71 m/s, waiting: 0.0s, CO2: 3113.41 mg/s
+  14 -> speed: 13.07 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  15 -> speed: 12.49 m/s, waiting: 0.0s, CO2: 3936.67 mg/s
+Step 131 | Vehicles: 46
+  0 -> speed: 13.23 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  14 -> speed: 13.40 m/s, waiting: 0.0s, CO2: 3021.87 mg/s
+  15 -> speed: 11.63 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 132 | Vehicles: 47
+  0 -> speed: 14.06 m/s, waiting: 0.0s, CO2: 4758.02 mg/s
+  14 -> speed: 13.21 m/s, waiting: 0.0s, CO2: 1442.93 mg/s
+  15 -> speed: 12.16 m/s, waiting: 0.0s, CO2: 3416.76 mg/s
+Step 133 | Vehicles: 47
+  0 -> speed: 13.36 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  14 -> speed: 12.69 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  15 -> speed: 12.48 m/s, waiting: 0.0s, CO2: 2871.19 mg/s
+Step 134 | Vehicles: 48
+  0 -> speed: 13.28 m/s, waiting: 0.0s, CO2: 1764.10 mg/s
+  14 -> speed: 13.17 m/s, waiting: 0.0s, CO2: 3437.67 mg/s
+  15 -> speed: 12.80 m/s, waiting: 0.0s, CO2: 2911.29 mg/s
+Step 135 | Vehicles: 47
+  0 -> speed: 14.12 m/s, waiting: 0.0s, CO2: 4789.73 mg/s
+  14 -> speed: 13.37 m/s, waiting: 0.0s, CO2: 2658.43 mg/s
+  18 -> speed: 12.92 m/s, waiting: 0.0s, CO2: 1990.22 mg/s
+Step 136 | Vehicles: 47
+  0 -> speed: 13.73 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  14 -> speed: 12.90 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  18 -> speed: 12.46 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 137 | Vehicles: 45
+  0 -> speed: 14.10 m/s, waiting: 0.0s, CO2: 3295.17 mg/s
+  14 -> speed: 12.64 m/s, waiting: 0.0s, CO2: 1195.74 mg/s
+  18 -> speed: 12.87 m/s, waiting: 0.0s, CO2: 3199.16 mg/s
+Step 138 | Vehicles: 45
+  14 -> speed: 13.22 m/s, waiting: 0.0s, CO2: 3786.42 mg/s
+  18 -> speed: 12.41 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  19 -> speed: 15.55 m/s, waiting: 0.0s, CO2: 4065.17 mg/s
+Step 139 | Vehicles: 44
+  18 -> speed: 11.97 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  19 -> speed: 15.30 m/s, waiting: 0.0s, CO2: 1291.04 mg/s
+  20 -> speed: 13.69 m/s, waiting: 0.0s, CO2: 2285.75 mg/s
+Step 140 | Vehicles: 44
+  18 -> speed: 12.90 m/s, waiting: 0.0s, CO2: 4763.51 mg/s
+  19 -> speed: 15.60 m/s, waiting: 0.0s, CO2: 3320.35 mg/s
+  24 -> speed: 11.22 m/s, waiting: 0.0s, CO2: 4358.59 mg/s
+Step 141 | Vehicles: 43
+  18 -> speed: 12.79 m/s, waiting: 0.0s, CO2: 1638.67 mg/s
+  19 -> speed: 15.54 m/s, waiting: 0.0s, CO2: 2002.50 mg/s
+  24 -> speed: 10.44 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 142 | Vehicles: 41
+  18 -> speed: 12.09 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  19 -> speed: 15.51 m/s, waiting: 0.0s, CO2: 2096.36 mg/s
+  24 -> speed: 11.45 m/s, waiting: 0.0s, CO2: 4555.16 mg/s
+Step 143 | Vehicles: 41
+  18 -> speed: 12.29 m/s, waiting: 0.0s, CO2: 2495.32 mg/s
+  19 -> speed: 15.20 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  24 -> speed: 10.90 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 144 | Vehicles: 41
+  18 -> speed: 12.92 m/s, waiting: 0.0s, CO2: 3875.49 mg/s
+  24 -> speed: 10.99 m/s, waiting: 0.0s, CO2: 2085.89 mg/s
+  26 -> speed: 12.43 m/s, waiting: 0.0s, CO2: 1333.34 mg/s
+Step 145 | Vehicles: 42
+  18 -> speed: 12.41 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  24 -> speed: 10.61 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  26 -> speed: 12.33 m/s, waiting: 0.0s, CO2: 1655.95 mg/s
+Step 146 | Vehicles: 43
+  18 -> speed: 12.39 m/s, waiting: 0.0s, CO2: 1885.91 mg/s
+  24 -> speed: 11.05 m/s, waiting: 0.0s, CO2: 2969.45 mg/s
+  26 -> speed: 11.89 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 147 | Vehicles: 43
+  18 -> speed: 12.22 m/s, waiting: 0.0s, CO2: 1460.14 mg/s
+  24 -> speed: 10.22 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  26 -> speed: 12.54 m/s, waiting: 0.0s, CO2: 3836.70 mg/s
+Step 148 | Vehicles: 44
+  18 -> speed: 12.87 m/s, waiting: 0.0s, CO2: 3884.74 mg/s
+  24 -> speed: 11.38 m/s, waiting: 0.0s, CO2: 4955.67 mg/s
+  26 -> speed: 12.42 m/s, waiting: 0.0s, CO2: 1573.21 mg/s
+Step 149 | Vehicles: 43
+  18 -> speed: 12.93 m/s, waiting: 0.0s, CO2: 2173.91 mg/s
+  24 -> speed: 11.45 m/s, waiting: 0.0s, CO2: 2053.44 mg/s
+  26 -> speed: 11.92 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 150 | Vehicles: 44
+  18 -> speed: 12.18 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  24 -> speed: 11.16 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  26 -> speed: 11.76 m/s, waiting: 0.0s, CO2: 1479.89 mg/s
+Step 151 | Vehicles: 44
+  18 -> speed: 12.34 m/s, waiting: 0.0s, CO2: 2382.89 mg/s
+  24 -> speed: 10.78 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  26 -> speed: 11.46 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 152 | Vehicles: 45
+  18 -> speed: 12.11 m/s, waiting: 0.0s, CO2: 1288.32 mg/s
+  24 -> speed: 11.08 m/s, waiting: 0.0s, CO2: 2632.25 mg/s
+  26 -> speed: 11.92 m/s, waiting: 0.0s, CO2: 3186.81 mg/s
+Step 153 | Vehicles: 45
+  18 -> speed: 12.76 m/s, waiting: 0.0s, CO2: 3888.03 mg/s
+  24 -> speed: 11.37 m/s, waiting: 0.0s, CO2: 2643.21 mg/s
+  26 -> speed: 11.93 m/s, waiting: 0.0s, CO2: 1938.78 mg/s
+Step 154 | Vehicles: 46
+  18 -> speed: 11.87 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  24 -> speed: 11.45 m/s, waiting: 0.0s, CO2: 2110.87 mg/s
+  26 -> speed: 12.36 m/s, waiting: 0.0s, CO2: 3174.31 mg/s
+Step 155 | Vehicles: 44
+  24 -> speed: 11.03 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  26 -> speed: 11.76 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  27 -> speed: 13.15 m/s, waiting: 0.0s, CO2: 4666.44 mg/s
+Step 156 | Vehicles: 45
+  24 -> speed: 10.47 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  26 -> speed: 11.87 m/s, waiting: 0.0s, CO2: 2213.00 mg/s
+  27 -> speed: 12.94 m/s, waiting: 0.0s, CO2: 1359.71 mg/s
+Step 157 | Vehicles: 44
+  24 -> speed: 11.19 m/s, waiting: 0.0s, CO2: 3721.62 mg/s
+  26 -> speed: 12.38 m/s, waiting: 0.0s, CO2: 3401.94 mg/s
+  27 -> speed: 12.04 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 158 | Vehicles: 43
+  24 -> speed: 10.60 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  27 -> speed: 12.47 m/s, waiting: 0.0s, CO2: 3187.61 mg/s
+  28 -> speed: 14.90 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 159 | Vehicles: 43
+  24 -> speed: 9.42 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  27 -> speed: 12.69 m/s, waiting: 0.0s, CO2: 2618.52 mg/s
+  28 -> speed: 14.61 m/s, waiting: 0.0s, CO2: 1151.52 mg/s
+Step 160 | Vehicles: 43
+  24 -> speed: 4.94 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  27 -> speed: 12.09 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  29 -> speed: 11.95 m/s, waiting: 0.0s, CO2: 2477.50 mg/s
+Step 161 | Vehicles: 43
+  24 -> speed: 2.26 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  27 -> speed: 12.86 m/s, waiting: 0.0s, CO2: 4258.86 mg/s
+  29 -> speed: 12.02 m/s, waiting: 0.0s, CO2: 2089.32 mg/s
+Step 162 | Vehicles: 44
+  24 -> speed: 0.21 m/s, waiting: 0.0s, CO2: 40.13 mg/s
+  27 -> speed: 12.01 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  29 -> speed: 12.80 m/s, waiting: 0.0s, CO2: 4284.58 mg/s
+Step 163 | Vehicles: 44
+  24 -> speed: 2.21 m/s, waiting: 0.0s, CO2: 3565.07 mg/s
+  27 -> speed: 12.78 m/s, waiting: 0.0s, CO2: 4260.86 mg/s
+  29 -> speed: 12.47 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 164 | Vehicles: 45
+  24 -> speed: 3.63 m/s, waiting: 0.0s, CO2: 3311.53 mg/s
+  27 -> speed: 12.91 m/s, waiting: 0.0s, CO2: 2367.71 mg/s
+  29 -> speed: 11.66 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 165 | Vehicles: 45
+  24 -> speed: 5.37 m/s, waiting: 0.0s, CO2: 4254.78 mg/s
+  27 -> speed: 12.66 m/s, waiting: 0.0s, CO2: 1217.39 mg/s
+  29 -> speed: 12.20 m/s, waiting: 0.0s, CO2: 3462.13 mg/s
+Step 166 | Vehicles: 45
+  24 -> speed: 6.87 m/s, waiting: 0.0s, CO2: 4313.90 mg/s
+  27 -> speed: 12.08 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  29 -> speed: 12.60 m/s, waiting: 0.0s, CO2: 3103.51 mg/s
+Step 167 | Vehicles: 45
+  24 -> speed: 8.76 m/s, waiting: 0.0s, CO2: 5744.80 mg/s
+  27 -> speed: 12.23 m/s, waiting: 0.0s, CO2: 2354.56 mg/s
+  29 -> speed: 12.84 m/s, waiting: 0.0s, CO2: 2709.51 mg/s
+Step 168 | Vehicles: 46
+  24 -> speed: 10.15 m/s, waiting: 0.0s, CO2: 5130.87 mg/s
+  27 -> speed: 11.99 m/s, waiting: 0.0s, CO2: 1266.33 mg/s
+  29 -> speed: 12.49 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 169 | Vehicles: 46
+  24 -> speed: 10.80 m/s, waiting: 0.0s, CO2: 3491.01 mg/s
+  27 -> speed: 13.13 m/s, waiting: 0.0s, CO2: 5432.50 mg/s
+  29 -> speed: 12.14 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 170 | Vehicles: 46
+  24 -> speed: 11.35 m/s, waiting: 0.0s, CO2: 3317.41 mg/s
+  27 -> speed: 12.86 m/s, waiting: 0.0s, CO2: 1165.87 mg/s
+  29 -> speed: 12.87 m/s, waiting: 0.0s, CO2: 4135.86 mg/s
+Step 171 | Vehicles: 46
+  24 -> speed: 11.10 m/s, waiting: 0.0s, CO2: 1208.93 mg/s
+  27 -> speed: 11.96 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  29 -> speed: 11.69 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 172 | Vehicles: 47
+  24 -> speed: 10.69 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  27 -> speed: 9.28 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  29 -> speed: 12.74 m/s, waiting: 0.0s, CO2: 5062.37 mg/s
+Step 173 | Vehicles: 47
+  24 -> speed: 11.05 m/s, waiting: 0.0s, CO2: 2800.48 mg/s
+  27 -> speed: 4.78 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  29 -> speed: 12.56 m/s, waiting: 0.0s, CO2: 1409.78 mg/s
+Step 174 | Vehicles: 48
+  24 -> speed: 10.88 m/s, waiting: 0.0s, CO2: 1406.61 mg/s
+  27 -> speed: 5.92 m/s, waiting: 0.0s, CO2: 3467.34 mg/s
+  29 -> speed: 12.30 m/s, waiting: 0.0s, CO2: 1217.83 mg/s
+Step 175 | Vehicles: 48
+  24 -> speed: 10.97 m/s, waiting: 0.0s, CO2: 2080.07 mg/s
+  27 -> speed: 5.74 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  29 -> speed: 12.61 m/s, waiting: 0.0s, CO2: 2852.70 mg/s
+Step 176 | Vehicles: 48
+  24 -> speed: 10.24 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  27 -> speed: 8.26 m/s, waiting: 0.0s, CO2: 6806.95 mg/s
+  29 -> speed: 12.60 m/s, waiting: 0.0s, CO2: 1909.37 mg/s
+Step 177 | Vehicles: 47
+  24 -> speed: 11.05 m/s, waiting: 0.0s, CO2: 3944.80 mg/s
+  27 -> speed: 10.23 m/s, waiting: 0.0s, CO2: 6559.02 mg/s
+  30 -> speed: 0.00 m/s, waiting: 39.0s, CO2: 1521.00 mg/s
+Step 178 | Vehicles: 48
+  24 -> speed: 10.34 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  27 -> speed: 12.75 m/s, waiting: 0.0s, CO2: 9391.14 mg/s
+  30 -> speed: 0.00 m/s, waiting: 40.0s, CO2: 1521.00 mg/s
+Step 179 | Vehicles: 48
+  24 -> speed: 10.17 m/s, waiting: 0.0s, CO2: 1392.18 mg/s
+  27 -> speed: 13.06 m/s, waiting: 0.0s, CO2: 2938.02 mg/s
+  30 -> speed: 0.00 m/s, waiting: 41.0s, CO2: 1521.00 mg/s
+Step 180 | Vehicles: 48
+  24 -> speed: 10.67 m/s, waiting: 0.0s, CO2: 3089.51 mg/s
+  27 -> speed: 12.13 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  30 -> speed: 0.00 m/s, waiting: 42.0s, CO2: 1521.00 mg/s
+Step 181 | Vehicles: 49
+  24 -> speed: 11.16 m/s, waiting: 0.0s, CO2: 3141.67 mg/s
+  27 -> speed: 12.28 m/s, waiting: 0.0s, CO2: 2353.27 mg/s
+  30 -> speed: 0.00 m/s, waiting: 43.0s, CO2: 1521.00 mg/s
+Step 182 | Vehicles: 50
+  24 -> speed: 11.25 m/s, waiting: 0.0s, CO2: 2096.56 mg/s
+  27 -> speed: 12.89 m/s, waiting: 0.0s, CO2: 3771.96 mg/s
+  30 -> speed: 0.00 m/s, waiting: 44.0s, CO2: 1521.00 mg/s
+Step 183 | Vehicles: 48
+  27 -> speed: 12.43 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  30 -> speed: 1.63 m/s, waiting: 0.0s, CO2: 3045.15 mg/s
+  35 -> speed: 8.13 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 184 | Vehicles: 48
+  27 -> speed: 12.87 m/s, waiting: 0.0s, CO2: 3303.93 mg/s
+  30 -> speed: 3.99 m/s, waiting: 0.0s, CO2: 4601.46 mg/s
+  35 -> speed: 3.63 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 185 | Vehicles: 48
+  27 -> speed: 12.93 m/s, waiting: 0.0s, CO2: 2156.59 mg/s
+  30 -> speed: 5.46 m/s, waiting: 0.0s, CO2: 3861.23 mg/s
+  35 -> speed: 0.01 m/s, waiting: 1.0s, CO2: 0.00 mg/s
+Step 186 | Vehicles: 49
+  27 -> speed: 12.95 m/s, waiting: 0.0s, CO2: 2032.90 mg/s
+  30 -> speed: 7.53 m/s, waiting: 0.0s, CO2: 5606.10 mg/s
+  35 -> speed: 0.00 m/s, waiting: 2.0s, CO2: 1516.83 mg/s
+Step 187 | Vehicles: 49
+  27 -> speed: 12.28 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  30 -> speed: 9.41 m/s, waiting: 0.0s, CO2: 6001.48 mg/s
+  35 -> speed: 0.00 m/s, waiting: 3.0s, CO2: 1519.07 mg/s
+Step 188 | Vehicles: 49
+  27 -> speed: 13.17 m/s, waiting: 0.0s, CO2: 4703.94 mg/s
+  30 -> speed: 11.42 m/s, waiting: 0.0s, CO2: 7211.35 mg/s
+  35 -> speed: 1.34 m/s, waiting: 0.0s, CO2: 2718.78 mg/s
+Step 189 | Vehicles: 49
+  27 -> speed: 13.15 m/s, waiting: 0.0s, CO2: 1921.60 mg/s
+  30 -> speed: 13.49 m/s, waiting: 0.0s, CO2: 8442.32 mg/s
+  35 -> speed: 3.23 m/s, waiting: 0.0s, CO2: 3769.42 mg/s
+Step 190 | Vehicles: 49
+  27 -> speed: 11.99 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  30 -> speed: 15.32 m/s, waiting: 0.0s, CO2: 8659.95 mg/s
+  35 -> speed: 3.71 m/s, waiting: 0.0s, CO2: 2173.68 mg/s
+Step 191 | Vehicles: 48
+  30 -> speed: 15.71 m/s, waiting: 0.0s, CO2: 3663.72 mg/s
+  35 -> speed: 5.85 m/s, waiting: 0.0s, CO2: 5041.95 mg/s
+  36 -> speed: 9.75 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 192 | Vehicles: 48
+  30 -> speed: 16.17 m/s, waiting: 0.0s, CO2: 3978.58 mg/s
+  35 -> speed: 7.94 m/s, waiting: 0.0s, CO2: 5801.67 mg/s
+  36 -> speed: 5.25 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 193 | Vehicles: 47
+  30 -> speed: 15.43 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  35 -> speed: 9.97 m/s, waiting: 0.0s, CO2: 6584.08 mg/s
+  36 -> speed: 7.28 m/s, waiting: 0.0s, CO2: 5422.36 mg/s
+Step 194 | Vehicles: 46
+  30 -> speed: 15.26 m/s, waiting: 0.0s, CO2: 1578.96 mg/s
+  35 -> speed: 12.19 m/s, waiting: 0.0s, CO2: 8197.78 mg/s
+  36 -> speed: 6.91 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 195 | Vehicles: 46
+  30 -> speed: 15.16 m/s, waiting: 0.0s, CO2: 1815.32 mg/s
+  35 -> speed: 13.66 m/s, waiting: 0.0s, CO2: 6666.87 mg/s
+  36 -> speed: 6.63 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+Step 196 | Vehicles: 47
+  30 -> speed: 16.06 m/s, waiting: 0.0s, CO2: 5624.05 mg/s
+  35 -> speed: 13.87 m/s, waiting: 0.0s, CO2: 2716.41 mg/s
+  36 -> speed: 8.36 m/s, waiting: 0.0s, CO2: 5255.95 mg/s
+Step 197 | Vehicles: 47
+  30 -> speed: 15.28 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  35 -> speed: 13.62 m/s, waiting: 0.0s, CO2: 1239.67 mg/s
+  36 -> speed: 10.85 m/s, waiting: 0.0s, CO2: 8159.21 mg/s
+Step 198 | Vehicles: 48
+  30 -> speed: 15.09 m/s, waiting: 0.0s, CO2: 1520.04 mg/s
+  35 -> speed: 13.11 m/s, waiting: 0.0s, CO2: 0.00 mg/s
+  36 -> speed: 12.77 m/s, waiting: 0.0s, CO2: 7632.69 mg/s
+Step 199 | Vehicles: 47
+  35 -> speed: 13.28 m/s, waiting: 0.0s, CO2: 2523.69 mg/s
+  36 -> speed: 13.19 m/s, waiting: 0.0s, CO2: 3260.06 mg/s
+  41 -> speed: 10.21 m/s, waiting: 0.0s, CO2: 5010.80 mg/s
+Simulation finished.
