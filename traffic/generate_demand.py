@@ -26,3 +26,29 @@ print(f"Simulation duration: {simulation_duration} seconds")
 print(f"Random seed: {random_seed}")
 print(f"Vehicle types: {vehicle_types}")
 print(f"Number of vehicles: {number_of_vehicles}")
+# Generate vehicle demand
+vehicles = []
+
+for vehicle_id in range(number_of_vehicles):
+    vehicle_type = random.choice(vehicle_types)
+    departure_time = random.randint(0, simulation_duration - 1)
+
+    vehicles.append({
+        "id": f"veh_{vehicle_id:04d}",
+        "type": vehicle_type,
+        "depart": departure_time
+    })
+
+print(f"Generated {len(vehicles)} vehicles.")
+
+# Route IDs
+routes = [
+    "route_0000",
+    "route_0001"
+]
+
+# Assign a route to each vehicle
+for vehicle in vehicles:
+    vehicle["route"] = random.choice(routes)
+
+print("Routes assigned to all vehicles.")
