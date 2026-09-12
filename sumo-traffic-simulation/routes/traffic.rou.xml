@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<routes>
+
+    <!-- Vehicle types -->
+    <vType id="car"
+           accel="2.6"
+           decel="4.5"
+           sigma="0.5"
+           length="5"
+           maxSpeed="13.9"/>
+
+    <vType id="bus"
+           accel="1.2"
+           decel="4.0"
+           sigma="0.5"
+           length="12"
+           maxSpeed="13.9"/>
+
+    <vType id="truck"
+           accel="1.0"
+           decel="4.0"
+           sigma="0.5"
+           length="8"
+           maxSpeed="13.9"/>
+
+
+    <!-- Routes -->
+    <!-- Eastbound across top row -->
+    <route id="route_E" edges="E0 E2 E4 E6"/>
+
+    <route id="route_W" edges="E39 E37 E35 E33"/>
+
+    <route id="route_N" edges="E60 E58 E56"/>
+
+    <route id="route_S" edges="E67 E69 E71"/>
+
+
+    <!-- 600 vehicles/hour total -->
+    <!-- Cars: 420/hour -->
+    <flow id="cars_E"
+          type="car"
+          route="route_E"
+          begin="0"
+          end="3600"
+          vehsPerHour="210"
+          departLane="best"
+          departSpeed="max"/>
+
+    <flow id="cars_W"
+          type="car"
+          route="route_W"
+          begin="0"
+          end="3600"
+          vehsPerHour="210"
+          departLane="best"
+          departSpeed="max"/>
+
+
+    <!-- Buses: 90/hour -->
+    <flow id="buses_E"
+          type="bus"
+          route="route_E"
+          begin="0"
+          end="3600"
+          vehsPerHour="45"
+          departLane="best"
+          departSpeed="max"/>
+
+    <flow id="buses_W"
+          type="bus"
+          route="route_W"
+          begin="0"
+          end="3600"
+          vehsPerHour="45"
+          departLane="best"
+          departSpeed="max"/>
+
+
+    <!-- Trucks: 90/hour -->
+    <flow id="trucks_E"
+          type="truck"
+          route="route_E"
+          begin="0"
+          end="3600"
+          vehsPerHour="45"
+          departLane="best"
+          departSpeed="max"/>
+
+    <flow id="trucks_W"
+          type="truck"
+          route="route_W"
+          begin="0"
+          end="3600"
+          vehsPerHour="45"
+          departLane="best"
+          departSpeed="max"/>
+
+</routes>
