@@ -60,3 +60,16 @@ body {
 .stat span {
   color: #555;
 }
+
+.leaflet-container {
+  border-radius: 8px;
+  border: 1px solid #d6dce1;
+  background: #e8edf0;
+}
+
+.map-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
