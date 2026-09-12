@@ -218,7 +218,7 @@ function EcoTwinDashboard() {
           </section>
         </div>
 
-        <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1.4fr)_minmax(340px,0.6fr)]">
+        <div className="mt-4 grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(350px,0.6fr)]">
           <section className="glass-panel overflow-hidden rounded-2xl border border-line/80">
             <PanelHeading eyebrow="Historical stream" title="Simulation timeline" icon={CircleGauge} action={<span className="font-mono text-[10px] text-steel">{timeline.length} points</span>} />
             <div className="h-[250px] p-3 sm:h-[290px] sm:p-4"><ResponsiveContainer width="100%" height="100%"><LineChart data={timeline} margin={{ top: 10, right: 12, left: -18, bottom: 0 }}><CartesianGrid stroke="var(--color-line)" strokeDasharray="3 4" vertical={false} /><XAxis dataKey="time" tick={{ fill: "var(--color-steel)", fontSize: 9, fontFamily: "var(--font-mono)" }} tickLine={false} axisLine={false} tickFormatter={(value: number) => `${value}s`} /><YAxis tick={{ fill: "var(--color-steel)", fontSize: 9, fontFamily: "var(--font-mono)" }} tickLine={false} axisLine={false} /><Tooltip contentStyle={{ background: "var(--color-ink2)", border: "1px solid var(--color-line)", borderRadius: "8px", fontFamily: "var(--font-mono)", fontSize: "10px" }} labelFormatter={(value) => `Simulation ${value}s`} /><Line type="monotone" dataKey="vehicles" name="Vehicles" stroke="var(--color-cyan)" strokeWidth={2} dot={false} /><Line type="monotone" dataKey="co2" name="CO₂" stroke="var(--color-amber)" strokeWidth={2} dot={false} /><Line type="monotone" dataKey="wait" name="Avg wait" stroke="var(--color-mint)" strokeWidth={2} dot={false} /></LineChart></ResponsiveContainer></div>
