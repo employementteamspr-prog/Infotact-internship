@@ -1,0 +1,46 @@
+function MapLegend() {
+  return (
+    <div className="map-legend">
+
+      <div className="legend-header">
+        <div>
+          <h3>Map Legend</h3>
+          <p>Traffic simulation indicators</p>
+        </div>
+      </div>
+
+      <div className="legend-items">
+
+        <div className="legend-item">
+          <span className="legend-signal ns"></span>
+
+          <div>
+            <strong>North-South Green</strong>
+            <span>green_ns</span>
+          </div>
+        </div>
+
+        <div className="legend-item">
+          <span className="legend-signal ew"></span>
+
+          <div>
+            <strong>East-West Green</strong>
+            <span>green_ew</span>
+          </div>
+        </div>
+
+        <div className="legend-item">
+          <span className="legend-road"></span>
+
+          <div>
+            <strong>Road Network</strong>
+            <span>100 m simulation grid</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+export default MapLegend;

@@ -1,13 +1,16 @@
-import {
-  CircleMarker,
-  Tooltip,
-} from "react-leaflet";
+import { CircleMarker, Tooltip } from "react-leaflet";
 
 function IntersectionMarker({ intersection }) {
-  const phaseName =
-    intersection.current_phase === 0
-      ? "green_ns"
-      : "green_ew";
+  const isNorthSouth =
+    intersection.current_phase === 0;
+
+  const phaseName = isNorthSouth
+    ? "green_ns"
+    : "green_ew";
+
+  const phaseLabel = isNorthSouth
+    ? "North-South Green"
+    : "East-West Green";
 
   return (
     <CircleMarker
@@ -15,49 +18,50 @@ function IntersectionMarker({ intersection }) {
         intersection.y,
         intersection.x,
       ]}
-      radius={9}
+      radius={10}
       pathOptions={{
+        color: isNorthSouth ? "#16a34a" : "#2563eb",
+        fillColor: isNorthSouth ? "#22c55e" : "#3b82f6",
+        fillOpacity: 1,
         weight: 2,
       }}
     >
       <Tooltip>
-        <div>
+        <div style={{ minWidth: "180px" }}>
           <strong>{intersection.id}</strong>
 
           <br />
-
-          Coordinate:
-          ({intersection.x}, {intersection.y}) m
-
           <br />
 
-          Current Phase:
+          <strong>Coordinates</strong>
+          <br />
+          X: {intersection.x} m
+          <br />
+          Y: {intersection.y} m
+
+          <br />
+          <br />
+
+          <strong>Traffic Phase</strong>
+          <br />
           {phaseName}
+          <br />
+          {phaseLabel}
 
           <br />
-
-          Queue Length:
-          {intersection.queue_length}
-
           <br />
 
-          Waiting Time:
-          {intersection.waiting_time} s
-
+          <strong>Simulation Data</strong>
           <br />
-
-          Average Speed:
-          {intersection.average_speed} m/s
-
+          Queue: {intersection.queue_length}
           <br />
-
-          CO₂ Emission:
-          {intersection.co2_emission}
-
+          Waiting: {intersection.waiting_time} s
           <br />
-
-          Phase Elapsed:
-          {intersection.phase_elapsed_time} s
+          Speed: {intersection.average_speed} m/s
+          <br />
+          CO₂: {intersection.co2_emission}
+          <br />
+          Phase Time: {intersection.phase_elapsed_time} s
         </div>
       </Tooltip>
     </CircleMarker>

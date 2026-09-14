@@ -36,7 +36,7 @@ for (
       y: row * CELL_SIZE_METERS,
 
       // Traffic-light information
-      current_phase: 0,
+      current_phase: index % 2,
       phase_elapsed_time: 0,
 
       // Simulation observations

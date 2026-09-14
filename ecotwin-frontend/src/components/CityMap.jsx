@@ -48,7 +48,7 @@ function CityMap() {
   const cityHeight =
     (rows - 1) * cellSizeMeters;
 
-  // Store all horizontal and vertical roads
+  // Store all roads
   const roads = [];
 
   // ------------------------------------------------
@@ -65,7 +65,11 @@ function CityMap() {
           [y, cityWidth],
         ]}
         pathOptions={{
-          weight: 8,
+          weight: 7,
+          color: "#344a44",
+          opacity: 0.9,
+          lineCap: "round",
+          lineJoin: "round",
         }}
       />
     );
@@ -85,7 +89,11 @@ function CityMap() {
           [cityHeight, x],
         ]}
         pathOptions={{
-          weight: 8,
+          weight: 7,
+          color: "#344a44",
+          opacity: 0.9,
+          lineCap: "round",
+          lineJoin: "round",
         }}
       />
     );
@@ -93,8 +101,8 @@ function CityMap() {
 
   return (
     <MapContainer
-      // The project uses x/y simulation coordinates,
-      // not real latitude/longitude.
+      // EcoTwin uses simulation x/y coordinates
+      // rather than geographical coordinates.
       crs={CRS.Simple}
 
       center={[
@@ -112,14 +120,17 @@ function CityMap() {
         [cityHeight + 50, cityWidth + 50],
       ]}
 
+      maxBoundsViscosity={1.0}
+
       style={{
         width: "100%",
-        height: "600px",
-        background: "#e8edf0",
+        height: "620px",
+        background: "#e8eef0",
       }}
     >
+
       {/* ------------------------------------------
-          Automatically fit complete city grid
+          Fit complete city grid
       ------------------------------------------ */}
       <FitCityBounds
         cityWidth={cityWidth}
@@ -140,6 +151,7 @@ function CityMap() {
           intersection={intersection}
         />
       ))}
+
     </MapContainer>
   );
 }
