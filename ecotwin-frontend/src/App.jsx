@@ -15,10 +15,6 @@ function App() {
   return (
     <div className="app">
 
-      {/* -----------------------------------------
-          TOP HEADER
-      ----------------------------------------- */}
-
       <header className="topbar">
 
         <div className="brand">
@@ -56,16 +52,7 @@ function App() {
       </header>
 
 
-      {/* -----------------------------------------
-          MAIN DASHBOARD
-      ----------------------------------------- */}
-
       <main className="dashboard">
-
-        {/* ---------------------------------------
-            HERO SECTION
-        --------------------------------------- */}
-
         <section className="hero">
 
           <div>
@@ -105,14 +92,7 @@ function App() {
         </section>
 
 
-        {/* ---------------------------------------
-            STATISTICS
-        --------------------------------------- */}
-
         <section className="stats-grid">
-
-          {/* CITY GRID */}
-
           <div className="stat-card">
 
             <div className="stat-icon grid-icon">
@@ -137,8 +117,6 @@ function App() {
 
           </div>
 
-
-          {/* INTERSECTIONS */}
 
           <div className="stat-card">
 
@@ -165,8 +143,6 @@ function App() {
           </div>
 
 
-          {/* CELL SIZE */}
-
           <div className="stat-card">
 
             <div className="stat-icon distance-icon">
@@ -191,8 +167,6 @@ function App() {
 
           </div>
 
-
-          {/* STATUS */}
 
           <div className="stat-card">
 
@@ -224,10 +198,6 @@ function App() {
 
         </section>
 
-
-        {/* ---------------------------------------
-            SIMULATION MAP
-        --------------------------------------- */}
 
         <section className="simulation-card">
 
@@ -265,15 +235,6 @@ function App() {
           </div>
 
 
-          {/* -------------------------------------
-              CITY MAP
-
-              IMPORTANT:
-              The intersection data from
-              useSimulation() is passed into
-              CityMap through this prop.
-          ------------------------------------- */}
-
           <div className="map-wrapper">
 
             <CityMap
@@ -282,10 +243,6 @@ function App() {
 
           </div>
 
-
-          {/* -------------------------------------
-              MAP LEGEND
-          ------------------------------------- */}
 
           <MapLegend />
 

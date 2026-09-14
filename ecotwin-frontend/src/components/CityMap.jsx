@@ -15,10 +15,6 @@ import {
 
 import IntersectionMarker from "./IntersectionMarker";
 
-// --------------------------------------------------
-// Fit the complete city grid inside the map
-// --------------------------------------------------
-
 function FitCityBounds({
   cityWidth,
   cityHeight,
@@ -39,10 +35,6 @@ function FitCityBounds({
 
   return null;
 }
-
-// --------------------------------------------------
-// Convert CO₂ value into environmental intensity
-// --------------------------------------------------
 
 function getEnvironmentalStyle(
   co2Emission
@@ -69,10 +61,6 @@ function getEnvironmentalStyle(
   };
 }
 
-// --------------------------------------------------
-// Main City Map Component
-// --------------------------------------------------
-
 function CityMap({
   intersections: simulationIntersections = [],
 }) {
@@ -85,10 +73,6 @@ function CityMap({
     cellSizeMeters,
   } = gridConfig;
 
-  // ------------------------------------------------
-  // Calculate total city dimensions
-  // ------------------------------------------------
-
   const cityWidth =
     (columns - 1) *
     cellSizeMeters;
@@ -97,22 +81,8 @@ function CityMap({
     (rows - 1) *
     cellSizeMeters;
 
-  // ------------------------------------------------
-  // Extra space around city grid
-  // ------------------------------------------------
-
   const mapPadding = 100;
-
-  // ------------------------------------------------
-  // Store all roads
-  // ------------------------------------------------
-
   const roads = [];
-
-  // ------------------------------------------------
-  // Create horizontal roads
-  // ------------------------------------------------
-
   for (
     let row = 0;
     row < rows;
@@ -139,10 +109,6 @@ function CityMap({
     );
   }
 
-  // ------------------------------------------------
-  // Create vertical roads
-  // ------------------------------------------------
-
   for (
     let column = 0;
     column < columns;
@@ -168,10 +134,6 @@ function CityMap({
       />
     );
   }
-
-  // ------------------------------------------------
-  // Render map
-  // ------------------------------------------------
 
   return (
     <MapContainer
@@ -204,25 +166,12 @@ function CityMap({
       }}
     >
 
-      {/* ------------------------------------------
-          FIT COMPLETE CITY GRID
-      ------------------------------------------ */}
-
       <FitCityBounds
         cityWidth={cityWidth}
         cityHeight={cityHeight}
       />
 
-      {/* ------------------------------------------
-          CITY ROAD NETWORK
-      ------------------------------------------ */}
-
       {roads}
-
-      {/* ------------------------------------------
-          ENVIRONMENTAL / CO₂ LAYER
-      ------------------------------------------ */}
-
       {intersections.map(
         (intersection) => {
 
@@ -265,10 +214,6 @@ function CityMap({
           );
         }
       )}
-
-      {/* ------------------------------------------
-          TRAFFIC-LIGHT INTERSECTIONS
-      ------------------------------------------ */}
 
       {intersections.map(
         (intersection) => (

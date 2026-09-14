@@ -15,9 +15,6 @@ function MapLegend() {
 
       <div className="legend-items">
 
-        {/* ------------------------------------------
-            NORTH-SOUTH PHASE
-        ------------------------------------------ */}
         <div className="legend-item">
 
           <span className="legend-signal ns"></span>
@@ -35,9 +32,6 @@ function MapLegend() {
         </div>
 
 
-        {/* ------------------------------------------
-            EAST-WEST PHASE
-        ------------------------------------------ */}
         <div className="legend-item">
 
           <span className="legend-signal ew"></span>
@@ -55,9 +49,6 @@ function MapLegend() {
         </div>
 
 
-        {/* ------------------------------------------
-            ROAD NETWORK
-        ------------------------------------------ */}
         <div className="legend-item">
 
           <span className="legend-road"></span>
@@ -75,9 +66,6 @@ function MapLegend() {
         </div>
 
 
-        {/* ------------------------------------------
-            CO₂ / ENVIRONMENTAL LAYER
-        ------------------------------------------ */}
         <div className="legend-item">
 
           <span className="legend-environment"></span>
