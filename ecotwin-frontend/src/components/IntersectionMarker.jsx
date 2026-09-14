@@ -20,50 +20,99 @@ function IntersectionMarker({ intersection }) {
       ]}
       radius={10}
       pathOptions={{
-        color: isNorthSouth ? "#16a34a" : "#2563eb",
-        fillColor: isNorthSouth ? "#22c55e" : "#3b82f6",
+        color: isNorthSouth
+          ? "#16a34a"
+          : "#2563eb",
+
+        fillColor: isNorthSouth
+          ? "#22c55e"
+          : "#3b82f6",
+
         fillOpacity: 1,
         weight: 2,
       }}
     >
-      <Tooltip>
-        <div style={{ minWidth: "180px" }}>
-          <strong>{intersection.id}</strong>
 
-          <br />
-          <br />
+      <Tooltip
+        direction="top"
+        offset={[0, -8]}
+        opacity={1}
+        className="intersection-tooltip"
+      >
 
-          <strong>Coordinates</strong>
-          <br />
-          X: {intersection.x} m
-          <br />
-          Y: {intersection.y} m
+        <div className="intersection-tooltip-content">
 
-          <br />
-          <br />
+          <strong>
+            {intersection.id}
+          </strong>
 
-          <strong>Traffic Phase</strong>
-          <br />
-          {phaseName}
-          <br />
-          {phaseLabel}
 
-          <br />
-          <br />
+          <div className="tooltip-section">
 
-          <strong>Simulation Data</strong>
-          <br />
-          Queue: {intersection.queue_length}
-          <br />
-          Waiting: {intersection.waiting_time} s
-          <br />
-          Speed: {intersection.average_speed} m/s
-          <br />
-          CO₂: {intersection.co2_emission}
-          <br />
-          Phase Time: {intersection.phase_elapsed_time} s
+            <strong>
+              Coordinates
+            </strong>
+
+            <br />
+
+            X: {intersection.x} m
+
+            <br />
+
+            Y: {intersection.y} m
+
+          </div>
+
+
+          <div className="tooltip-section">
+
+            <strong>
+              Traffic Phase
+            </strong>
+
+            <br />
+
+            {phaseName}
+
+            <br />
+
+            {phaseLabel}
+
+          </div>
+
+
+          <div className="tooltip-section">
+
+            <strong>
+              Simulation Data
+            </strong>
+
+            <br />
+
+            Queue: {intersection.queue_length}
+
+            <br />
+
+            Waiting: {intersection.waiting_time} s
+
+            <br />
+
+            Speed: {intersection.average_speed} m/s
+
+            <br />
+
+            CO₂: {intersection.co2_emission}
+
+            <br />
+
+            Phase Time: {intersection.phase_elapsed_time} s
+
+          </div>
+
         </div>
+
       </Tooltip>
+
     </CircleMarker>
   );
 }

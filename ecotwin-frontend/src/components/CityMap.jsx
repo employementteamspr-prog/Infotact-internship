@@ -1,6 +1,7 @@
 import {
   MapContainer,
   Polyline,
+  Circle,
   useMap,
 } from "react-leaflet";
 
@@ -9,7 +10,6 @@ import { CRS } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import {
-  intersections,
   gridConfig,
 } from "../data/gridData";
 
@@ -18,44 +18,108 @@ import IntersectionMarker from "./IntersectionMarker";
 // --------------------------------------------------
 // Fit the complete city grid inside the map
 // --------------------------------------------------
-function FitCityBounds({ cityWidth, cityHeight }) {
+
+function FitCityBounds({
+  cityWidth,
+  cityHeight,
+}) {
   const map = useMap();
 
   const bounds = [
-    [-50, -50],
-    [cityHeight + 50, cityWidth + 50],
+    [-100, -100],
+    [
+      cityHeight + 100,
+      cityWidth + 100,
+    ],
   ];
 
-  map.fitBounds(bounds);
+  map.fitBounds(bounds, {
+    padding: [30, 30],
+  });
 
   return null;
 }
 
 // --------------------------------------------------
+// Convert CO₂ value into environmental intensity
+// --------------------------------------------------
+
+function getEnvironmentalStyle(
+  co2Emission
+) {
+  const value =
+    Number(co2Emission) || 0;
+
+  if (value <= 0) {
+    return {
+      radius: 0,
+      opacity: 0,
+    };
+  }
+
+  const intensity =
+    Math.min(value / 100, 1);
+
+  return {
+    radius:
+      25 + intensity * 45,
+
+    opacity:
+      0.12 + intensity * 0.28,
+  };
+}
+
+// --------------------------------------------------
 // Main City Map Component
 // --------------------------------------------------
-function CityMap() {
+
+function CityMap({
+  intersections: simulationIntersections = [],
+}) {
+  const intersections =
+    simulationIntersections;
+
   const {
     rows,
     columns,
     cellSizeMeters,
   } = gridConfig;
 
-  // Total simulation area
+  // ------------------------------------------------
+  // Calculate total city dimensions
+  // ------------------------------------------------
+
   const cityWidth =
-    (columns - 1) * cellSizeMeters;
+    (columns - 1) *
+    cellSizeMeters;
 
   const cityHeight =
-    (rows - 1) * cellSizeMeters;
+    (rows - 1) *
+    cellSizeMeters;
 
+  // ------------------------------------------------
+  // Extra space around city grid
+  // ------------------------------------------------
+
+  const mapPadding = 100;
+
+  // ------------------------------------------------
   // Store all roads
+  // ------------------------------------------------
+
   const roads = [];
 
   // ------------------------------------------------
   // Create horizontal roads
   // ------------------------------------------------
-  for (let row = 0; row < rows; row++) {
-    const y = row * cellSizeMeters;
+
+  for (
+    let row = 0;
+    row < rows;
+    row++
+  ) {
+    const y =
+      row * cellSizeMeters;
 
     roads.push(
       <Polyline
@@ -78,8 +142,14 @@ function CityMap() {
   // ------------------------------------------------
   // Create vertical roads
   // ------------------------------------------------
-  for (let column = 0; column < columns; column++) {
-    const x = column * cellSizeMeters;
+
+  for (
+    let column = 0;
+    column < columns;
+    column++
+  ) {
+    const x =
+      column * cellSizeMeters;
 
     roads.push(
       <Polyline
@@ -99,10 +169,12 @@ function CityMap() {
     );
   }
 
+  // ------------------------------------------------
+  // Render map
+  // ------------------------------------------------
+
   return (
     <MapContainer
-      // EcoTwin uses simulation x/y coordinates
-      // rather than geographical coordinates.
       crs={CRS.Simple}
 
       center={[
@@ -116,8 +188,11 @@ function CityMap() {
       maxZoom={3}
 
       maxBounds={[
-        [-50, -50],
-        [cityHeight + 50, cityWidth + 50],
+        [-mapPadding, -mapPadding],
+        [
+          cityHeight + mapPadding,
+          cityWidth + mapPadding,
+        ],
       ]}
 
       maxBoundsViscosity={1.0}
@@ -130,27 +205,79 @@ function CityMap() {
     >
 
       {/* ------------------------------------------
-          Fit complete city grid
+          FIT COMPLETE CITY GRID
       ------------------------------------------ */}
+
       <FitCityBounds
         cityWidth={cityWidth}
         cityHeight={cityHeight}
       />
 
       {/* ------------------------------------------
-          City road network
+          CITY ROAD NETWORK
       ------------------------------------------ */}
+
       {roads}
 
       {/* ------------------------------------------
-          25 traffic-light intersections
+          ENVIRONMENTAL / CO₂ LAYER
       ------------------------------------------ */}
-      {intersections.map((intersection) => (
-        <IntersectionMarker
-          key={intersection.id}
-          intersection={intersection}
-        />
-      ))}
+
+      {intersections.map(
+        (intersection) => {
+
+          const environmentalStyle =
+            getEnvironmentalStyle(
+              intersection.co2_emission
+            );
+
+          if (
+            environmentalStyle.radius === 0
+          ) {
+            return null;
+          }
+
+          return (
+            <Circle
+              key={`co2-${intersection.id}`}
+
+              center={[
+                intersection.y,
+                intersection.x,
+              ]}
+
+              radius={
+                environmentalStyle.radius
+              }
+
+              pathOptions={{
+                color: "#dc6b32",
+                fillColor: "#ef8a45",
+
+                fillOpacity:
+                  environmentalStyle.opacity,
+
+                weight: 1,
+
+                opacity: 0.35,
+              }}
+            />
+          );
+        }
+      )}
+
+      {/* ------------------------------------------
+          TRAFFIC-LIGHT INTERSECTIONS
+      ------------------------------------------ */}
+
+      {intersections.map(
+        (intersection) => (
+          <IntersectionMarker
+            key={intersection.id}
+            intersection={intersection}
+          />
+        )
+      )}
 
     </MapContainer>
   );

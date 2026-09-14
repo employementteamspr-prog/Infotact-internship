@@ -1,13 +1,24 @@
 import CityMap from "./components/CityMap";
 import MapLegend from "./components/MapLegend";
+import useSimulation from "./hooks/useSimulation";
 
 function App() {
+  const {
+    intersections,
+    connectionStatus,
+    simulationDataAvailable,
+  } = useSimulation();
+
+  const isConnected =
+    connectionStatus === "connected";
+
   return (
     <div className="app">
 
       {/* -----------------------------------------
           TOP HEADER
       ----------------------------------------- */}
+
       <header className="topbar">
 
         <div className="brand">
@@ -27,21 +38,34 @@ function App() {
         </div>
 
         <div className="live-status">
-          <span className="status-dot"></span>
-          Map Ready
+
+          <span
+            className={`status-dot ${
+              isConnected
+                ? "connected"
+                : ""
+            }`}
+          ></span>
+
+          {isConnected
+            ? "Simulation Connected"
+            : "Map Ready"}
+
         </div>
 
       </header>
 
 
       {/* -----------------------------------------
-          MAIN CONTENT
+          MAIN DASHBOARD
       ----------------------------------------- */}
+
       <main className="dashboard">
 
-        {/* -----------------------------------------
+        {/* ---------------------------------------
             HERO SECTION
-        ----------------------------------------- */}
+        --------------------------------------- */}
+
         <section className="hero">
 
           <div>
@@ -52,12 +76,15 @@ function App() {
 
             <h2>
               Intelligent Traffic &
-              <span> Environmental Monitoring</span>
+              <span>
+                {" "}Environmental Monitoring
+              </span>
             </h2>
 
             <p>
-              Interactive simulation view for traffic
-              intersections and future environmental data.
+              Interactive simulation view for
+              traffic intersections and future
+              environmental data.
             </p>
 
           </div>
@@ -78,12 +105,14 @@ function App() {
         </section>
 
 
-        {/* -----------------------------------------
-            STAT CARDS
-        ----------------------------------------- */}
+        {/* ---------------------------------------
+            STATISTICS
+        --------------------------------------- */}
+
         <section className="stats-grid">
 
-          {/* City Grid */}
+          {/* CITY GRID */}
+
           <div className="stat-card">
 
             <div className="stat-icon grid-icon">
@@ -109,7 +138,8 @@ function App() {
           </div>
 
 
-          {/* Intersections */}
+          {/* INTERSECTIONS */}
+
           <div className="stat-card">
 
             <div className="stat-icon signal-icon">
@@ -123,7 +153,7 @@ function App() {
               </span>
 
               <strong>
-                25
+                {intersections.length}
               </strong>
 
               <small>
@@ -135,7 +165,8 @@ function App() {
           </div>
 
 
-          {/* Cell Size */}
+          {/* CELL SIZE */}
+
           <div className="stat-card">
 
             <div className="stat-icon distance-icon">
@@ -161,7 +192,8 @@ function App() {
           </div>
 
 
-          {/* Map Status */}
+          {/* STATUS */}
+
           <div className="stat-card">
 
             <div className="stat-icon status-icon">
@@ -175,11 +207,15 @@ function App() {
               </span>
 
               <strong>
-                Ready
+                {isConnected
+                  ? "Live"
+                  : "Ready"}
               </strong>
 
               <small>
-                Map initialized
+                {simulationDataAvailable
+                  ? "Live data received"
+                  : "Waiting for simulation"}
               </small>
 
             </div>
@@ -189,9 +225,10 @@ function App() {
         </section>
 
 
-        {/* -----------------------------------------
-            MAP SECTION
-        ----------------------------------------- */}
+        {/* ---------------------------------------
+            SIMULATION MAP
+        --------------------------------------- */}
+
         <section className="simulation-card">
 
           <div className="section-heading">
@@ -211,30 +248,48 @@ function App() {
 
             <div className="simulation-chip">
 
-              <span className="status-dot"></span>
+              <span
+                className={`status-dot ${
+                  isConnected
+                    ? "connected"
+                    : ""
+                }`}
+              ></span>
 
-              SIMULATION MAP
+              {isConnected
+                ? "LIVE SIMULATION"
+                : "SIMULATION MAP"}
 
             </div>
 
           </div>
 
 
-          {/* City Map */}
+          {/* -------------------------------------
+              CITY MAP
+
+              IMPORTANT:
+              The intersection data from
+              useSimulation() is passed into
+              CityMap through this prop.
+          ------------------------------------- */}
+
           <div className="map-wrapper">
 
-            <CityMap />
+            <CityMap
+              intersections={intersections}
+            />
 
           </div>
 
 
-          {/* Map Legend */}
+          {/* -------------------------------------
+              MAP LEGEND
+          ------------------------------------- */}
+
           <MapLegend />
 
         </section>
-
-
-    
 
       </main>
 

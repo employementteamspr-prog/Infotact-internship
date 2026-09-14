@@ -395,12 +395,10 @@ select {
 ========================================== */
 
 .map-wrapper {
-  overflow: hidden;
-
+  position: relative;
+  overflow: visible;
   border: 1px solid #dce5e2;
-
   border-radius: 16px;
-
   background: #e8eef0;
 }
 
@@ -506,95 +504,9 @@ select {
 .legend-road {
   width: 26px;
   height: 6px;
-
   flex-shrink: 0;
-
   border-radius: 999px;
-
-  background: #3988eb;
-}
-
-
-/* ==========================================
-   INTEGRATION BANNER
-========================================== */
-
-.integration-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 30px;
-
-  margin-top: 20px;
-
-  padding: 22px 24px;
-
-  border: 1px solid #dce8e2;
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #eef8f2,
-      #f7fbf9
-    );
-}
-
-.banner-label {
-  display: block;
-
-  margin-bottom: 6px;
-
-  color: #23865d;
-
-  font-size: 10px;
-  font-weight: 800;
-
-  letter-spacing: 0.12em;
-}
-
-.integration-banner h3 {
-  margin: 0;
-
-  font-size: 18px;
-}
-
-.integration-banner p {
-  max-width: 680px;
-
-  margin: 6px 0 0;
-
-  color: #71807a;
-
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.integration-flow {
-  display: flex;
-  align-items: center;
-
-  gap: 9px;
-
-  flex-shrink: 0;
-
-  padding: 12px 16px;
-
-  border-radius: 12px;
-
-  background: #ffffff;
-
-  border: 1px solid #dce7e2;
-
-  font-size: 11px;
-  font-weight: 800;
-
-  color: #547067;
-}
-
-.integration-flow b {
-  color: #8b9994;
+  background: #344a44;
 }
 
 
@@ -658,4 +570,78 @@ select {
     height: 500px;
   }
 
+}
+
+/* ==========================================
+   ENVIRONMENTAL / CO₂ LEGEND
+========================================== */
+
+.legend-environment {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: rgba(239, 138, 69, 0.35);
+
+  border: 2px solid #dc6b32;
+
+  box-shadow:
+    0 0 0 5px rgba(220, 107, 50, 0.08);
+}
+
+/* ==========================================
+   INTERSECTION TOOLTIP
+========================================== */
+
+.intersection-tooltip {
+  border: 1px solid #dce5e2 !important;
+
+  border-radius: 10px !important;
+
+  box-shadow:
+    0 8px 25px rgba(22, 42, 35, 0.14) !important;
+
+  padding: 0 !important;
+}
+
+.intersection-tooltip-content {
+  min-width: 190px;
+
+  padding: 10px 12px;
+
+  color: #26332f;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+.intersection-tooltip-content > strong {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 14px;
+
+  color: #17342a;
+}
+
+.tooltip-section {
+  margin-top: 8px;
+
+  padding-top: 8px;
+
+  border-top: 1px solid #edf1ef;
+}
+
+.tooltip-section strong {
+  color: #52635d;
+}
+
+.map-wrapper .leaflet-container {
+  overflow: visible !important;
+  border-radius: 16px;
 }
