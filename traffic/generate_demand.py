@@ -2,7 +2,7 @@ import json
 import random
 
 # Load simulation configuration
-with open("simulation_config.json", "r") as file:
+with open("traffic/simulation_config.json", "r") as file:
     config = json.load(file)
 
 # Traffic demand settings
