@@ -1,275 +1,172 @@
-// ==================================================
-// EcoTwin - Mock Live Simulation Hook
-// ==================================================
+import { useEffect, useState } from "react";
+
+import { intersections as initialIntersections } from "../data/gridData";
 
 import {
-  useEffect,
-  useState,
-} from "react";
+  connectSimulationSocket,
+  disconnectSimulationSocket,
+} from "../services/simulationService";
 
-import {
-  intersections as initialIntersections,
-} from "../data/gridData";
 
-// --------------------------------------------------
-// Generate initial mock values
-// --------------------------------------------------
+function createIntersectionData(trafficLights) {
 
-function createMockIntersections() {
+  const trafficLightMap = new Map();
+
+  trafficLights.forEach((trafficLight) => {
+    trafficLightMap.set(
+      trafficLight.id,
+      trafficLight
+    );
+  });
+
   return initialIntersections.map((intersection) => {
 
-    const queueLength =
-      Math.floor(Math.random() * 31) + 5;
+    const index = Number(
+      intersection.id.replace("tls_", "")
+    );
 
-    const waitingTime =
-      Math.floor(Math.random() * 41) + 5;
+    const sumoId = `J${index}`;
 
-    const averageSpeed =
-      Number(
-        (5 + Math.random() * 8).toFixed(2)
-      );
+    const trafficLight =
+      trafficLightMap.get(sumoId);
 
-    const co2Emission =
-      Math.floor(
-        queueLength * 2 +
-        waitingTime +
-        Math.random() * 30
-      );
+    if (!trafficLight) {
+      return intersection;
+    }
 
     return {
       ...intersection,
 
-      queue_length:
-        queueLength,
-
-      waiting_time:
-        waitingTime,
-
-      average_speed:
-        averageSpeed,
-
-      co2_emission:
-        co2Emission,
-
       current_phase:
-        Math.random() > 0.5
-          ? 0
-          : 1,
+        trafficLight.current_phase,
 
       phase_elapsed_time:
-        Math.floor(
-          Math.random() * 20
-        ),
+        trafficLight.phase_duration,
+
+      queue_length:
+        trafficLight.queue_length ?? 0,
+
+      waiting_time:
+        trafficLight.waiting_time ?? 0,
+
+      average_speed:
+        trafficLight.average_speed ?? 0,
+
+      co2_emission:
+        trafficLight.co2_emission ?? 0,
     };
   });
 }
 
 
-// --------------------------------------------------
-// Update mock simulation
-// --------------------------------------------------
-
-function updateSimulation(
-  previousIntersections
-) {
-  return previousIntersections.map(
-    (intersection) => {
-
-      // --------------------------------------------
-      // Queue
-      // --------------------------------------------
-
-      const queueChange =
-        Math.floor(
-          Math.random() * 11
-        ) - 5;
-
-      const queueLength = Math.max(
-        0,
-        Math.min(
-          50,
-          intersection.queue_length +
-            queueChange
-        )
-      );
-
-
-      // --------------------------------------------
-      // Waiting time
-      // --------------------------------------------
-
-      const waitingChange =
-        Math.floor(
-          Math.random() * 9
-        ) - 4;
-
-      const waitingTime = Math.max(
-        0,
-        intersection.waiting_time +
-          waitingChange
-      );
-
-
-      // --------------------------------------------
-      // Average speed
-      // --------------------------------------------
-
-      const speedChange =
-        Math.random() * 2 - 1;
-
-      const averageSpeed = Math.max(
-        2,
-        Math.min(
-          13.9,
-          intersection.average_speed +
-            speedChange
-        )
-      );
-
-
-      // --------------------------------------------
-      // CO₂
-      // --------------------------------------------
-
-      const co2Emission = Math.max(
-        0,
-        Math.round(
-          queueLength * 2 +
-          waitingTime +
-          Math.random() * 25
-        )
-      );
-
-
-      // --------------------------------------------
-      // Traffic light phase
-      // --------------------------------------------
-
-      let currentPhase =
-        intersection.current_phase;
-
-      let phaseElapsedTime =
-        intersection.phase_elapsed_time + 1;
-
-
-      /*
-        Switch traffic light phase after
-        approximately 10–20 seconds.
-      */
-
-      if (
-        phaseElapsedTime >= 10 &&
-        Math.random() < 0.25
-      ) {
-        currentPhase =
-          currentPhase === 0
-            ? 1
-            : 0;
-
-        phaseElapsedTime = 0;
-      }
-
-
-      return {
-        ...intersection,
-
-        queue_length:
-          queueLength,
-
-        waiting_time:
-          waitingTime,
-
-        average_speed:
-          Number(
-            averageSpeed.toFixed(2)
-          ),
-
-        co2_emission:
-          co2Emission,
-
-        current_phase:
-          currentPhase,
-
-        phase_elapsed_time:
-          phaseElapsedTime,
-      };
-    }
-  );
-}
-
-
-// --------------------------------------------------
-// Simulation Hook
-// --------------------------------------------------
-
 function useSimulation() {
 
-  const [
-    intersections,
-    setIntersections,
-  ] = useState(
-    createMockIntersections()
-  );
+  const [intersections, setIntersections] =
+    useState(initialIntersections);
 
+  const [vehicles, setVehicles] =
+    useState([]);
 
-  const [
-    connectionStatus,
-    setConnectionStatus,
-  ] = useState("offline");
+  const [simulationTime, setSimulationTime] =
+    useState(0);
 
+  const [connectionStatus, setConnectionStatus] =
+    useState("offline");
 
   const [
     simulationDataAvailable,
-    setSimulationDataAvailable,
+    setSimulationDataAvailable
   ] = useState(false);
 
-
-  // ------------------------------------------------
-  // Start mock simulation
-  // ------------------------------------------------
 
   useEffect(() => {
 
     console.log(
-      "EcoTwin mock simulation started."
+      "Connecting to EcoTwin live simulation..."
     );
 
-    setConnectionStatus(
-      "connected"
-    );
-
-    setSimulationDataAvailable(
-      true
-    );
+    setConnectionStatus("connecting");
 
 
-    // ----------------------------------------------
-    // Update every second
-    // ----------------------------------------------
+    const handleMessage = (data) => {
 
-    const interval =
-      setInterval(() => {
+      console.log(
+        "Live simulation update:",
+        data
+      );
 
-        setIntersections(
-          (previousData) =>
-            updateSimulation(
-              previousData
-            )
+
+      const trafficLights =
+        data.traffic_lights || [];
+
+
+      const liveVehicles =
+        data.vehicles || [];
+
+
+      const updatedIntersections =
+        createIntersectionData(
+          trafficLights
         );
 
-      }, 1000);
+
+      setIntersections(
+        updatedIntersections
+      );
 
 
-    // ----------------------------------------------
-    // Cleanup
-    // ----------------------------------------------
+      // Replace the complete vehicle snapshot.
+      // Vehicles that leave SUMO are automatically removed.
+      setVehicles(liveVehicles);
+
+
+      setSimulationTime(
+        data.simulation_time || 0
+      );
+
+
+      setSimulationDataAvailable(true);
+
+      setConnectionStatus("connected");
+    };
+
+
+    const handleError = (error) => {
+
+      console.error(
+        "EcoTwin simulation connection error:",
+        error
+      );
+
+      setConnectionStatus("error");
+    };
+
+
+    const handleClose = () => {
+
+      console.log(
+        "EcoTwin simulation connection closed."
+      );
+
+      setConnectionStatus("offline");
+    };
+
+
+    const socket =
+      connectSimulationSocket(
+        handleMessage,
+        handleError,
+        handleClose
+      );
+
 
     return () => {
 
-      clearInterval(
-        interval
+      console.log(
+        "Cleaning up EcoTwin WebSocket..."
       );
 
+      disconnectSimulationSocket(socket);
     };
 
   }, []);
@@ -277,9 +174,9 @@ function useSimulation() {
 
   return {
     intersections,
-
+    vehicles,
+    simulationTime,
     connectionStatus,
-
     simulationDataAvailable,
   };
 }

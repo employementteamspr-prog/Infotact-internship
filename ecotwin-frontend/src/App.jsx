@@ -4,10 +4,12 @@ import useSimulation from "./hooks/useSimulation";
 
 function App() {
   const {
-    intersections,
-    connectionStatus,
-    simulationDataAvailable,
-  } = useSimulation();
+  intersections,
+  vehicles,
+  simulationTime,
+  connectionStatus,
+  simulationDataAvailable,
+} = useSimulation();
 
   const isConnected =
     connectionStatus === "connected";
@@ -238,8 +240,9 @@ function App() {
           <div className="map-wrapper">
 
             <CityMap
-              intersections={intersections}
-            />
+  intersections={intersections}
+  vehicles={vehicles}
+/>
 
           </div>
 

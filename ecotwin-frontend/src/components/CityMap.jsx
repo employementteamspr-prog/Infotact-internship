@@ -2,6 +2,7 @@ import {
   MapContainer,
   Polyline,
   Circle,
+  Pane,
   useMap,
 } from "react-leaflet";
 
@@ -14,6 +15,7 @@ import {
 } from "../data/gridData";
 
 import IntersectionMarker from "./IntersectionMarker";
+import VehicleMarker from "./VehicleMarker";
 
 function FitCityBounds({
   cityWidth,
@@ -63,6 +65,7 @@ function getEnvironmentalStyle(
 
 function CityMap({
   intersections: simulationIntersections = [],
+  vehicles = [],
 }) {
   const intersections =
     simulationIntersections;
@@ -215,14 +218,35 @@ function CityMap({
         }
       )}
 
-      {intersections.map(
-        (intersection) => (
-          <IntersectionMarker
-            key={intersection.id}
-            intersection={intersection}
-          />
-        )
-      )}
+      {/* Traffic signal layer */}
+<Pane
+  name="intersections"
+  style={{
+    zIndex: 650,
+  }}
+>
+  {intersections.map((intersection) => (
+    <IntersectionMarker
+      key={intersection.id}
+      intersection={intersection}
+    />
+  ))}
+</Pane>
+
+{/* Vehicle layer */}
+<Pane
+  name="vehicles"
+  style={{
+    zIndex: 600,
+  }}
+>
+  {vehicles.map((vehicle) => (
+    <VehicleMarker
+      key={vehicle.id}
+      vehicle={vehicle}
+    />
+  ))}
+</Pane>
 
     </MapContainer>
   );
