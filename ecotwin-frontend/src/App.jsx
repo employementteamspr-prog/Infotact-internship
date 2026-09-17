@@ -2,14 +2,30 @@ import CityMap from "./components/CityMap";
 import MapLegend from "./components/MapLegend";
 import useSimulation from "./hooks/useSimulation";
 
+function formatSimulationTime(seconds) {
+  const totalSeconds = Math.floor(Number(seconds) || 0);
+
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const remainingSeconds = totalSeconds % 60;
+
+  return [
+    hours,
+    minutes,
+    remainingSeconds,
+  ]
+    .map((value) => String(value).padStart(2, "0"))
+    .join(":");
+}
+
 function App() {
   const {
-  intersections,
-  vehicles,
-  simulationTime,
-  connectionStatus,
-  simulationDataAvailable,
-} = useSimulation();
+    intersections,
+    vehicles,
+    simulationTime,
+    connectionStatus,
+    simulationDataAvailable,
+  } = useSimulation();
 
   const isConnected =
     connectionStatus === "connected";
@@ -39,9 +55,7 @@ function App() {
 
           <span
             className={`status-dot ${
-              isConnected
-                ? "connected"
-                : ""
+              isConnected ? "connected" : ""
             }`}
           ></span>
 
@@ -55,6 +69,7 @@ function App() {
 
 
       <main className="dashboard">
+
         <section className="hero">
 
           <div>
@@ -95,6 +110,8 @@ function App() {
 
 
         <section className="stats-grid">
+
+          {/* City Grid */}
           <div className="stat-card">
 
             <div className="stat-icon grid-icon">
@@ -120,9 +137,62 @@ function App() {
           </div>
 
 
+          {/* Live Vehicles */}
           <div className="stat-card">
 
             <div className="stat-icon signal-icon">
+              ●
+            </div>
+
+            <div>
+
+              <span className="stat-label">
+                ACTIVE VEHICLES
+              </span>
+
+              <strong>
+                {vehicles.length}
+              </strong>
+
+              <small>
+                Live simulation vehicles
+              </small>
+
+            </div>
+
+          </div>
+
+
+          {/* Simulation Time */}
+          <div className="stat-card">
+
+            <div className="stat-icon distance-icon">
+              ◷
+            </div>
+
+            <div>
+
+              <span className="stat-label">
+                SIMULATION TIME
+              </span>
+
+              <strong>
+                {formatSimulationTime(simulationTime)}
+              </strong>
+
+              <small>
+                HH : MM : SS
+              </small>
+
+            </div>
+
+          </div>
+
+
+          {/* Intersections */}
+          <div className="stat-card">
+
+            <div className="stat-icon status-icon">
               ●
             </div>
 
@@ -137,61 +207,7 @@ function App() {
               </strong>
 
               <small>
-                Traffic signal points
-              </small>
-
-            </div>
-
-          </div>
-
-
-          <div className="stat-card">
-
-            <div className="stat-icon distance-icon">
-              ↔
-            </div>
-
-            <div>
-
-              <span className="stat-label">
-                CELL SIZE
-              </span>
-
-              <strong>
-                100 m
-              </strong>
-
-              <small>
-                Simulation distance
-              </small>
-
-            </div>
-
-          </div>
-
-
-          <div className="stat-card">
-
-            <div className="stat-icon status-icon">
-              ✓
-            </div>
-
-            <div>
-
-              <span className="stat-label">
-                STATUS
-              </span>
-
-              <strong>
-                {isConnected
-                  ? "Live"
-                  : "Ready"}
-              </strong>
-
-              <small>
-                {simulationDataAvailable
-                  ? "Live data received"
-                  : "Waiting for simulation"}
+                Live traffic signal points
               </small>
 
             </div>
@@ -222,9 +238,7 @@ function App() {
 
               <span
                 className={`status-dot ${
-                  isConnected
-                    ? "connected"
-                    : ""
+                  isConnected ? "connected" : ""
                 }`}
               ></span>
 
@@ -240,9 +254,9 @@ function App() {
           <div className="map-wrapper">
 
             <CityMap
-  intersections={intersections}
-  vehicles={vehicles}
-/>
+              intersections={intersections}
+              vehicles={vehicles}
+            />
 
           </div>
 
