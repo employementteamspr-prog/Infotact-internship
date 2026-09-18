@@ -1,22 +1,34 @@
+import os
 import traci
 
 
-SUMO_CONFIG = "SUMO/simulation.sumocfg"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SUMO_CONFIG = os.path.join(BASE_DIR, "sumo", "simulation.sumocfg")
 
 
 def start_sumo():
     """Start the SUMO simulation."""
-    traci.start(["sumo", "-c", SUMO_CONFIG])
+    if traci.isLoaded():
+        return
+
+    traci.start([
+        "sumo",
+        "-c",
+        SUMO_CONFIG
+    ])
 
 
 def collect_vehicle_data():
-    """Collect vehicle and emission data from the current SUMO step."""
+    """Collect raw vehicle and emission data from the current SUMO step."""
     vehicles = []
 
     for vehicle_id in traci.vehicle.getIDList():
         vehicles.append({
             "vehicle_id": vehicle_id,
-            "position": traci.vehicle.getPosition(vehicle_id),
+            "position": {
+                "x": traci.vehicle.getPosition(vehicle_id)[0],
+                "y": traci.vehicle.getPosition(vehicle_id)[1]
+            },
             "road_id": traci.vehicle.getRoadID(vehicle_id),
             "lane_id": traci.vehicle.getLaneID(vehicle_id),
             "speed": traci.vehicle.getSpeed(vehicle_id),
@@ -28,11 +40,12 @@ def collect_vehicle_data():
 
 
 def simulation_step():
-    """Advance SUMO by one simulation step and collect data."""
+    """Advance SUMO by one step and return vehicle data."""
     traci.simulationStep()
     return collect_vehicle_data()
 
 
 def close_sumo():
     """Close the SUMO connection."""
-    traci.close()
+    if traci.isLoaded():
+        traci.close()
