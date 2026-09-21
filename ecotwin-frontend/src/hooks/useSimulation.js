@@ -81,83 +81,105 @@ function useSimulation() {
 
   useEffect(() => {
 
-    console.log(
-      "Connecting to EcoTwin live simulation..."
-    );
+    let socket = null;
+    let reconnectTimer = null;
+    let isCleaningUp = false;
 
-    setConnectionStatus("connecting");
+    const connect = () => {
 
-
-    const handleMessage = (data) => {
+      if (isCleaningUp) {
+        return;
+      }
 
       console.log(
-        "Live simulation update:",
-        data
+        "Connecting to EcoTwin live simulation..."
       );
 
+      setConnectionStatus("connecting");
 
-      const trafficLights =
-        data.traffic_lights || [];
+      socket =
+        connectSimulationSocket(
+
+          (data) => {
+
+            console.log(
+              "Live simulation update:",
+              data
+            );
+
+            const trafficLights =
+              Array.isArray(data.traffic_lights)
+                ? data.traffic_lights
+                : [];
+
+            const liveVehicles =
+              Array.isArray(data.vehicles)
+                ? data.vehicles
+                : [];
+
+            const updatedIntersections =
+              createIntersectionData(
+                trafficLights
+              );
+
+            setIntersections(
+              updatedIntersections
+            );
+
+            setVehicles(
+              liveVehicles
+            );
+
+            setSimulationTime(
+              Number(data.simulation_time) || 0
+            );
+
+            setSimulationDataAvailable(true);
+
+            setConnectionStatus("connected");
+          },
 
 
-      const liveVehicles =
-        data.vehicles || [];
+          (error) => {
+
+            console.error(
+              "EcoTwin simulation connection error:",
+              error
+            );
+
+            setConnectionStatus("error");
+          },
 
 
-      const updatedIntersections =
-        createIntersectionData(
-          trafficLights
+          () => {
+
+            console.log(
+              "EcoTwin simulation connection closed."
+            );
+
+            if (isCleaningUp) {
+              return;
+            }
+
+            setConnectionStatus("offline");
+
+            console.log(
+              "Retrying EcoTwin WebSocket connection in 3 seconds..."
+            );
+
+            reconnectTimer =
+              setTimeout(() => {
+
+                connect();
+
+              }, 3000);
+          }
+
         );
-
-
-      setIntersections(
-        updatedIntersections
-      );
-
-
-      // Replace the complete vehicle snapshot.
-      // Vehicles that leave SUMO are automatically removed.
-      setVehicles(liveVehicles);
-
-
-      setSimulationTime(
-        data.simulation_time || 0
-      );
-
-
-      setSimulationDataAvailable(true);
-
-      setConnectionStatus("connected");
     };
 
 
-    const handleError = (error) => {
-
-      console.error(
-        "EcoTwin simulation connection error:",
-        error
-      );
-
-      setConnectionStatus("error");
-    };
-
-
-    const handleClose = () => {
-
-      console.log(
-        "EcoTwin simulation connection closed."
-      );
-
-      setConnectionStatus("offline");
-    };
-
-
-    const socket =
-      connectSimulationSocket(
-        handleMessage,
-        handleError,
-        handleClose
-      );
+    connect();
 
 
     return () => {
@@ -165,6 +187,12 @@ function useSimulation() {
       console.log(
         "Cleaning up EcoTwin WebSocket..."
       );
+
+      isCleaningUp = true;
+
+      if (reconnectTimer) {
+        clearTimeout(reconnectTimer);
+      }
 
       disconnectSimulationSocket(socket);
     };
