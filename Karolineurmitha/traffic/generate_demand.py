@@ -33,12 +33,9 @@ def generate_demand(config):
         '<?xml version="1.0" encoding="UTF-8"?>',
         "<routes>",
         "",
-        '<vType id="car" accel="2.6" decel="4.5" '
-        'sigma="0.5" length="5" minGap="2.5" maxSpeed="13.9"/>',
-        '<vType id="bus" accel="1.2" decel="4.0" '
-        'sigma="0.5" length="12" minGap="3" maxSpeed="13.9"/>',
-        '<vType id="truck" accel="1.0" decel="3.5" '
-        'sigma="0.5" length="12" minGap="3" maxSpeed="13.9"/>',
+        '<vType id="car" accel="2.6" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="13.9"/>',
+        '<vType id="bus" accel="1.2" decel="4.0" sigma="0.5" length="12" minGap="3" maxSpeed="13.9"/>',
+        '<vType id="truck" accel="1.0" decel="3.5" sigma="0.5" length="12" minGap="3" maxSpeed="13.9"/>',
         ""
     ]
 

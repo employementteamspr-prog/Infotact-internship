@@ -10,7 +10,11 @@
         "random_seed": 42
     },
     "vehicles": {
-        "types": ["car", "bus", "truck"],
+        "types": [
+            "car",
+            "bus",
+            "truck"
+        ],
         "max_speed_mps": 13.9
     },
     "roads": {
