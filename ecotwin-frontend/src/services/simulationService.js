@@ -1,27 +1,3 @@
-// ==================================================
-// EcoTwin - Simulation Integration Service
-// ==================================================
-
-/*
-  This service is the bridge between the frontend
-  and the EcoTwin simulation backend.
-
-  SUMO
-    ↓
-  Python / TraCI
-    ↓
-  FastAPI + WebSocket
-    ↓
-  simulationService.js
-    ↓
-  React Components
-*/
-
-
-// --------------------------------------------------
-// BACKEND CONFIGURATION
-// --------------------------------------------------
-
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   "http://localhost:8000";
@@ -31,13 +7,8 @@ const WEBSOCKET_URL =
   "ws://localhost:8000/ws/simulation";
 
 
-// --------------------------------------------------
-// GET CURRENT SIMULATION STATE
-// --------------------------------------------------
-
 export async function getSimulationState() {
   try {
-
     const response = await fetch(
       `${API_BASE_URL}/simulation/state`
     );
@@ -57,9 +28,7 @@ export async function getSimulationState() {
     }
 
     return data;
-
   } catch (error) {
-
     console.error(
       "Unable to fetch simulation state:",
       error
@@ -70,12 +39,7 @@ export async function getSimulationState() {
 }
 
 
-// --------------------------------------------------
-// VALIDATE WEBSOCKET MESSAGE
-// --------------------------------------------------
-
 function isValidSimulationData(data) {
-
   if (!data || typeof data !== "object") {
     return false;
   }
@@ -105,39 +69,26 @@ function isValidSimulationData(data) {
 }
 
 
-// --------------------------------------------------
-// CREATE WEBSOCKET CONNECTION
-// --------------------------------------------------
-
 export function connectSimulationSocket(
   onMessage,
   onError,
   onClose
 ) {
-
   const socket =
     new WebSocket(WEBSOCKET_URL);
 
-
   socket.onopen = () => {
-
     console.log(
       "EcoTwin simulation WebSocket connected."
     );
-
   };
 
-
   socket.onmessage = (event) => {
-
     try {
-
       const data =
         JSON.parse(event.data);
 
-
       if (!isValidSimulationData(data)) {
-
         console.warn(
           "Ignoring invalid simulation data:",
           data
@@ -146,23 +97,16 @@ export function connectSimulationSocket(
         return;
       }
 
-
       onMessage(data);
-
     } catch (error) {
-
       console.error(
         "Invalid simulation WebSocket data:",
         error
       );
-
     }
-
   };
 
-
   socket.onerror = (error) => {
-
     console.error(
       "Simulation WebSocket error:",
       error
@@ -171,12 +115,9 @@ export function connectSimulationSocket(
     if (onError) {
       onError(error);
     }
-
   };
 
-
   socket.onclose = () => {
-
     console.log(
       "EcoTwin simulation WebSocket disconnected."
     );
@@ -184,22 +125,15 @@ export function connectSimulationSocket(
     if (onClose) {
       onClose();
     }
-
   };
-
 
   return socket;
 }
 
 
-// --------------------------------------------------
-// CLOSE WEBSOCKET CONNECTION
-// --------------------------------------------------
-
 export function disconnectSimulationSocket(
   socket
 ) {
-
   if (
     socket &&
     (
@@ -207,17 +141,10 @@ export function disconnectSimulationSocket(
       socket.readyState === WebSocket.CONNECTING
     )
   ) {
-
     socket.close();
-
   }
-
 }
 
-
-// --------------------------------------------------
-// EXPORT CONFIGURATION
-// --------------------------------------------------
 
 export {
   API_BASE_URL,

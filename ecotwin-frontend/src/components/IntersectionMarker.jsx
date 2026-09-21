@@ -1,16 +1,43 @@
-import { CircleMarker, Tooltip } from "react-leaflet";
+import {
+  CircleMarker,
+  Tooltip,
+} from "react-leaflet";
 
-function IntersectionMarker({ intersection }) {
-  const isNorthSouth =
-    intersection.current_phase === 0;
+function IntersectionMarker({
+  intersection,
+}) {
+  const phaseType =
+    intersection.phase_type || "green";
 
-  const phaseName = isNorthSouth
-    ? "green_ns"
-    : "green_ew";
+  const phaseDirection =
+    intersection.phase_direction || "unknown";
 
-  const phaseLabel = isNorthSouth
-    ? "North-South Green"
-    : "East-West Green";
+  let markerColor = "#2563eb";
+  let markerFill = "#3b82f6";
+
+  if (phaseType === "green") {
+    markerColor = "#16a34a";
+    markerFill = "#22c55e";
+  }
+
+  if (phaseType === "yellow") {
+    markerColor = "#d97706";
+    markerFill = "#f59e0b";
+  }
+
+  let phaseLabel = "Unknown";
+
+  if (phaseType === "green") {
+    if (phaseDirection === "north_south") {
+      phaseLabel = "North-South Green";
+    } else if (phaseDirection === "east_west") {
+      phaseLabel = "East-West Green";
+    } else {
+      phaseLabel = "Green";
+    }
+  } else if (phaseType === "yellow") {
+    phaseLabel = "Yellow Transition";
+  }
 
   return (
     <CircleMarker
@@ -20,99 +47,88 @@ function IntersectionMarker({ intersection }) {
       ]}
       radius={10}
       pathOptions={{
-        color: isNorthSouth
-          ? "#16a34a"
-          : "#2563eb",
-
-        fillColor: isNorthSouth
-          ? "#22c55e"
-          : "#3b82f6",
-
+        color: markerColor,
+        fillColor: markerFill,
         fillOpacity: 1,
         weight: 2,
       }}
     >
-
       <Tooltip
         direction="top"
-        offset={[0, -8]}
+        offset={[0, -10]}
         opacity={1}
         className="intersection-tooltip"
       >
-
         <div className="intersection-tooltip-content">
 
-          <strong>
+          <div className="tooltip-title">
             {intersection.id}
-          </strong>
-
+          </div>
 
           <div className="tooltip-section">
-
-            <strong>
+            <div className="tooltip-heading">
               Coordinates
-            </strong>
+            </div>
 
-            <br />
+            <div>
+              X: {intersection.x} m
+            </div>
 
-            X: {intersection.x} m
-
-            <br />
-
-            Y: {intersection.y} m
-
+            <div>
+              Y: {intersection.y} m
+            </div>
           </div>
 
-
           <div className="tooltip-section">
-
-            <strong>
+            <div className="tooltip-heading">
               Traffic Phase
-            </strong>
+            </div>
 
-            <br />
+            <div>
+              Phase: {intersection.current_phase}
+            </div>
 
-            {phaseName}
+            <div>
+              Type: {phaseType}
+            </div>
 
-            <br />
+            <div>
+              {phaseLabel}
+            </div>
 
-            {phaseLabel}
+            <div>
+              Duration: {intersection.phase_duration} s
+            </div>
 
+            <div>
+              Elapsed: {intersection.phase_elapsed_time} s
+            </div>
           </div>
 
-
           <div className="tooltip-section">
-
-            <strong>
+            <div className="tooltip-heading">
               Simulation Data
-            </strong>
+            </div>
 
-            <br />
+            <div>
+              Queue: {intersection.queue_length}
+            </div>
 
-            Queue: {intersection.queue_length}
+            <div>
+              Waiting: {intersection.waiting_time} s
+            </div>
 
-            <br />
+            <div>
+              Speed: {intersection.average_speed} m/s
+            </div>
 
-            Waiting: {intersection.waiting_time} s
-
-            <br />
-
-            Speed: {intersection.average_speed} m/s
-
-            <br />
-
-            CO₂: {intersection.co2_emission}
-
-            <br />
-
-            Phase Time: {intersection.phase_elapsed_time} s
-
+            <div>
+              CO₂: {intersection.co2_emission}
+            </div>
           </div>
 
         </div>
-
       </Tooltip>
-
     </CircleMarker>
   );
 }

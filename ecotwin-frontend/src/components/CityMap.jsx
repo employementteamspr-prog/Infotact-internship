@@ -17,6 +17,7 @@ import {
 import IntersectionMarker from "./IntersectionMarker";
 import VehicleMarker from "./VehicleMarker";
 
+
 function FitCityBounds({
   cityWidth,
   cityHeight,
@@ -37,6 +38,7 @@ function FitCityBounds({
 
   return null;
 }
+
 
 function getEnvironmentalStyle(
   co2Emission
@@ -63,13 +65,11 @@ function getEnvironmentalStyle(
   };
 }
 
+
 function CityMap({
   intersections: simulationIntersections = [],
   vehicles = [],
 }) {
-  const intersections =
-    simulationIntersections;
-
   const {
     rows,
     columns,
@@ -86,6 +86,8 @@ function CityMap({
 
   const mapPadding = 100;
   const roads = [];
+
+
   for (
     let row = 0;
     row < rows;
@@ -111,6 +113,7 @@ function CityMap({
       />
     );
   }
+
 
   for (
     let column = 0;
@@ -138,20 +141,17 @@ function CityMap({
     );
   }
 
+
   return (
     <MapContainer
       crs={CRS.Simple}
-
       center={[
         cityHeight / 2,
         cityWidth / 2,
       ]}
-
       zoom={1}
-
       minZoom={0}
       maxZoom={3}
-
       maxBounds={[
         [-mapPadding, -mapPadding],
         [
@@ -159,9 +159,7 @@ function CityMap({
           cityWidth + mapPadding,
         ],
       ]}
-
       maxBoundsViscosity={1.0}
-
       style={{
         width: "100%",
         height: "620px",
@@ -174,8 +172,11 @@ function CityMap({
         cityHeight={cityHeight}
       />
 
+
       {roads}
-      {intersections.map(
+
+
+      {simulationIntersections.map(
         (intersection) => {
 
           const environmentalStyle =
@@ -192,25 +193,19 @@ function CityMap({
           return (
             <Circle
               key={`co2-${intersection.id}`}
-
               center={[
                 intersection.y,
                 intersection.x,
               ]}
-
               radius={
                 environmentalStyle.radius
               }
-
               pathOptions={{
                 color: "#dc6b32",
                 fillColor: "#ef8a45",
-
                 fillOpacity:
                   environmentalStyle.opacity,
-
                 weight: 1,
-
                 opacity: 0.35,
               }}
             />
@@ -218,38 +213,43 @@ function CityMap({
         }
       )}
 
-      {/* Traffic signal layer */}
-<Pane
-  name="intersections"
-  style={{
-    zIndex: 650,
-  }}
->
-  {intersections.map((intersection) => (
-    <IntersectionMarker
-      key={intersection.id}
-      intersection={intersection}
-    />
-  ))}
-</Pane>
 
-{/* Vehicle layer */}
-<Pane
-  name="vehicles"
-  style={{
-    zIndex: 600,
-  }}
->
-  {vehicles.map((vehicle) => (
-    <VehicleMarker
-      key={vehicle.id}
-      vehicle={vehicle}
-    />
-  ))}
-</Pane>
+      <Pane
+        name="intersections"
+        style={{
+          zIndex: 650,
+        }}
+      >
+        {simulationIntersections.map(
+          (intersection) => (
+            <IntersectionMarker
+              key={intersection.id}
+              intersection={intersection}
+            />
+          )
+        )}
+      </Pane>
+
+
+      <Pane
+        name="vehicles"
+        style={{
+          zIndex: 600,
+        }}
+      >
+        {vehicles.map(
+          (vehicle) => (
+            <VehicleMarker
+              key={vehicle.id}
+              vehicle={vehicle}
+            />
+          )
+        )}
+      </Pane>
 
     </MapContainer>
   );
 }
+
 
 export default CityMap;

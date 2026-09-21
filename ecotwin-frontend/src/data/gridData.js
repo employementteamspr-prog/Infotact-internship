@@ -1,40 +1,19 @@
-// ==================================================
 // EcoTwin - City Grid & Simulation Configuration
-// ==================================================
-
-/*
-  These values follow the EcoTwin project configuration.
-
-  The frontend uses the same structure that the
-  future SUMO / FastAPI / WebSocket integration
-  will provide.
-*/
-
-// --------------------------------------------------
-// CITY CONFIGURATION
-// --------------------------------------------------
 
 const GRID_ROWS = 5;
 const GRID_COLUMNS = 5;
 const CELL_SIZE_METERS = 100;
 
+
 export const gridConfig = {
   rows: GRID_ROWS,
   columns: GRID_COLUMNS,
-
   cellSizeMeters: CELL_SIZE_METERS,
-
-  intersectionCount:
-    GRID_ROWS * GRID_COLUMNS,
-
+  intersectionCount: GRID_ROWS * GRID_COLUMNS,
   coordinateSystem: "x_y",
   distanceUnit: "meters",
 };
 
-
-// --------------------------------------------------
-// SIMULATION CONFIGURATION
-// --------------------------------------------------
 
 export const simulationConfig = {
   timestepSeconds: 1,
@@ -42,10 +21,6 @@ export const simulationConfig = {
   seed: 42,
 };
 
-
-// --------------------------------------------------
-// VEHICLE CONFIGURATION
-// --------------------------------------------------
 
 export const vehicleConfig = {
   types: [
@@ -60,10 +35,6 @@ export const vehicleConfig = {
 };
 
 
-// --------------------------------------------------
-// ROAD CONFIGURATION
-// --------------------------------------------------
-
 export const roadConfig = {
   roadIdFormat: "road_{id:04d}",
 
@@ -73,30 +44,32 @@ export const roadConfig = {
 };
 
 
-// --------------------------------------------------
-// TRAFFIC LIGHT CONFIGURATION
-// --------------------------------------------------
-
 export const trafficLightConfig = {
-
   idFormat: "tls_{id:04d}",
 
   phases: {
-    green_ns: 0,
-    green_ew: 1,
+    phase0: {
+      type: "green",
+    },
+
+    phase1: {
+      type: "yellow",
+    },
+
+    phase2: {
+      type: "green",
+    },
+
+    phase3: {
+      type: "yellow",
+    },
   },
 
   minGreenSeconds: 10,
-
   maxGreenSeconds: 60,
-
   yellowSeconds: 3,
 };
 
-
-// --------------------------------------------------
-// OBSERVATION CONFIGURATION
-// --------------------------------------------------
 
 export const observationVariables = [
   "queue_length",
@@ -108,10 +81,6 @@ export const observationVariables = [
 ];
 
 
-// --------------------------------------------------
-// ACTION CONFIGURATION
-// --------------------------------------------------
-
 export const actionConfig = {
   type: "discrete",
 
@@ -122,11 +91,8 @@ export const actionConfig = {
 };
 
 
-// --------------------------------------------------
-// INTERSECTION DATA
-// --------------------------------------------------
-
 export const intersections = [];
+
 
 for (
   let row = 0;
@@ -145,10 +111,6 @@ for (
 
     intersections.push({
 
-      // --------------------------------------------
-      // Traffic-light identity
-      // --------------------------------------------
-
       id:
         `tls_${String(index).padStart(4, "0")}`,
 
@@ -156,35 +118,21 @@ for (
 
       column,
 
-
-      // --------------------------------------------
-      // Simulation coordinates
-      // --------------------------------------------
-
       x:
         column * CELL_SIZE_METERS,
 
       y:
         row * CELL_SIZE_METERS,
 
+      current_phase: 0,
 
-      // --------------------------------------------
-      // Traffic-light state
-      // --------------------------------------------
+      phase_type: "unknown",
 
-      current_phase:
-        index % 2,
+      phase_direction: "unknown",
+
+      phase_duration: 0,
 
       phase_elapsed_time: 0,
-
-
-      // --------------------------------------------
-      // Simulation observations
-      //
-      // These are currently initial values.
-      // Later they will be replaced by live
-      // SUMO / FastAPI / WebSocket data.
-      // --------------------------------------------
 
       queue_length: 0,
 
@@ -193,7 +141,6 @@ for (
       average_speed: 0,
 
       co2_emission: 0,
-
     });
   }
 }
