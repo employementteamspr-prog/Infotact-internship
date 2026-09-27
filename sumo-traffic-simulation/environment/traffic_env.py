@@ -18,13 +18,13 @@ class TrafficEnv(gym.Env):
         0 = Queue length
         1 = Total waiting time
         2 = Average speed
-        3 = CO2 emission
+        3 = Localized CO2 emission
         4 = Traffic-light phase
         5 = Phase elapsed time
 
     Reward:
         0.5 = Waiting time
-        0.3 = CO2 emission
+        0.3 = Localized CO2 emission
         0.2 = Queue length
 
     Episode:
@@ -49,10 +49,16 @@ class TrafficEnv(gym.Env):
 
         self.sumo_binary = "sumo"
 
-        # J1 has multiple traffic-light phases.
+        # Controlled traffic light
         self.tls_id = "J1"
 
-        # Simulation duration
+        # J1 coordinates in the 5x5 grid
+        self.tls_position = (100.0, 0.0)
+
+        # Radius for localized CO2 calculation
+        self.co2_radius = 100.0
+
+        # Maximum episode duration
         self.max_simulation_time = 3600
 
         # ---------------------------------
@@ -68,7 +74,7 @@ class TrafficEnv(gym.Env):
         # [queue_length,
         #  waiting_time,
         #  average_speed,
-        #  co2_emission,
+        #  localized_co2,
         #  phase,
         #  phase_elapsed]
         self.observation_space = spaces.Box(
@@ -79,10 +85,6 @@ class TrafficEnv(gym.Env):
         )
 
         self.current_time = 0.0
-
-        # ---------------------------------
-        # Throughput
-        # ---------------------------------
         self.throughput = 0
 
         # ---------------------------------
@@ -94,21 +96,17 @@ class TrafficEnv(gym.Env):
 
     def reset(self, seed=None, options=None):
         """
-        Start a new SUMO episode and return
-        the initial traffic observation.
+        Start a new SUMO episode.
         """
 
         super().reset(seed=seed)
 
-        # Close an existing SUMO connection
         if traci.isLoaded():
             traci.close()
 
-        # Reset episode variables
         self.current_time = 0.0
         self.throughput = 0
 
-        # Start SUMO
         traci.start([
             self.sumo_binary,
             "-c",
@@ -117,8 +115,7 @@ class TrafficEnv(gym.Env):
             "42"
         ])
 
-        # Advance one second so that the initial
-        # observation represents an actual state.
+        # Advance one simulation step
         traci.simulationStep()
 
         self.current_time = traci.simulation.getTime()
@@ -126,18 +123,18 @@ class TrafficEnv(gym.Env):
         observation = self._get_observation()
 
         info = {
-            "throughput": self.throughput
+            "throughput": self.throughput,
+            "localized_co2": float(observation[3])
         }
 
         return observation, info
 
     def step(self, action):
         """
-        Apply an action, advance SUMO by one second,
+        Apply an action, advance SUMO,
         collect observations and calculate reward.
         """
 
-        # Make sure action is an integer
         action = int(action)
 
         # ---------------------------------
@@ -169,7 +166,7 @@ class TrafficEnv(gym.Env):
             )
 
         # ---------------------------------
-        # Advance SUMO by one second
+        # Advance SUMO
         # ---------------------------------
         traci.simulationStep()
 
@@ -178,19 +175,17 @@ class TrafficEnv(gym.Env):
         # ---------------------------------
         # Update throughput
         # ---------------------------------
-        arrived_vehicles = traci.simulation.getArrivedNumber()
-
-        self.throughput += arrived_vehicles
+        self.throughput += traci.simulation.getArrivedNumber()
 
         # ---------------------------------
-        # Get new observation
+        # Get observation
         # ---------------------------------
         observation = self._get_observation()
 
         # ---------------------------------
         # Calculate reward
         # ---------------------------------
-        reward = self._calculate_reward(
+        reward, reward_components = self._calculate_reward(
             observation
         )
 
@@ -206,22 +201,22 @@ class TrafficEnv(gym.Env):
         )
 
         terminated = simulation_finished
-
-        # Reaching one hour is treated as
-        # the environment time limit.
         truncated = time_limit_reached
 
         # ---------------------------------
-        # Information returned to RL agent
+        # Information for evaluation
         # ---------------------------------
         info = {
             "waiting_time": float(observation[1]),
-            "co2_emission": float(observation[3]),
+            "localized_co2": float(observation[3]),
             "queue_length": float(observation[0]),
             "average_speed": float(observation[2]),
             "phase": int(observation[4]),
             "phase_elapsed": float(observation[5]),
-            "throughput": self.throughput
+            "throughput": self.throughput,
+            "waiting_penalty": reward_components["waiting_penalty"],
+            "co2_penalty": reward_components["co2_penalty"],
+            "queue_penalty": reward_components["queue_penalty"]
         }
 
         return (
@@ -241,12 +236,8 @@ class TrafficEnv(gym.Env):
 
         total_waiting_time = 0.0
         total_speed = 0.0
-        total_co2 = 0.0
         queue_length = 0
 
-        # ---------------------------------
-        # Vehicle-level information
-        # ---------------------------------
         for vehicle_id in vehicle_ids:
 
             speed = traci.vehicle.getSpeed(
@@ -261,26 +252,20 @@ class TrafficEnv(gym.Env):
 
             total_speed += speed
 
-            total_co2 += (
-                traci.vehicle.getCO2Emission(
-                    vehicle_id
-                )
-            )
-
-            # Vehicle is queued if speed
-            # is below 0.1 m/s.
             if speed < 0.1:
                 queue_length += 1
 
-        # ---------------------------------
-        # Average speed
-        # ---------------------------------
         if vehicle_ids:
             average_speed = (
                 total_speed / len(vehicle_ids)
             )
         else:
             average_speed = 0.0
+
+        # ---------------------------------
+        # Localized CO2
+        # ---------------------------------
+        localized_co2 = self._get_localized_co2()
 
         # ---------------------------------
         # Traffic-light information
@@ -306,15 +291,12 @@ class TrafficEnv(gym.Env):
             - (next_switch - phase_duration)
         )
 
-        # ---------------------------------
-        # Create observation
-        # ---------------------------------
         observation = np.array(
             [
                 queue_length,
                 total_waiting_time,
                 average_speed,
-                total_co2,
+                localized_co2,
                 phase,
                 phase_elapsed
             ],
@@ -323,17 +305,50 @@ class TrafficEnv(gym.Env):
 
         return observation
 
+    def _get_localized_co2(self):
+        """
+        Calculate CO2 emissions from vehicles
+        within the specified radius of J1.
+        """
+
+        local_co2 = 0.0
+
+        tls_x, tls_y = self.tls_position
+
+        for vehicle_id in traci.vehicle.getIDList():
+
+            x, y = traci.vehicle.getPosition(
+                vehicle_id
+            )
+
+            distance = np.sqrt(
+                (x - tls_x) ** 2
+                + (y - tls_y) ** 2
+            )
+
+            if distance <= self.co2_radius:
+
+                local_co2 += (
+                    traci.vehicle.getCO2Emission(
+                        vehicle_id
+                    )
+                )
+
+        return local_co2
+
     def _calculate_reward(self, observation):
         """
-        Calculate the weighted traffic-control reward.
+        Calculate the Week 2 reward.
 
-        Lower waiting time, CO2 emission and
-        queue length produce a better reward.
+        The reward penalizes:
+            - waiting time
+            - localized CO2 buildup
+            - queue length
         """
 
         queue_length = float(observation[0])
         waiting_time = float(observation[1])
-        co2_emission = float(observation[3])
+        localized_co2 = float(observation[3])
 
         # ---------------------------------
         # Normalize metrics
@@ -344,7 +359,7 @@ class TrafficEnv(gym.Env):
         )
 
         normalized_co2 = min(
-            co2_emission / 100000.0,
+            localized_co2 / 50000.0,
             1.0
         )
 
@@ -354,15 +369,39 @@ class TrafficEnv(gym.Env):
         )
 
         # ---------------------------------
-        # Weighted negative cost
+        # Individual penalties
         # ---------------------------------
-        reward = -(
-            self.waiting_weight * normalized_waiting
-            + self.co2_weight * normalized_co2
-            + self.queue_weight * normalized_queue
+        waiting_penalty = (
+            self.waiting_weight
+            * normalized_waiting
         )
 
-        return float(reward)
+        co2_penalty = (
+            self.co2_weight
+            * normalized_co2
+        )
+
+        queue_penalty = (
+            self.queue_weight
+            * normalized_queue
+        )
+
+        # ---------------------------------
+        # Final reward
+        # ---------------------------------
+        reward = -(
+            waiting_penalty
+            + co2_penalty
+            + queue_penalty
+        )
+
+        reward_components = {
+            "waiting_penalty": float(waiting_penalty),
+            "co2_penalty": float(co2_penalty),
+            "queue_penalty": float(queue_penalty)
+        }
+
+        return float(reward), reward_components
 
     def close(self):
         """
