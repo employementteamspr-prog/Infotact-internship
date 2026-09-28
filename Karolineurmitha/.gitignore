@@ -1,3 +1,6 @@
 .venv/
 __pycache__/
 *.pyc
+training/checkpoints/
+training/results/
+traffic_env_old.py
