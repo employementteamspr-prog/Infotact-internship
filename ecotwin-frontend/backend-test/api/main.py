@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 # ==================================================
-# EcoTwin - FastAPI + SUMO Backend
+# EcoTwin - FastAPI + SUMO + RL Integration
 # ==================================================
 
 app = FastAPI(
@@ -44,6 +44,26 @@ SUMO_CONFIG = os.path.join(
 )
 
 SIMULATION_DURATION = 3600
+
+
+# ==================================================
+# RL CONFIGURATION
+# ==================================================
+
+RL_ALGORITHM = "PPO"
+
+RL_ENABLED = False
+
+RL_STATUS = "STANDBY"
+
+RL_SOURCE = "environment"
+
+RL_CURRENT_ACTION = None
+
+# Week 2 reward weights
+WAITING_WEIGHT = 0.5
+CO2_WEIGHT = 0.3
+QUEUE_WEIGHT = 0.2
 
 
 # ==================================================
@@ -150,51 +170,30 @@ def get_phase_elapsed_time(
         phase_tracking.get(tls_id)
     )
 
-    # --------------------------------------------------
     # First observation
-    # --------------------------------------------------
-
     if previous_phase_data is None:
 
         phase_tracking[tls_id] = {
-
-            "phase":
-                current_phase,
-
-            "start_time":
-                simulation_time
-
+            "phase": current_phase,
+            "start_time": simulation_time
         }
 
-        return 0
+        return 0.0
 
-
-    # --------------------------------------------------
     # Phase changed
-    # --------------------------------------------------
-
     if (
         previous_phase_data["phase"]
         != current_phase
     ):
 
         phase_tracking[tls_id] = {
-
-            "phase":
-                current_phase,
-
-            "start_time":
-                simulation_time
-
+            "phase": current_phase,
+            "start_time": simulation_time
         }
 
-        return 0
+        return 0.0
 
-
-    # --------------------------------------------------
     # Phase still active
-    # --------------------------------------------------
-
     elapsed_time = (
         simulation_time
         - previous_phase_data["start_time"]
@@ -210,7 +209,10 @@ def get_phase_elapsed_time(
 # DETERMINE PHASE TYPE
 # ==================================================
 
-def get_phase_type(tls_id, phase):
+def get_phase_type(
+    tls_id,
+    phase
+):
 
     try:
 
@@ -220,7 +222,6 @@ def get_phase_type(tls_id, phase):
         )
 
         if not program:
-
             return "unknown"
 
         logic = program[0]
@@ -228,30 +229,15 @@ def get_phase_type(tls_id, phase):
         phases = logic.phases
 
         if phase < 0 or phase >= len(phases):
-
             return "unknown"
 
         phase_state = phases[phase].state
 
-        # --------------------------------------------------
-        # Green phase
-        # --------------------------------------------------
-
         if "G" in phase_state:
-
             return "green"
 
-        # --------------------------------------------------
-        # Yellow phase
-        # --------------------------------------------------
-
         if "y" in phase_state:
-
             return "yellow"
-
-        # --------------------------------------------------
-        # Red / other phase
-        # --------------------------------------------------
 
         return "red"
 
@@ -277,7 +263,6 @@ def get_phase_direction(
         )
 
         if not program:
-
             return "unknown"
 
         logic = program[0]
@@ -285,14 +270,9 @@ def get_phase_direction(
         phases = logic.phases
 
         if phase < 0 or phase >= len(phases):
-
             return "unknown"
 
         phase_state = phases[phase].state
-
-        # --------------------------------------------------
-        # Find green/yellow signal positions
-        # --------------------------------------------------
 
         active_positions = []
 
@@ -304,19 +284,8 @@ def get_phase_direction(
 
                 active_positions.append(index)
 
-
         if not active_positions:
-
             return "unknown"
-
-
-        # --------------------------------------------------
-        # The generated EcoTwin network uses
-        # alternating signal groups.
-        #
-        # We identify the two groups based on
-        # the signal-state pattern.
-        # --------------------------------------------------
 
         first_half = (
             len(phase_state) // 2
@@ -332,24 +301,95 @@ def get_phase_direction(
             for index in active_positions
         )
 
-
         if first_group and not second_group:
-
             return "north_south"
 
-
         if second_group and not first_group:
-
             return "east_west"
 
-
-        # Some generated SUMO intersections
-        # have a more complex signal layout.
         return "mixed"
 
     except Exception:
 
         return "unknown"
+
+
+# ==================================================
+# CALCULATE RL REWARD
+# ==================================================
+
+def calculate_rl_reward(
+    queue_length,
+    waiting_time,
+    co2
+):
+
+    # ----------------------------------------------
+    # Normalize observations
+    # ----------------------------------------------
+
+    normalized_waiting = min(
+        max(waiting_time, 0) / 1000.0,
+        1.0
+    )
+
+    normalized_co2 = min(
+        max(co2, 0) / 50000.0,
+        1.0
+    )
+
+    normalized_queue = min(
+        max(queue_length, 0) / 25.0,
+        1.0
+    )
+
+    # ----------------------------------------------
+    # Weighted penalties
+    # ----------------------------------------------
+
+    waiting_penalty = (
+        WAITING_WEIGHT
+        * normalized_waiting
+    )
+
+    co2_penalty = (
+        CO2_WEIGHT
+        * normalized_co2
+    )
+
+    queue_penalty = (
+        QUEUE_WEIGHT
+        * normalized_queue
+    )
+
+    # ----------------------------------------------
+    # Final reward
+    # ----------------------------------------------
+
+    reward = -(
+        waiting_penalty
+        + co2_penalty
+        + queue_penalty
+    )
+
+    return {
+        "reward": round(
+            float(reward),
+            4
+        ),
+        "waiting_penalty": round(
+            float(waiting_penalty),
+            4
+        ),
+        "co2_penalty": round(
+            float(co2_penalty),
+            4
+        ),
+        "queue_penalty": round(
+            float(queue_penalty),
+            4
+        )
+    }
 
 
 # ==================================================
@@ -370,56 +410,83 @@ def collect_simulation_data():
         traci.trafficlight.getIDList()
     )
 
-
     # ==================================================
     # VEHICLES
     # ==================================================
 
     vehicles = []
 
+    total_vehicle_waiting = 0.0
+
+    total_vehicle_co2 = 0.0
+
     for vehicle_id in vehicle_ids:
 
-        x, y = (
-            traci.vehicle.getPosition(
-                vehicle_id
-            )
-        )
+        try:
 
-        speed = (
-            traci.vehicle.getSpeed(
-                vehicle_id
-            )
-        )
-
-        waiting_time = (
-            traci.vehicle
-            .getAccumulatedWaitingTime(
-                vehicle_id
-            )
-        )
-
-        vehicles.append({
-
-            "id":
-                vehicle_id,
-
-            "x":
-                round(x, 2),
-
-            "y":
-                round(y, 2),
-
-            "speed":
-                round(speed, 2),
-
-            "waiting_time":
-                round(
-                    waiting_time,
-                    2
+            x, y = (
+                traci.vehicle.getPosition(
+                    vehicle_id
                 )
+            )
 
-        })
+            speed = (
+                traci.vehicle.getSpeed(
+                    vehicle_id
+                )
+            )
 
+            vehicle_type = (
+                traci.vehicle.getTypeID(
+                    vehicle_id
+                )
+            )
+
+            co2 = (
+                traci.vehicle.getCO2Emission(
+                    vehicle_id
+                )
+            )
+
+            waiting = (
+                traci.vehicle
+                .getAccumulatedWaitingTime(
+                    vehicle_id
+                )
+            )
+
+            total_vehicle_waiting += waiting
+
+            total_vehicle_co2 += co2
+
+            vehicles.append({
+
+                "vehicle_id":
+                    vehicle_id,
+
+                "x":
+                    round(x, 2),
+
+                "y":
+                    round(y, 2),
+
+                "speed":
+                    round(speed, 2),
+
+                "type":
+                    vehicle_type,
+
+                "co2":
+                    round(co2, 2),
+
+                "waiting_time":
+                    round(waiting, 2)
+
+            })
+
+        except Exception:
+
+            continue
 
     # ==================================================
     # TRAFFIC LIGHTS
@@ -427,48 +494,47 @@ def collect_simulation_data():
 
     traffic_lights = []
 
+    total_queue_length = 0
+
+    total_waiting_time = 0.0
+
+    total_intersection_co2 = 0.0
+
     for tls_id in traffic_light_ids:
 
-        # --------------------------------------------------
+        # ----------------------------------------------
         # Current phase
-        # --------------------------------------------------
+        # ----------------------------------------------
 
         phase = (
             traci.trafficlight
             .getPhase(tls_id)
         )
 
-
-        # --------------------------------------------------
+        # ----------------------------------------------
         # Phase duration
-        # --------------------------------------------------
+        # ----------------------------------------------
 
         phase_duration = (
             traci.trafficlight
             .getPhaseDuration(tls_id)
         )
 
-
-        # --------------------------------------------------
-        # Phase elapsed time
-        # --------------------------------------------------
+        # ----------------------------------------------
+        # Phase elapsed
+        # ----------------------------------------------
 
         phase_elapsed_time = (
             get_phase_elapsed_time(
-
                 tls_id,
-
                 phase,
-
                 simulation_time
-
             )
         )
 
-
-        # --------------------------------------------------
+        # ----------------------------------------------
         # Phase type
-        # --------------------------------------------------
+        # ----------------------------------------------
 
         phase_type = (
             get_phase_type(
@@ -477,10 +543,9 @@ def collect_simulation_data():
             )
         )
 
-
-        # --------------------------------------------------
+        # ----------------------------------------------
         # Phase direction
-        # --------------------------------------------------
+        # ----------------------------------------------
 
         phase_direction = (
             get_phase_direction(
@@ -489,10 +554,9 @@ def collect_simulation_data():
             )
         )
 
-
-        # --------------------------------------------------
+        # ----------------------------------------------
         # Controlled lanes
-        # --------------------------------------------------
+        # ----------------------------------------------
 
         controlled_lanes = (
             traci.trafficlight
@@ -507,27 +571,25 @@ def collect_simulation_data():
             )
         )
 
-
-        # --------------------------------------------------
-        # Metrics
-        # --------------------------------------------------
+        # ----------------------------------------------
+        # Intersection metrics
+        # ----------------------------------------------
 
         queue_length = 0
 
-        total_waiting_time = 0
+        intersection_waiting = 0.0
 
-        total_speed = 0
+        total_speed = 0.0
 
         vehicle_count = 0
 
-        total_co2 = 0
+        intersection_co2 = 0.0
 
         nearby_vehicle_ids = set()
 
-
-        # ==================================================
-        # FIND VEHICLES NEAR INTERSECTION
-        # ==================================================
+        # ----------------------------------------------
+        # Find nearby vehicles
+        # ----------------------------------------------
 
         for lane_id in controlled_lanes:
 
@@ -540,9 +602,7 @@ def collect_simulation_data():
                     )
                 )
 
-                for vehicle_id in (
-                    lane_vehicle_ids
-                ):
+                for vehicle_id in lane_vehicle_ids:
 
                     nearby_vehicle_ids.add(
                         vehicle_id
@@ -552,14 +612,11 @@ def collect_simulation_data():
 
                 continue
 
+        # ----------------------------------------------
+        # Calculate metrics
+        # ----------------------------------------------
 
-        # ==================================================
-        # CALCULATE METRICS
-        # ==================================================
-
-        for vehicle_id in (
-            nearby_vehicle_ids
-        ):
+        for vehicle_id in nearby_vehicle_ids:
 
             try:
 
@@ -584,31 +641,25 @@ def collect_simulation_data():
                     )
                 )
 
-
                 vehicle_count += 1
 
                 total_speed += speed
 
-                total_waiting_time += (
-                    waiting
-                )
+                intersection_waiting += waiting
 
-                total_co2 += co2
-
+                intersection_co2 += co2
 
                 if speed < 0.1:
 
                     queue_length += 1
 
-
             except Exception:
 
                 continue
 
-
-        # ==================================================
-        # AVERAGES
-        # ==================================================
+        # ----------------------------------------------
+        # Averages
+        # ----------------------------------------------
 
         if vehicle_count > 0:
 
@@ -618,20 +669,29 @@ def collect_simulation_data():
             )
 
             average_waiting_time = (
-                total_waiting_time
+                intersection_waiting
                 / vehicle_count
             )
 
         else:
 
-            average_speed = 0
+            average_speed = 0.0
 
-            average_waiting_time = 0
+            average_waiting_time = 0.0
 
+        total_queue_length += queue_length
 
-        # ==================================================
-        # TRAFFIC LIGHT RESPONSE
-        # ==================================================
+        total_waiting_time += (
+            average_waiting_time
+        )
+
+        total_intersection_co2 += (
+            intersection_co2
+        )
+
+        # ----------------------------------------------
+        # Traffic light response
+        # ----------------------------------------------
 
         traffic_lights.append({
 
@@ -673,12 +733,187 @@ def collect_simulation_data():
 
             "co2_emission":
                 round(
-                    total_co2,
+                    intersection_co2,
                     2
                 )
 
         })
 
+    # ==================================================
+    # GLOBAL RL OBSERVATION
+    # ==================================================
+
+    vehicle_count = len(vehicles)
+
+    if traffic_lights:
+
+        global_queue = (
+            total_queue_length
+            / len(traffic_lights)
+        )
+
+        global_waiting = (
+            total_waiting_time
+            / len(traffic_lights)
+        )
+
+        global_co2 = (
+            total_intersection_co2
+            / len(traffic_lights)
+        )
+
+    else:
+
+        global_queue = 0.0
+
+        global_waiting = 0.0
+
+        global_co2 = 0.0
+
+    if vehicle_count > 0:
+
+        average_speed = (
+            sum(
+                vehicle["speed"]
+                for vehicle in vehicles
+            )
+            / vehicle_count
+        )
+
+    else:
+
+        average_speed = 0.0
+
+    # ==================================================
+    # WEEK 2 RL REWARD
+    # ==================================================
+
+    reward_data = calculate_rl_reward(
+        global_queue,
+        global_waiting,
+        global_co2
+    )
+
+    # ==================================================
+    # RL INFORMATION
+    # ==================================================
+
+    rl_data = {
+
+        "enabled":
+            RL_ENABLED,
+
+        "algorithm":
+            RL_ALGORITHM,
+
+        "current_action":
+            RL_CURRENT_ACTION,
+
+        "reward":
+            reward_data["reward"],
+
+        "waiting_penalty":
+            reward_data["waiting_penalty"],
+
+        "co2_penalty":
+            reward_data["co2_penalty"],
+
+        "queue_penalty":
+            reward_data["queue_penalty"],
+
+        "status":
+            RL_STATUS,
+
+        "source":
+            RL_SOURCE
+
+    }
+
+    # ==================================================
+    # NORMALIZED CONTRACT
+    # ==================================================
+
+    intersections = []
+
+    signals = []
+
+    for traffic_light in traffic_lights:
+
+        intersection = {
+
+            "id":
+                traffic_light["id"],
+
+            "queue_length":
+                traffic_light["queue_length"],
+
+            "waiting_time":
+                traffic_light["waiting_time"],
+
+            "co2":
+                traffic_light["co2_emission"],
+
+            "average_speed":
+                traffic_light["average_speed"],
+
+            "current_phase":
+                traffic_light["current_phase"],
+
+            "phase_type":
+                traffic_light["phase_type"],
+
+            "phase_direction":
+                traffic_light["phase_direction"]
+
+        }
+
+        intersections.append(
+            intersection
+        )
+
+        signals.append({
+
+            "id":
+                traffic_light["id"],
+
+            "phase":
+                traffic_light["phase_type"],
+
+            "current_phase":
+                traffic_light["current_phase"],
+
+            "phase_direction":
+                traffic_light["phase_direction"],
+
+            "remaining_seconds":
+                max(
+                    0,
+                    round(
+                        traffic_light["phase_duration"]
+                        - traffic_light["phase_elapsed_time"],
+                        2
+                    )
+                ),
+
+            "phase_duration":
+                traffic_light["phase_duration"],
+
+            "phase_elapsed_time":
+                traffic_light["phase_elapsed_time"],
+
+            "queue_length":
+                traffic_light["queue_length"],
+
+            "waiting_time":
+                traffic_light["waiting_time"],
+
+            "average_speed":
+                traffic_light["average_speed"],
+
+            "co2_emission":
+                traffic_light["co2_emission"]
+
+        })
 
     # ==================================================
     # FINAL RESPONSE
@@ -686,11 +921,12 @@ def collect_simulation_data():
 
     return {
 
+        # Original backend fields
         "simulation_time":
             simulation_time,
 
         "vehicle_count":
-            len(vehicles),
+            vehicle_count,
 
         "traffic_light_count":
             len(traffic_lights),
@@ -699,7 +935,51 @@ def collect_simulation_data():
             vehicles,
 
         "traffic_lights":
-            traffic_lights
+            traffic_lights,
+
+        # Leader's frontend contract
+        "timestamp":
+            simulation_time,
+
+        "simulation_status":
+            "running",
+
+        "signals":
+            signals,
+
+        "intersections":
+            intersections,
+
+        "metrics": {
+
+            "vehicle_count":
+                vehicle_count,
+
+            "avg_waiting_time":
+                round(
+                    total_vehicle_waiting
+                    / vehicle_count,
+                    2
+                )
+                if vehicle_count > 0
+                else 0.0,
+
+            "queue_length":
+                total_queue_length,
+
+            "total_co2":
+                round(
+                    total_vehicle_co2,
+                    2
+                ),
+
+            "rl_reward":
+                reward_data["reward"]
+
+        },
+
+        "rl":
+            rl_data
 
     }
 
@@ -732,7 +1012,13 @@ def health():
             "ok",
 
         "sumo_connected":
-            sumo_started
+            sumo_started,
+
+        "rl_enabled":
+            RL_ENABLED,
+
+        "rl_status":
+            RL_STATUS
 
     }
 
@@ -786,13 +1072,11 @@ async def simulation_websocket(
 
             await asyncio.sleep(1)
 
-
     except WebSocketDisconnect:
 
         print(
             "EcoTwin WebSocket client disconnected."
         )
-
 
     except Exception as error:
 
@@ -839,5 +1123,5 @@ def shutdown():
     phase_tracking = {}
 
     print(
-        "SUMO simulation closed."
+        "EcoTwin SUMO closed."
     )

@@ -104,11 +104,12 @@ function calculateTotalCO2(
 function App() {
 
   const {
-    intersections,
-    vehicles,
-    simulationTime,
-    connectionStatus,
-  } = useSimulation();
+  intersections,
+  vehicles,
+  simulationTime,
+  connectionStatus,
+  rl,
+} = useSimulation();
 
 
   const isConnected =
@@ -458,7 +459,21 @@ function App() {
             </div>
 
           </div>
+          
+        {/* RL Reward */}
+<div className="stat-card">
+  <div className="stat-label">
+    RL Reward
+  </div>
 
+  <div className="stat-value">
+    {Number(rl?.reward ?? 0).toFixed(4)}
+  </div>
+
+  <div className="stat-subtext">
+    {rl?.algorithm || "PPO"} • {rl?.status || "STANDBY"}
+  </div>
+</div>
         </section>
 
 

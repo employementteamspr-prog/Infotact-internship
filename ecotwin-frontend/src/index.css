@@ -670,3 +670,8 @@ select {
     height: 500px;
   }
 }
+
+/* Keep moving vehicle information above map markers */
+.leaflet-tooltip.vehicle-tooltip {
+  z-index: 10000 !important;
+}

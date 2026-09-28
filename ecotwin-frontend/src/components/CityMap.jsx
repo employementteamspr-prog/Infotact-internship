@@ -7,29 +7,18 @@ import {
 } from "react-leaflet";
 
 import { CRS } from "leaflet";
-
 import "leaflet/dist/leaflet.css";
 
-import {
-  gridConfig,
-} from "../data/gridData";
-
+import { gridConfig } from "../data/gridData";
 import IntersectionMarker from "./IntersectionMarker";
 import VehicleMarker from "./VehicleMarker";
 
-
-function FitCityBounds({
-  cityWidth,
-  cityHeight,
-}) {
+function FitCityBounds({ cityWidth, cityHeight }) {
   const map = useMap();
 
   const bounds = [
     [-100, -100],
-    [
-      cityHeight + 100,
-      cityWidth + 100,
-    ],
+    [cityHeight + 100, cityWidth + 100],
   ];
 
   map.fitBounds(bounds, {
@@ -39,12 +28,8 @@ function FitCityBounds({
   return null;
 }
 
-
-function getEnvironmentalStyle(
-  co2Emission
-) {
-  const value =
-    Number(co2Emission) || 0;
+function getEnvironmentalStyle(co2Emission) {
+  const value = Number(co2Emission) || 0;
 
   if (value <= 0) {
     return {
@@ -53,18 +38,13 @@ function getEnvironmentalStyle(
     };
   }
 
-  const intensity =
-    Math.min(value / 100, 1);
+  const intensity = Math.min(value / 100, 1);
 
   return {
-    radius:
-      25 + intensity * 45,
-
-    opacity:
-      0.12 + intensity * 0.28,
+    radius: 25 + intensity * 45,
+    opacity: 0.12 + intensity * 0.28,
   };
 }
-
 
 function CityMap({
   intersections: simulationIntersections = [],
@@ -77,24 +57,21 @@ function CityMap({
   } = gridConfig;
 
   const cityWidth =
-    (columns - 1) *
-    cellSizeMeters;
+    (columns - 1) * cellSizeMeters;
 
   const cityHeight =
-    (rows - 1) *
-    cellSizeMeters;
+    (rows - 1) * cellSizeMeters;
 
   const mapPadding = 100;
+
   const roads = [];
 
+  // -----------------------------------------
+  // HORIZONTAL ROADS
+  // -----------------------------------------
 
-  for (
-    let row = 0;
-    row < rows;
-    row++
-  ) {
-    const y =
-      row * cellSizeMeters;
+  for (let row = 0; row < rows; row++) {
+    const y = row * cellSizeMeters;
 
     roads.push(
       <Polyline
@@ -114,14 +91,12 @@ function CityMap({
     );
   }
 
+  // -----------------------------------------
+  // VERTICAL ROADS
+  // -----------------------------------------
 
-  for (
-    let column = 0;
-    column < columns;
-    column++
-  ) {
-    const x =
-      column * cellSizeMeters;
+  for (let column = 0; column < columns; column++) {
+    const x = column * cellSizeMeters;
 
     roads.push(
       <Polyline
@@ -140,7 +115,6 @@ function CityMap({
       />
     );
   }
-
 
   return (
     <MapContainer
@@ -166,19 +140,33 @@ function CityMap({
         background: "#e8eef0",
       }}
     >
+      <Pane
+  name="vehicleTooltips"
+  style={{
+    zIndex: 1000,
+  }}
+/>
+      {/* -----------------------------------------
+          FIT CITY BOUNDS
+      ----------------------------------------- */}
 
       <FitCityBounds
         cityWidth={cityWidth}
         cityHeight={cityHeight}
       />
 
+      {/* -----------------------------------------
+          ROAD NETWORK
+      ----------------------------------------- */}
 
       {roads}
 
+      {/* -----------------------------------------
+          CO2 ENVIRONMENTAL OVERLAY
+      ----------------------------------------- */}
 
       {simulationIntersections.map(
         (intersection) => {
-
           const environmentalStyle =
             getEnvironmentalStyle(
               intersection.co2_emission
@@ -213,6 +201,9 @@ function CityMap({
         }
       )}
 
+      {/* -----------------------------------------
+          TRAFFIC LIGHT / INTERSECTION LAYER
+      ----------------------------------------- */}
 
       <Pane
         name="intersections"
@@ -230,6 +221,9 @@ function CityMap({
         )}
       </Pane>
 
+      {/* -----------------------------------------
+          MOVING VEHICLE LAYER
+      ----------------------------------------- */}
 
       <Pane
         name="vehicles"
@@ -237,19 +231,15 @@ function CityMap({
           zIndex: 600,
         }}
       >
-        {vehicles.map(
-          (vehicle) => (
-            <VehicleMarker
-              key={vehicle.id}
-              vehicle={vehicle}
-            />
-          )
-        )}
+        {vehicles.map((vehicle) => (
+          <VehicleMarker
+            key={vehicle.vehicle_id}
+            vehicle={vehicle}
+          />
+        ))}
       </Pane>
-
     </MapContainer>
   );
 }
-
 
 export default CityMap;

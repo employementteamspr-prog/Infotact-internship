@@ -20,23 +20,75 @@ async def test_websocket():
             data = json.loads(message)
 
             print("\n--- Simulation Update ---")
-            print("Simulation time:", data["simulation_time"])
-            print("Vehicle count:", data["vehicle_count"])
-            print("Traffic lights:", data["traffic_light_count"])
+
+            print(
+                "Simulation time:",
+                data["simulation_time"]
+            )
+
+            print(
+                "Vehicle count:",
+                data["vehicle_count"]
+            )
+
+            print(
+                "Traffic lights:",
+                data["traffic_light_count"]
+            )
+
+            # ------------------------------------------
+            # FIRST VEHICLE
+            # ------------------------------------------
 
             if data["vehicles"]:
+
                 vehicle = data["vehicles"][0]
 
                 print("First vehicle:")
-                print("  ID:", vehicle["id"])
-                print("  Position:", vehicle["x"], vehicle["y"])
-                print("  Speed:", vehicle["speed"], "m/s")
+
+                print(
+                    "  Vehicle ID:",
+                    vehicle["vehicle_id"]
+                )
+
+                print(
+                    "  Position:",
+                    vehicle["x"],
+                    vehicle["y"]
+                )
+
+                print(
+                    "  Speed:",
+                    vehicle["speed"],
+                    "m/s"
+                )
+
+                print(
+                    "  Type:",
+                    vehicle["type"]
+                )
+
+                print(
+                    "  CO2:",
+                    vehicle["co2"],
+                    "mg/s"
+                )
+
+            # ------------------------------------------
+            # FIRST TRAFFIC LIGHT
+            # ------------------------------------------
 
             if data["traffic_lights"]:
+
                 traffic_light = data["traffic_lights"][0]
 
                 print("First traffic light:")
-                print("  ID:", traffic_light["id"])
+
+                print(
+                    "  ID:",
+                    traffic_light["id"]
+                )
+
                 print(
                     "  Phase:",
                     traffic_light["current_phase"]

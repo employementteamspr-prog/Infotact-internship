@@ -59,12 +59,14 @@ function VehicleMarker({
         weight: 2,
       }}
     >
-      <Tooltip
-        direction="top"
-        offset={[0, -8]}
-        opacity={1}
-        sticky={true}
-      >
+   <Tooltip
+  direction="top"
+  offset={[0, -18]}
+  opacity={1}
+  sticky={true}
+  pane="vehicleTooltips"
+  className="vehicle-tooltip"
+>
         <div
           style={{
             minWidth: "170px",
@@ -72,7 +74,7 @@ function VehicleMarker({
           }}
         >
           <strong>
-            {vehicle.id}
+            {vehicle.vehicle_id}
           </strong>
 
           <br />
@@ -87,8 +89,13 @@ function VehicleMarker({
 
           <br />
 
-          Waiting:{" "}
-          {vehicle.waiting_time} s
+          Type:{" "}
+          {vehicle.type}
+
+          <br />
+
+          CO2:{" "}
+          {vehicle.co2} mg/s
 
           <br />
 
