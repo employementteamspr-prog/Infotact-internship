@@ -12,7 +12,7 @@ const API_BASE_URL =
 
 const WEBSOCKET_URL =
   import.meta.env.VITE_WEBSOCKET_URL ||
-  "ws://localhost:8000/ws/simulation";
+  "ws://localhost:8001/ws/traffic";
 
 const SIMULATION_MODE =
   import.meta.env.VITE_ECOTWIN_MODE === "mock"
@@ -117,23 +117,40 @@ export function normalizeSimulationPayload(data) {
           vehicle.id ||
           "unknown",
 
+        // Supports both:
+        // 1. x / y
+        // 2. position.x / position.y
         x:
-          Number(vehicle.x) || 0,
+          Number(
+            vehicle.x ??
+            vehicle.position?.x
+          ) || 0,
 
         y:
-          Number(vehicle.y) || 0,
+          Number(
+            vehicle.y ??
+            vehicle.position?.y
+          ) || 0,
 
         speed:
           Number(vehicle.speed) || 0,
 
         type:
-          vehicle.type || "unknown",
+          vehicle.type || "car",
 
+        // Supports both:
+        // 1. co2
+        // 2. co2_emission
         co2:
-          Number(vehicle.co2) || 0,
+          Number(
+            vehicle.co2 ??
+            vehicle.co2_emission
+          ) || 0,
 
         waiting_time:
-          Number(vehicle.waiting_time) || 0,
+          Number(
+            vehicle.waiting_time
+          ) || 0,
       }))
     : [];
 
@@ -365,7 +382,9 @@ export function normalizeSimulationPayload(data) {
 
   return {
     timestamp:
-      Number(data?.simulation_time) || 0,
+      Number(
+        data?.simulation_time
+      ) || 0,
 
     simulation_status:
       "running",
@@ -420,6 +439,7 @@ export function connectSimulationSocket(
   onError,
   onClose
 ) {
+
   if (SIMULATION_MODE === "mock") {
 
     console.log(
