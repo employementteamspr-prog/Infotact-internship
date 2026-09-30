@@ -1,9 +1,22 @@
+import sys
 import os
+
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PROJECT_DIR)
+
 import ray
 import torch
 
 from ray.rllib.algorithms.dqn import DQNConfig
 from environment.traffic_env import TrafficEnv
+
+
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CHECKPOINT_PATH = os.path.join(
+    PROJECT_DIR,
+    "training",
+    "checkpoints"
+)
 
 
 ray.init(ignore_reinit_error=True)
@@ -16,19 +29,17 @@ config = (
         env_config={}
     )
     .framework("torch")
+    .env_runners(num_env_runners=0)
     .resources(num_gpus=0)
 )
 
 
-algo = config.build()
+algo = config.build_algo()
 
+# Restore the trained DQN checkpoint
+algo.restore(CHECKPOINT_PATH)
 
-checkpoint_path = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "checkpoints")
-)
-
-
-algo.restore(checkpoint_path)
+print("DQN checkpoint restored successfully.")
 
 
 env = TrafficEnv()
@@ -40,6 +51,7 @@ steps = 0
 
 
 for _ in range(100):
+
     obs_tensor = torch.tensor(
         obs,
         dtype=torch.float32
@@ -60,10 +72,11 @@ for _ in range(100):
         break
 
 
-print("DQN Evaluation completed.")
+print("\nDQN Evaluation completed.")
 print("Steps:", steps)
 print("Total reward:", total_reward)
 print("Final info:", info)
+
 
 env.close()
 algo.stop()
