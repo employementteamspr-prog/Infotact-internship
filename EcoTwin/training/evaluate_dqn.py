@@ -49,8 +49,14 @@ obs, info = env.reset()
 total_reward = 0.0
 steps = 0
 
+keep_actions = 0
+switch_actions = 0
+phase_changes = 0
 
-for _ in range(100):
+previous_phase = info.get("phase", None)
+
+
+for _ in range(1000):
 
     obs_tensor = torch.tensor(
         obs,
@@ -62,11 +68,25 @@ for _ in range(100):
     )
 
     action = output["actions"].item()
+    if action == 0:
+        keep_actions += 1
+    else:
+        switch_actions += 1
 
     obs, reward, terminated, truncated, info = env.step(action)
 
     total_reward += reward
     steps += 1
+
+    current_phase = info.get("phase", None)
+
+    if (
+        previous_phase is not None
+        and current_phase != previous_phase
+    ):
+        phase_changes += 1
+
+    previous_phase = current_phase
 
     if terminated or truncated:
         break
@@ -75,8 +95,10 @@ for _ in range(100):
 print("\nDQN Evaluation completed.")
 print("Steps:", steps)
 print("Total reward:", total_reward)
+print("Keep actions:", keep_actions)
+print("Switch actions:", switch_actions)
+print("Phase changes:", phase_changes)
 print("Final info:", info)
-
 
 env.close()
 algo.stop()
