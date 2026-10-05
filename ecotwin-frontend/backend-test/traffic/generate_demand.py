@@ -1,55 +1,180 @@
 import json
 import random
+from pathlib import Path
 
-# Load simulation configuration
-with open("traffic/simulation_config.json", "r") as file:
-    config = json.load(file)
 
-# Traffic demand settings
-vehicles_per_hour = config["traffic_demand"]["vehicles_per_hour"]
-simulation_duration = config["simulation"]["duration_seconds"]
-random_seed = config["traffic_demand"]["random_seed"]
+# ============================================================
+# EcoTwin - Traffic Demand Generator
+# ============================================================
 
-random.seed(random_seed)
+BASE_DIR = Path(__file__).resolve().parent
 
-# Vehicle types
-vehicle_types = config["vehicles"]["types"]
+CONFIG_FILE = BASE_DIR / "simulation_config.json"
+OUTPUT_FILE = BASE_DIR / "traffic.rou.xml"
 
-# Calculate number of vehicles
-number_of_vehicles = int(
-    vehicles_per_hour * simulation_duration / 3600
-)
 
-print("EcoTwin Traffic Demand Generator")
-print(f"Vehicles per hour: {vehicles_per_hour}")
-print(f"Simulation duration: {simulation_duration} seconds")
-print(f"Random seed: {random_seed}")
-print(f"Vehicle types: {vehicle_types}")
-print(f"Number of vehicles: {number_of_vehicles}")
+# ------------------------------------------------------------
+# Load configuration
+# ------------------------------------------------------------
 
-# Generate vehicle demand
-vehicles = []
+def load_config():
+    with open(CONFIG_FILE, "r", encoding="utf-8") as file:
+        return json.load(file)
 
-for vehicle_id in range(number_of_vehicles):
-    vehicle_type = random.choice(vehicle_types)
-    departure_time = random.randint(0, simulation_duration - 1)
 
-    vehicles.append({
-        "id": f"veh_{vehicle_id:04d}",
-        "type": vehicle_type,
-        "depart": departure_time
-    })
+# ------------------------------------------------------------
+# Generate traffic demand
+# ------------------------------------------------------------
 
-print(f"Generated {len(vehicles)} vehicles.")
+def generate_demand(config):
 
-# Route IDs
-routes = [
-    "route_0000",
-    "route_0001"
-]
+    simulation = config["simulation"]
+    traffic_demand = config["traffic_demand"]
+    vehicles_config = config["vehicles"]
 
-# Assign a route to each vehicle
-for vehicle in vehicles:
-    vehicle["route"] = random.choice(routes)
+    duration = simulation["duration_seconds"]
+    vehicles_per_hour = traffic_demand["vehicles_per_hour"]
+    random_seed = traffic_demand["random_seed"]
 
-print("Routes assigned to all vehicles.")
+    vehicle_types = vehicles_config["types"]
+
+    # Make generation reproducible
+    random.seed(random_seed)
+
+    # Calculate total vehicles
+    vehicle_count = int(
+        vehicles_per_hour * duration / 3600
+    )
+
+    print("========================================")
+    print("EcoTwin Traffic Demand Generator")
+    print("========================================")
+    print(f"Vehicles per hour : {vehicles_per_hour}")
+    print(f"Simulation duration : {duration} seconds")
+    print(f"Random seed : {random_seed}")
+    print(f"Vehicle types : {vehicle_types}")
+    print(f"Total vehicles : {vehicle_count}")
+    print()
+
+
+    # --------------------------------------------------------
+    # Routes for the existing EcoTwin J0-J24 network
+    # --------------------------------------------------------
+
+    routes = {
+        "east": "E0 E2 E4 E6",
+        "west": "E7 E5 E3 E1",
+        "south": "E40 E42 E44 E46",
+        "north": "E47 E45 E43 E41",
+    }
+
+
+    # --------------------------------------------------------
+    # Start XML
+    # --------------------------------------------------------
+
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        "<routes>",
+        "",
+        # Vehicle types
+        (
+            '<vType id="car" '
+            'accel="2.6" decel="4.5" sigma="0.5" '
+            'length="5" minGap="2.5" maxSpeed="13.9"/>'
+        ),
+        (
+            '<vType id="bus" '
+            'accel="1.2" decel="4.0" sigma="0.5" '
+            'length="12" minGap="2.5" maxSpeed="13.9"/>'
+        ),
+        (
+            '<vType id="truck" '
+            'accel="1.0" decel="4.0" sigma="0.5" '
+            'length="12" minGap="2.5" maxSpeed="13.9"/>'
+        ),
+        "",
+    ]
+
+
+    # --------------------------------------------------------
+    # Add route definitions
+    # --------------------------------------------------------
+
+    for route_name, edges in routes.items():
+
+        lines.append(
+            f'<route id="{route_name}_route" '
+            f'edges="{edges}"/>'
+        )
+
+    lines.append("")
+
+
+    # --------------------------------------------------------
+    # Generate vehicles
+    # --------------------------------------------------------
+
+    route_names = list(routes.keys())
+
+    for vehicle_id in range(vehicle_count):
+
+        # Random vehicle type
+        vehicle_type = random.choice(vehicle_types)
+
+        # Random direction
+        route_name = random.choice(route_names)
+
+        # Evenly distribute vehicles across simulation
+        if vehicle_count > 1:
+            depart_time = (
+                vehicle_id * duration / vehicle_count
+            )
+        else:
+            depart_time = 0
+
+        lines.append(
+            f'<vehicle '
+            f'id="veh_{vehicle_id:04d}" '
+            f'type="{vehicle_type}" '
+            f'route="{route_name}_route" '
+            f'depart="{depart_time:.2f}"/>'
+        )
+
+
+    # --------------------------------------------------------
+    # Finish XML
+    # --------------------------------------------------------
+
+    lines.append("")
+    lines.append("</routes>")
+
+
+    # --------------------------------------------------------
+    # Write traffic.rou.xml
+    # --------------------------------------------------------
+
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        file.write("\n".join(lines))
+
+
+    print("Traffic demand generated successfully.")
+    print(f"Output file : {OUTPUT_FILE}")
+    print(f"Vehicles generated : {vehicle_count}")
+    print(f"Routes available : {len(routes)}")
+
+
+# ------------------------------------------------------------
+# Main
+# ------------------------------------------------------------
+
+if __name__ == "__main__":
+
+    config = load_config()
+
+    generate_demand(config)
