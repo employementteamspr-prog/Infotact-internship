@@ -86,6 +86,38 @@ function createMockTrafficLights(time) {
 
 
 // ==================================================
+// Heatmap Data
+// ==================================================
+
+function createHeatmapData(vehicles) {
+  if (!Array.isArray(vehicles)) {
+    return [];
+  }
+
+  return vehicles
+    .filter(
+      (vehicle) =>
+        vehicle &&
+        Number.isFinite(Number(vehicle.x)) &&
+        Number.isFinite(Number(vehicle.y)) &&
+        Number.isFinite(Number(vehicle.co2))
+    )
+    .map((vehicle) => ({
+      vehicle_id:
+        vehicle.vehicle_id ??
+        vehicle.id ??
+        "unknown",
+
+      x: Number(vehicle.x),
+
+      y: Number(vehicle.y),
+
+      co2: Number(vehicle.co2),
+    }));
+}
+
+
+// ==================================================
 // Intersection Mapping
 // ==================================================
 
@@ -179,6 +211,16 @@ function useSimulation() {
   ] = useState([]);
 
 
+  // ==================================================
+  // WEEK 3 - HEATMAP DATA
+  // ==================================================
+
+  const [
+    heatmapData,
+    setHeatmapData,
+  ] = useState([]);
+
+
   const [
     simulationTime,
     setSimulationTime,
@@ -238,8 +280,13 @@ function useSimulation() {
         "EcoTwin running in MOCK mode."
       );
 
-      setConnectionStatus("connected");
-      setSimulationDataAvailable(true);
+      setConnectionStatus(
+        "connected"
+      );
+
+      setSimulationDataAvailable(
+        true
+      );
 
       let mockTime = 0;
 
@@ -252,15 +299,30 @@ function useSimulation() {
 
 
         const mockVehicles =
-          createMockVehicles(mockTime);
+          createMockVehicles(
+            mockTime
+          );
 
 
         const mockTrafficLights =
-          createMockTrafficLights(mockTime);
+          createMockTrafficLights(
+            mockTime
+          );
 
 
         setVehicles(
           mockVehicles
+        );
+
+
+        // ------------------------------------------
+        // WEEK 3 - MOCK HEATMAP DATA
+        // ------------------------------------------
+
+        setHeatmapData(
+          createHeatmapData(
+            mockVehicles
+          )
         );
 
 
@@ -276,7 +338,10 @@ function useSimulation() {
         );
 
 
+        // ------------------------------------------
         // Mock RL data
+        // ------------------------------------------
+
         setRl({
           enabled: false,
           algorithm: "PPO",
@@ -309,7 +374,9 @@ function useSimulation() {
         isCleaningUp = true;
 
         if (mockTimer) {
-          clearInterval(mockTimer);
+          clearInterval(
+            mockTimer
+          );
         }
       };
     }
@@ -348,6 +415,10 @@ function useSimulation() {
             );
 
 
+            // ------------------------------------------
+            // TRAFFIC LIGHT DATA
+            // ------------------------------------------
+
             const trafficLights =
               Array.isArray(
                 data.traffic_lights
@@ -356,6 +427,10 @@ function useSimulation() {
                 : [];
 
 
+            // ------------------------------------------
+            // VEHICLE DATA
+            // ------------------------------------------
+
             const liveVehicles =
               Array.isArray(
                 data.vehicles
@@ -363,6 +438,10 @@ function useSimulation() {
                 ? data.vehicles
                 : [];
 
+
+            // ------------------------------------------
+            // INTERSECTION DATA
+            // ------------------------------------------
 
             const updatedIntersections =
               createIntersectionData(
@@ -375,10 +454,37 @@ function useSimulation() {
             );
 
 
+            // ------------------------------------------
+            // LIVE VEHICLES
+            // ------------------------------------------
+
             setVehicles(
               liveVehicles
             );
 
+
+            // ------------------------------------------
+            // WEEK 3 - LIVE HEATMAP DATA
+            //
+            // Uses the CURRENT WebSocket vehicle
+            // data, so old vehicle positions are
+            // automatically removed on every update.
+            // ------------------------------------------
+
+            const liveHeatmapData =
+              createHeatmapData(
+                liveVehicles
+              );
+
+
+            setHeatmapData(
+              liveHeatmapData
+            );
+
+
+            // ------------------------------------------
+            // SIMULATION TIME
+            // ------------------------------------------
 
             setSimulationTime(
               Number(
@@ -406,14 +512,16 @@ function useSimulation() {
               setRl(
                 data.rl
               );
-
             }
 
+
+            // ------------------------------------------
+            // CONNECTION STATUS
+            // ------------------------------------------
 
             setSimulationDataAvailable(
               true
             );
-
 
             setConnectionStatus(
               "connected"
@@ -501,11 +609,22 @@ function useSimulation() {
   }, []);
 
 
+  // ==================================================
+  // RETURN SIMULATION DATA
+  // ==================================================
+
   return {
     intersections,
+
     vehicles,
+
+    // Week 3 heatmap data
+    heatmapData,
+
     simulationTime,
+
     connectionStatus,
+
     simulationDataAvailable,
 
     // RL information

@@ -3,13 +3,19 @@ import MapLegend from "./components/MapLegend";
 import useSimulation from "./hooks/useSimulation";
 
 
+// ==================================================
+// FORMAT SIMULATION TIME
+// ==================================================
+
 function formatSimulationTime(seconds) {
 
   const totalSeconds =
     Math.floor(Number(seconds) || 0);
 
   const hours =
-    Math.floor(totalSeconds / 3600);
+    Math.floor(
+      totalSeconds / 3600
+    );
 
   const minutes =
     Math.floor(
@@ -31,9 +37,9 @@ function formatSimulationTime(seconds) {
 }
 
 
-/* ==========================================
-   CALCULATE LIVE VEHICLE AVERAGE SPEED
-========================================== */
+// ==================================================
+// CALCULATE LIVE VEHICLE AVERAGE SPEED
+// ==================================================
 
 function calculateAverageVehicleSpeed(
   vehicles
@@ -57,9 +63,9 @@ function calculateAverageVehicleSpeed(
 }
 
 
-/* ==========================================
-   CALCULATE TOTAL QUEUE
-========================================== */
+// ==================================================
+// CALCULATE TOTAL QUEUE
+// ==================================================
 
 function calculateTotalQueue(
   intersections
@@ -76,9 +82,9 @@ function calculateTotalQueue(
 }
 
 
-/* ==========================================
-   CALCULATE TOTAL CO2
-========================================== */
+// ==================================================
+// CALCULATE TOTAL CO2
+// ==================================================
 
 function calculateTotalCO2(
   intersections
@@ -97,19 +103,23 @@ function calculateTotalCO2(
 }
 
 
-/* ==========================================
-   MAIN APP
-========================================== */
+// ==================================================
+// MAIN APP
+// ==================================================
 
 function App() {
 
   const {
-  intersections,
-  vehicles,
-  simulationTime,
-  connectionStatus,
-  rl,
-} = useSimulation();
+    intersections,
+    vehicles,
+
+    // Week 3 heatmap data
+    heatmapData,
+
+    simulationTime,
+    connectionStatus,
+    rl,
+  } = useSimulation();
 
 
   const isConnected =
@@ -136,7 +146,6 @@ function App() {
 
   return (
     <div className="app">
-
 
       {/* =====================================
           TOP BAR
@@ -246,7 +255,7 @@ function App() {
           <div className="stat-card">
 
             <div className="stat-icon grid-icon">
-              ▦
+              ▪
             </div>
 
             <div>
@@ -273,7 +282,7 @@ function App() {
           <div className="stat-card">
 
             <div className="stat-icon signal-icon">
-              ●
+              —
             </div>
 
             <div>
@@ -329,7 +338,7 @@ function App() {
           <div className="stat-card">
 
             <div className="stat-icon status-icon">
-              ●
+              —
             </div>
 
             <div>
@@ -356,7 +365,7 @@ function App() {
           <div className="stat-card">
 
             <div className="stat-icon distance-icon">
-              ≋
+              ≪
             </div>
 
             <div>
@@ -437,7 +446,7 @@ function App() {
           <div className="stat-card">
 
             <div className="stat-icon status-icon">
-              ●
+              —
             </div>
 
             <div>
@@ -459,21 +468,30 @@ function App() {
             </div>
 
           </div>
-          
-        {/* RL Reward */}
-<div className="stat-card">
-  <div className="stat-label">
-    RL Reward
-  </div>
 
-  <div className="stat-value">
-    {Number(rl?.reward ?? 0).toFixed(4)}
-  </div>
 
-  <div className="stat-subtext">
-    {rl?.algorithm || "PPO"} • {rl?.status || "STANDBY"}
-  </div>
-</div>
+          {/* RL Reward */}
+
+          <div className="stat-card">
+
+            <div className="stat-label">
+              RL Reward
+            </div>
+
+            <div className="stat-value">
+              {Number(
+                rl?.reward ?? 0
+              ).toFixed(4)}
+            </div>
+
+            <div className="stat-subtext">
+              {rl?.algorithm || "PPO"}
+              {" "}•{" "}
+              {rl?.status || "STANDBY"}
+            </div>
+
+          </div>
+
         </section>
 
 
@@ -523,8 +541,15 @@ function App() {
               intersections={
                 intersections
               }
+
               vehicles={
                 vehicles
+              }
+
+              /* Week 3 carbon heatmap data */
+
+              heatmapData={
+                heatmapData
               }
             />
 
