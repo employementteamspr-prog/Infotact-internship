@@ -1,27 +1,69 @@
-from fastapi import FastAPI
-from API.sumo_data import start_sumo, simulation_step, close_sumo
+import asyncio
+
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+
+from API.rl_service import RLTrafficService
+
 
 app = FastAPI(title="EcoTwin Traffic Data API")
 
 
+# Persistent PPO + SUMO service
+rl_service = RLTrafficService()
+
+
 @app.get("/")
 def root():
-    return {"message": "EcoTwin Traffic Data API is running"}
+    return {
+        "message": "EcoTwin Traffic Data API is running"
+    }
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "ok"
+    }
+
+
+@app.get("/traffic/start")
+def start_traffic():
+    return rl_service.start()
 
 
 @app.get("/traffic")
 def get_traffic():
-    start_sumo()
+    return rl_service.step()
+
+
+@app.get("/traffic/stop")
+def stop_traffic():
+    rl_service.stop()
+
+    return {
+        "status": "stopped"
+    }
+
+
+@app.websocket("/ws/traffic")
+async def traffic_websocket(websocket: WebSocket):
+    await websocket.accept()
 
     try:
-        data = simulation_step()
-        return {
-            "vehicles": data
-        }
+        rl_service.start()
+
+        while True:
+            data = rl_service.step()
+
+            await websocket.send_json(data)
+
+            await asyncio.sleep(0.1)
+
+    except WebSocketDisconnect:
+        print("WebSocket client disconnected.")
+
+    except Exception as e:
+        print(f"WebSocket error: {e}")
+
     finally:
-        close_sumo()
+        rl_service.stop()
