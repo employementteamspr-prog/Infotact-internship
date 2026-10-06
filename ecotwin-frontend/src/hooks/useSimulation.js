@@ -46,6 +46,10 @@ function createMockVehicles(time) {
 }
 
 
+// ==================================================
+// Mock Traffic Lights
+// ==================================================
+
 function createMockTrafficLights(time) {
   return initialIntersections.map(
     (intersection, index) => ({
@@ -135,7 +139,6 @@ function createIntersectionData(trafficLights) {
 
   return initialIntersections.map(
     (intersection) => {
-
       const index = Number(
         intersection.id.replace(
           "tls_",
@@ -197,6 +200,10 @@ function createIntersectionData(trafficLights) {
 
 function useSimulation() {
 
+  // ==================================================
+  // Intersection State
+  // ==================================================
+
   const [
     intersections,
     setIntersections,
@@ -205,6 +212,10 @@ function useSimulation() {
   );
 
 
+  // ==================================================
+  // Vehicle State
+  // ==================================================
+
   const [
     vehicles,
     setVehicles,
@@ -212,7 +223,7 @@ function useSimulation() {
 
 
   // ==================================================
-  // WEEK 3 - HEATMAP DATA
+  // Week 3 - Heatmap State
   // ==================================================
 
   const [
@@ -221,11 +232,19 @@ function useSimulation() {
   ] = useState([]);
 
 
+  // ==================================================
+  // Simulation Time
+  // ==================================================
+
   const [
     simulationTime,
     setSimulationTime,
   ] = useState(0);
 
+
+  // ==================================================
+  // Connection State
+  // ==================================================
 
   const [
     connectionStatus,
@@ -240,7 +259,23 @@ function useSimulation() {
 
 
   // ==================================================
-  // RL STATE
+  // Week 4 - Simulation Monitoring
+  // ==================================================
+
+  const [
+    vehicleCount,
+    setVehicleCount,
+  ] = useState(0);
+
+
+  const [
+    lastUpdateTime,
+    setLastUpdateTime,
+  ] = useState(null);
+
+
+  // ==================================================
+  // RL State
   // ==================================================
 
   const [
@@ -258,6 +293,10 @@ function useSimulation() {
     source: "environment",
   });
 
+
+  // ==================================================
+  // Simulation Effect
+  // ==================================================
 
   useEffect(() => {
 
@@ -298,11 +337,19 @@ function useSimulation() {
         }
 
 
+        // ------------------------------------------
+        // Mock Vehicles
+        // ------------------------------------------
+
         const mockVehicles =
           createMockVehicles(
             mockTime
           );
 
+
+        // ------------------------------------------
+        // Mock Traffic Lights
+        // ------------------------------------------
 
         const mockTrafficLights =
           createMockTrafficLights(
@@ -310,13 +357,31 @@ function useSimulation() {
           );
 
 
+        // ------------------------------------------
+        // Vehicle State
+        // ------------------------------------------
+
         setVehicles(
           mockVehicles
         );
 
 
         // ------------------------------------------
-        // WEEK 3 - MOCK HEATMAP DATA
+        // Week 4 - Vehicle Monitoring
+        // ------------------------------------------
+
+        setVehicleCount(
+          mockVehicles.length
+        );
+
+
+        setLastUpdateTime(
+          new Date()
+        );
+
+
+        // ------------------------------------------
+        // Week 3 - Mock Heatmap
         // ------------------------------------------
 
         setHeatmapData(
@@ -326,6 +391,10 @@ function useSimulation() {
         );
 
 
+        // ------------------------------------------
+        // Intersection State
+        // ------------------------------------------
+
         setIntersections(
           createIntersectionData(
             mockTrafficLights
@@ -333,13 +402,17 @@ function useSimulation() {
         );
 
 
+        // ------------------------------------------
+        // Simulation Time
+        // ------------------------------------------
+
         setSimulationTime(
           mockTime
         );
 
 
         // ------------------------------------------
-        // Mock RL data
+        // Mock RL Data
         // ------------------------------------------
 
         setRl({
@@ -407,16 +480,34 @@ function useSimulation() {
       socket =
         connectSimulationSocket(
 
+          // ==========================================
+          // WebSocket Message Handler
+          // ==========================================
+
           (data) => {
 
-            console.log(
-              "Live simulation update:",
-              data
-            );
+            
 
 
             // ------------------------------------------
-            // TRAFFIC LIGHT DATA
+            // Week 4 - Live Data Validation
+            // ------------------------------------------
+
+            if (
+              !data ||
+              typeof data !== "object"
+            ) {
+
+              console.warn(
+                "Invalid simulation data received."
+              );
+
+              return;
+            }
+
+
+            // ------------------------------------------
+            // Traffic Light Data
             // ------------------------------------------
 
             const trafficLights =
@@ -428,7 +519,7 @@ function useSimulation() {
 
 
             // ------------------------------------------
-            // VEHICLE DATA
+            // Vehicle Data
             // ------------------------------------------
 
             const liveVehicles =
@@ -440,7 +531,16 @@ function useSimulation() {
 
 
             // ------------------------------------------
-            // INTERSECTION DATA
+            // Week 4 - Vehicle Count
+            // ------------------------------------------
+
+            setVehicleCount(
+              liveVehicles.length
+            );
+
+
+            // ------------------------------------------
+            // Intersection Data
             // ------------------------------------------
 
             const updatedIntersections =
@@ -455,7 +555,7 @@ function useSimulation() {
 
 
             // ------------------------------------------
-            // LIVE VEHICLES
+            // Live Vehicles
             // ------------------------------------------
 
             setVehicles(
@@ -464,11 +564,7 @@ function useSimulation() {
 
 
             // ------------------------------------------
-            // WEEK 3 - LIVE HEATMAP DATA
-            //
-            // Uses the CURRENT WebSocket vehicle
-            // data, so old vehicle positions are
-            // automatically removed on every update.
+            // Week 3 - Live Heatmap Data
             // ------------------------------------------
 
             const liveHeatmapData =
@@ -483,7 +579,7 @@ function useSimulation() {
 
 
             // ------------------------------------------
-            // SIMULATION TIME
+            // Simulation Time
             // ------------------------------------------
 
             setSimulationTime(
@@ -494,7 +590,7 @@ function useSimulation() {
 
 
             // ------------------------------------------
-            // REAL RL DATA FROM FASTAPI
+            // Real RL Data From FastAPI
             // ------------------------------------------
 
             if (
@@ -516,7 +612,7 @@ function useSimulation() {
 
 
             // ------------------------------------------
-            // CONNECTION STATUS
+            // Week 4 - Successful Update
             // ------------------------------------------
 
             setSimulationDataAvailable(
@@ -526,8 +622,16 @@ function useSimulation() {
             setConnectionStatus(
               "connected"
             );
+
+            setLastUpdateTime(
+              new Date()
+            );
           },
 
+
+          // ==========================================
+          // WebSocket Error Handler
+          // ==========================================
 
           (error) => {
 
@@ -543,6 +647,10 @@ function useSimulation() {
           },
 
 
+          // ==========================================
+          // WebSocket Close Handler
+          // ==========================================
+
           () => {
 
             console.log(
@@ -557,6 +665,15 @@ function useSimulation() {
 
             setConnectionStatus(
               "offline"
+            );
+
+
+            // ------------------------------------------
+            // Clear stale vehicle count
+            // ------------------------------------------
+
+            setVehicleCount(
+              0
             );
 
 
@@ -576,6 +693,10 @@ function useSimulation() {
         );
     };
 
+
+    // ==================================================
+    // Start Connection
+    // ==================================================
 
     connect();
 
@@ -601,6 +722,13 @@ function useSimulation() {
       }
 
 
+      if (mockTimer) {
+        clearInterval(
+          mockTimer
+        );
+      }
+
+
       disconnectSimulationSocket(
         socket
       );
@@ -610,7 +738,7 @@ function useSimulation() {
 
 
   // ==================================================
-  // RETURN SIMULATION DATA
+  // Return Simulation Data
   // ==================================================
 
   return {
@@ -626,6 +754,11 @@ function useSimulation() {
     connectionStatus,
 
     simulationDataAvailable,
+
+    // Week 4 monitoring data
+    vehicleCount,
+
+    lastUpdateTime,
 
     // RL information
     rl,
