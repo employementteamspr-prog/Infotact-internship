@@ -1,0 +1,42 @@
+[
+    {
+        "iteration": 1,
+        "timesteps_total": 200.0
+    },
+    {
+        "iteration": 2,
+        "timesteps_total": 400.0
+    },
+    {
+        "iteration": 3,
+        "timesteps_total": 600.0
+    },
+    {
+        "iteration": 4,
+        "timesteps_total": 800.0
+    },
+    {
+        "iteration": 5,
+        "timesteps_total": 1000.0
+    },
+    {
+        "iteration": 6,
+        "timesteps_total": 1200.0
+    },
+    {
+        "iteration": 7,
+        "timesteps_total": 1400.0
+    },
+    {
+        "iteration": 8,
+        "timesteps_total": 1600.0
+    },
+    {
+        "iteration": 9,
+        "timesteps_total": 1800.0
+    },
+    {
+        "iteration": 10,
+        "timesteps_total": 2000.0
+    }
+]
