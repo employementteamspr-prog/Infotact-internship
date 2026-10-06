@@ -8,22 +8,15 @@ import useSimulation from "./hooks/useSimulation";
 // ==================================================
 
 function formatSimulationTime(seconds) {
+  const totalSeconds = Math.floor(Number(seconds) || 0);
 
-  const totalSeconds =
-    Math.floor(Number(seconds) || 0);
+  const hours = Math.floor(totalSeconds / 3600);
 
-  const hours =
-    Math.floor(
-      totalSeconds / 3600
-    );
+  const minutes = Math.floor(
+    (totalSeconds % 3600) / 60
+  );
 
-  const minutes =
-    Math.floor(
-      (totalSeconds % 3600) / 60
-    );
-
-  const remainingSeconds =
-    totalSeconds % 60;
+  const remainingSeconds = totalSeconds % 60;
 
   return [
     hours,
@@ -38,24 +31,32 @@ function formatSimulationTime(seconds) {
 
 
 // ==================================================
-// CALCULATE LIVE VEHICLE AVERAGE SPEED
+// FORMAT LAST WEBSOCKET UPDATE
 // ==================================================
 
-function calculateAverageVehicleSpeed(
-  vehicles
-) {
+function formatLastUpdateTime(date) {
+  if (!date) {
+    return "Waiting for data";
+  }
 
+  return new Date(date).toLocaleTimeString();
+}
+
+
+// ==================================================
+// CALCULATE AVERAGE VEHICLE SPEED
+// ==================================================
+
+function calculateAverageVehicleSpeed(vehicles) {
   if (!vehicles.length) {
     return "0.00";
   }
 
-  const totalSpeed =
-    vehicles.reduce(
-      (total, vehicle) =>
-        total +
-        (Number(vehicle.speed) || 0),
-      0
-    );
+  const totalSpeed = vehicles.reduce(
+    (total, vehicle) =>
+      total + (Number(vehicle.speed) || 0),
+    0
+  );
 
   return (
     totalSpeed / vehicles.length
@@ -67,16 +68,11 @@ function calculateAverageVehicleSpeed(
 // CALCULATE TOTAL QUEUE
 // ==================================================
 
-function calculateTotalQueue(
-  intersections
-) {
-
+function calculateTotalQueue(intersections) {
   return intersections.reduce(
     (total, intersection) =>
       total +
-      (Number(
-        intersection.queue_length
-      ) || 0),
+      (Number(intersection.queue_length) || 0),
     0
   );
 }
@@ -86,17 +82,12 @@ function calculateTotalQueue(
 // CALCULATE TOTAL CO2
 // ==================================================
 
-function calculateTotalCO2(
-  intersections
-) {
-
+function calculateTotalCO2(intersections) {
   return intersections
     .reduce(
       (total, intersection) =>
         total +
-        (Number(
-          intersection.co2_emission
-        ) || 0),
+        (Number(intersection.co2_emission) || 0),
       0
     )
     .toFixed(0);
@@ -108,35 +99,49 @@ function calculateTotalCO2(
 // ==================================================
 
 function App() {
-
   const {
     intersections,
     vehicles,
-
-    // Week 3 heatmap data
     heatmapData,
-
     simulationTime,
     connectionStatus,
+    simulationDataAvailable,
+    lastUpdateTime,
     rl,
   } = useSimulation();
 
 
+  // ================================================
+  // CONNECTION STATUS
+  // ================================================
+
   const isConnected =
     connectionStatus === "connected";
 
+
+  // ================================================
+  // WEBSOCKET STREAM HEALTH
+  // ================================================
+
+  const dataStreamHealthy =
+    isConnected &&
+    simulationDataAvailable &&
+    lastUpdateTime !== null;
+
+
+  // ================================================
+  // DASHBOARD METRICS
+  // ================================================
 
   const averageSpeed =
     calculateAverageVehicleSpeed(
       vehicles
     );
 
-
   const totalQueue =
     calculateTotalQueue(
       intersections
     );
-
 
   const totalCO2 =
     calculateTotalCO2(
@@ -147,9 +152,9 @@ function App() {
   return (
     <div className="app">
 
-      {/* =====================================
-          TOP BAR
-      ===================================== */}
+      {/* ==========================================
+          TOP HEADER
+      ========================================== */}
 
       <header className="topbar">
 
@@ -193,16 +198,16 @@ function App() {
       </header>
 
 
-      {/* =====================================
+      {/* ==========================================
           MAIN DASHBOARD
-      ===================================== */}
+      ========================================== */}
 
       <main className="dashboard">
 
 
-        {/* ===================================
-            HERO
-        =================================== */}
+        {/* ========================================
+            HERO SECTION
+        ======================================== */}
 
         <section className="hero">
 
@@ -243,9 +248,9 @@ function App() {
         </section>
 
 
-        {/* ===================================
-            LIVE STATISTICS
-        =================================== */}
+        {/* ========================================
+            STATISTICS GRID
+        ======================================== */}
 
         <section className="stats-grid">
 
@@ -495,9 +500,120 @@ function App() {
         </section>
 
 
-        {/* ===================================
+        {/* ========================================
+            WEBSOCKET DATA STREAM HEALTH
+        ======================================== */}
+
+        <section className="simulation-monitor">
+
+          <div className="monitor-header">
+
+            <div>
+
+              <span className="eyebrow">
+                DATA STREAM
+              </span>
+
+              <h3>
+                WebSocket Stream Health
+              </h3>
+
+            </div>
+
+
+            <div className="simulation-chip">
+
+              <span
+                className={`status-dot ${
+                  dataStreamHealthy
+                    ? "connected"
+                    : ""
+                }`}
+              ></span>
+
+              {dataStreamHealthy
+                ? "STREAM HEALTHY"
+                : "WAITING FOR DATA"}
+
+            </div>
+
+          </div>
+
+
+          <div className="monitor-grid">
+
+
+            {/* Last Update */}
+
+            <div className="monitor-item">
+
+              <span>
+                LAST UPDATE
+              </span>
+
+              <strong>
+                {formatLastUpdateTime(
+                  lastUpdateTime
+                )}
+              </strong>
+
+            </div>
+
+
+            {/* Stream Status */}
+
+            <div className="monitor-item">
+
+              <span>
+                STREAM STATUS
+              </span>
+
+              <strong>
+                {dataStreamHealthy
+                  ? "HEALTHY"
+                  : "INACTIVE"}
+              </strong>
+
+            </div>
+
+
+            {/* Data Source */}
+
+            <div className="monitor-item">
+
+              <span>
+                DATA SOURCE
+              </span>
+
+              <strong>
+                SUMO
+              </strong>
+
+            </div>
+
+
+            {/* Transport */}
+
+            <div className="monitor-item">
+
+              <span>
+                TRANSPORT
+              </span>
+
+              <strong>
+                WebSocket
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        {/* ========================================
             SIMULATION MAP
-        =================================== */}
+        ======================================== */}
 
         <section className="simulation-card">
 
@@ -545,8 +661,6 @@ function App() {
               vehicles={
                 vehicles
               }
-
-              /* Week 3 carbon heatmap data */
 
               heatmapData={
                 heatmapData
