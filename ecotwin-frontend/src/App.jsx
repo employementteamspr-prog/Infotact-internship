@@ -8,15 +8,20 @@ import useSimulation from "./hooks/useSimulation";
 // ==================================================
 
 function formatSimulationTime(seconds) {
-  const totalSeconds = Math.floor(Number(seconds) || 0);
+  const totalSeconds = Math.floor(
+    Number(seconds) || 0
+  );
 
-  const hours = Math.floor(totalSeconds / 3600);
+  const hours = Math.floor(
+    totalSeconds / 3600
+  );
 
   const minutes = Math.floor(
     (totalSeconds % 3600) / 60
   );
 
-  const remainingSeconds = totalSeconds % 60;
+  const remainingSeconds =
+    totalSeconds % 60;
 
   return [
     hours,
@@ -44,6 +49,30 @@ function formatLastUpdateTime(date) {
 
 
 // ==================================================
+// FORMAT CONNECTION STATUS
+// ==================================================
+
+function getConnectionLabel(status) {
+  switch (status) {
+    case "connected":
+      return "Simulation Connected";
+
+    case "connecting":
+      return "Connecting to Simulation";
+
+    case "error":
+      return "Connection Error";
+
+    case "offline":
+      return "Simulation Offline";
+
+    default:
+      return "Simulation Offline";
+  }
+}
+
+
+// ==================================================
 // CALCULATE AVERAGE VEHICLE SPEED
 // ==================================================
 
@@ -52,11 +81,13 @@ function calculateAverageVehicleSpeed(vehicles) {
     return "0.00";
   }
 
-  const totalSpeed = vehicles.reduce(
-    (total, vehicle) =>
-      total + (Number(vehicle.speed) || 0),
-    0
-  );
+  const totalSpeed =
+    vehicles.reduce(
+      (total, vehicle) =>
+        total +
+        (Number(vehicle.speed) || 0),
+      0
+    );
 
   return (
     totalSpeed / vehicles.length
@@ -99,6 +130,7 @@ function calculateTotalCO2(intersections) {
 // ==================================================
 
 function App() {
+
   const {
     intersections,
     vehicles,
@@ -117,6 +149,12 @@ function App() {
 
   const isConnected =
     connectionStatus === "connected";
+
+
+  const connectionLabel =
+    getConnectionLabel(
+      connectionStatus
+    );
 
 
   // ================================================
@@ -138,10 +176,12 @@ function App() {
       vehicles
     );
 
+
   const totalQueue =
     calculateTotalQueue(
       intersections
     );
+
 
   const totalCO2 =
     calculateTotalCO2(
@@ -189,9 +229,7 @@ function App() {
             }`}
           ></span>
 
-          {isConnected
-            ? "Simulation Connected"
-            : "Map Ready"}
+          {connectionLabel}
 
         </div>
 
@@ -461,13 +499,17 @@ function App() {
               </span>
 
               <strong>
-                {isConnected
+                {connectionStatus === "connected"
                   ? "LIVE"
-                  : "OFFLINE"}
+                  : connectionStatus === "connecting"
+                    ? "CONNECTING"
+                    : connectionStatus === "error"
+                      ? "ERROR"
+                      : "OFFLINE"}
               </strong>
 
               <small>
-                SUMO simulation stream
+                WebSocket connection state
               </small>
 
             </div>
@@ -533,7 +575,11 @@ function App() {
 
               {dataStreamHealthy
                 ? "STREAM HEALTHY"
-                : "WAITING FOR DATA"}
+                : connectionStatus === "connecting"
+                  ? "CONNECTING"
+                  : connectionStatus === "error"
+                    ? "STREAM ERROR"
+                    : "STREAM OFFLINE"}
 
             </div>
 
@@ -571,7 +617,11 @@ function App() {
               <strong>
                 {dataStreamHealthy
                   ? "HEALTHY"
-                  : "INACTIVE"}
+                  : connectionStatus === "connecting"
+                    ? "CONNECTING"
+                    : connectionStatus === "error"
+                      ? "ERROR"
+                      : "OFFLINE"}
               </strong>
 
             </div>
