@@ -1,0 +1,26 @@
+[
+    {
+        "name": "baseline",
+        "train_batch_size": 200,
+        "minibatch_size": 50,
+        "num_epochs": 2,
+        "timesteps": 600.0,
+        "num_episodes": 0,
+        "sampling_throughput": {
+            "throughput_since_last_reduce": 161.74183011697735,
+            "throughput_since_last_restore": 81.47376591585582
+        }
+    },
+    {
+        "name": "tuned",
+        "train_batch_size": 400,
+        "minibatch_size": 100,
+        "num_epochs": 4,
+        "timesteps": 1200.0,
+        "num_episodes": 0,
+        "sampling_throughput": {
+            "throughput_since_last_reduce": 151.37237983870241,
+            "throughput_since_last_restore": 142.0486846060969
+        }
+    }
+]
